@@ -18,12 +18,15 @@ public class Machine : MonoBehaviour
     private Machine_DrawGizmos _DrawGizmos;
     //
     private Mahine_AI _AI;
+    //
+    private Machine_Attack _Attack;
     void Start()
     {
         _Player_TF = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         _Move = GetComponent<Machine_Move>();
         _DrawGizmos = GetComponent<Machine_DrawGizmos>();
         _AI = GetComponent<Mahine_AI>();
+        _Attack = GetComponent<Machine_Attack>();
     }
 
     // Update is called once per frame
@@ -46,6 +49,7 @@ public class Machine : MonoBehaviour
         else if (_Distance < _DrawGizmos._Attack_Radius)
         {
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            //_Attack.Shoot();
         }
     }
    
