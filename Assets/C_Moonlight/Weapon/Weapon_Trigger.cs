@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Weapon_Trigger : MonoBehaviour
 {
+    public Weapon_Type _Type = Weapon_Type.Fist;
     public bool _Weapon_BadyBool;
     public Player Player;
+    private GameObject _Anything;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,15 +15,30 @@ public class Weapon_Trigger : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Machine"))
+        if (_Type == Weapon_Type.Sword)
         {
-            _Weapon_BadyBool = true;
-            Player.test_HP(other.gameObject);
-
-            //Machine_HP _HP = other.GetComponent<Machine_HP>();
-            //_HP.BeAttack();
-            //_HP._StrikeBool = false;
-            Debug.Log(_Weapon_BadyBool);
+            if(other.gameObject.CompareTag("Machine"))
+            {
+                _Weapon_BadyBool = true;
+                _Anything = other.gameObject;
+                Player.Machine(_Anything);
+                //Machine_HP _HP = other.GetComponent<Machine_HP>();
+                //_HP.BeAttack();
+                //_HP._StrikeBool = false;
+                Debug.Log(_Weapon_BadyBool);
+            }
+        }
+        if (_Type == Weapon_Type.Shield)
+        {
+            if (other.gameObject.CompareTag("Machine"))
+            {
+                _Anything = other.gameObject;
+                Player.Machine(_Anything);
+                //Machine_HP _HP = other.GetComponent<Machine_HP>();
+                //_HP.BeAttack();
+                //_HP._StrikeBool = false;
+                Debug.Log(_Weapon_BadyBool);
+            }
         }
     }
     public void OnTriggerExit(Collider other)

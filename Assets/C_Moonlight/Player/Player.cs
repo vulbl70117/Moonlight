@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     private Player_Attack _Attack;
     //
     //Machine
-    private Machine_HP _Machine;
+    private Machine _Machine;
     //
     //Weapon
     private Weapon _Weapon;
@@ -88,8 +88,8 @@ public class Player : MonoBehaviour
             {        
                 if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
                 {
-                    test.GetComponent<Machine_HP>().BeAttack();
-                    test.GetComponent<Machine_HP>()._StrikeBool = false;
+                    _Machine._HP.BeAttack();
+                    _Machine._HP._StrikeBool = false;
                 }
                     
             }
@@ -119,9 +119,10 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public void test_HP(GameObject aaa)
+    public void Machine(GameObject aaa)
     {
         test = aaa;
-        //_HP = test.GetComponent<Machine_HP>();
+        _Machine = test.GetComponent<Machine>();
+        
     }
 }
