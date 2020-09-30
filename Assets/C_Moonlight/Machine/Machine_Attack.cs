@@ -10,7 +10,7 @@ public class Machine_Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-           Shoot();
+ 
     }
 
     // Update is called once per frame

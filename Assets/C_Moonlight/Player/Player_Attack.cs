@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Player_Attack : MonoBehaviour
 {
-    private Machine _Machine;
+    private Weapon_Trigger _Trigger;
     // Start is called before the first frame update
     void Start()
     {
-        _Machine = GameObject.FindGameObjectWithTag("Machine").GetComponent<Machine>();
+        _Trigger = GetComponent<Weapon_Trigger>();
     }
 
     // Update is called once per frame
@@ -18,10 +18,10 @@ public class Player_Attack : MonoBehaviour
     }
     public void Attack()
     {
-        if (_Machine != null)
-        {
-            _Machine._HP.BeAttack();
-            _Machine._HP._StrikeBool = false;
-        }
+        //if (_Trigger != null)
+        //{
+        //    _Trigger._HP.BeAttack();
+        //    _Machine._HP._StrikeBool = false;
+        //}
     }
 }

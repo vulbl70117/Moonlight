@@ -35,7 +35,7 @@ public class Player_Evade : MonoBehaviour
     public void EvadeTime()
     {
         _EvadeTime_02 -= Time.deltaTime;
-        if (_EvadeTime_02 < 0 && _Trigger._Evade_ToMachine == false)
+        if ((_EvadeTime_02 < 0 && _Trigger._Evade_ToMachine == false))
         {
             _EvadeBool_01 = false;
             _Move._Move_Player_RD.useGravity = true;

@@ -37,9 +37,11 @@ public class Player_Trigger : MonoBehaviour
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Machine")
+        if (other.gameObject.CompareTag("Machine"))
         {
+            
             _Evade_ToMachine = false;
+            Debug.Log(_Evade_ToMachine);
         }
     }
     private void Camera_2D()

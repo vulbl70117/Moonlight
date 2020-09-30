@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class Machine : MonoBehaviour
 {
+    public float _Shoot_Time_01;
+    private float _Shoot_Time_02;
+    //
     private float _Distance;
     //
     public bool _DetectBool=true;
@@ -34,8 +37,8 @@ public class Machine : MonoBehaviour
     {
         //未偵測到敵人+Bool
         _Distance = Vector3.Distance(transform.position, _Player_TF.position);
-        Debug.Log(_DrawGizmos._Detect_Radius);
-        Debug.Log(_Distance);
+        //Debug.Log(_DrawGizmos._Detect_Radius);
+        //Debug.Log(_Distance);
         if (_Distance > _DrawGizmos._Detect_Radius)
         {
             _Move.Move_Time();
@@ -49,7 +52,12 @@ public class Machine : MonoBehaviour
         else if (_Distance < _DrawGizmos._Attack_Radius)
         {
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            //_Attack.Shoot();
+            if (Time.time > _Shoot_Time_02 + _Shoot_Time_01)
+            {
+                transform.LookAt(_Player_TF);
+                _Shoot_Time_02 = Time.time;
+                _Attack.Shoot();
+            }
         }
     }
    

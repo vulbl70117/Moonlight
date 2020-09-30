@@ -29,12 +29,14 @@ public class Player : MonoBehaviour
     private Player_Attack _Attack;
     //
     //Machine
-    private Machine _Machine;
+    private Machine_HP _Machine;
     //
     //Weapon
     private Weapon _Weapon;
     private GameObject _Weapon_All;
-    
+
+
+    GameObject test;
     void Start()
     {
         //Player
@@ -46,7 +48,7 @@ public class Player : MonoBehaviour
         _Jump = GetComponent<Player_Jump>();
         _Attack = GetComponent<Player_Attack>();
         //Machin
-        _Machine = GameObject.FindGameObjectWithTag("Machine").GetComponent<Machine>();
+        
         //Weapon
         _Weapon = GetComponentInChildren<Weapon>();
         //_Weapon_All = GetComponentInChildren<GameObject>();
@@ -83,10 +85,13 @@ public class Player : MonoBehaviour
         if (_Weapon)
         {
             if (Input.GetKeyDown(KeyCode.E))
-            {
+            {        
                 if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
-                    Debug.Log(_Weapon._Weapon_TG._Weapon_BadyBool);
-                    _Attack.Attack();
+                {
+                    test.GetComponent<Machine_HP>().BeAttack();
+                    test.GetComponent<Machine_HP>()._StrikeBool = false;
+                }
+                    
             }
         }
     }
@@ -113,5 +118,10 @@ public class Player : MonoBehaviour
                 _Change = To2D3D.to3D;
             }
         }
+    }
+    public void test_HP(GameObject aaa)
+    {
+        test = aaa;
+        //_HP = test.GetComponent<Machine_HP>();
     }
 }
