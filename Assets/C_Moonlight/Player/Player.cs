@@ -10,6 +10,8 @@ public enum To2D3D
 public class Player : MonoBehaviour
 {
     //Player
+    private bool _Can_MOve = true;
+    //
     public To2D3D _Change = To2D3D.to2D;
     //    
     public Transform _Player_Mod;
@@ -33,10 +35,9 @@ public class Player : MonoBehaviour
     //
     //Weapon
     private Weapon _Weapon;
-    private GameObject _Weapon_All;
+    //private GameObject _Weapon_All;
 
-
-    GameObject test;
+    private GameObject _Any;
     void Start()
     {
         //Player
@@ -56,73 +57,88 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (_Collision != null)
+        if (_Can_MOve)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && _Collision.JumpBool_01 == true )
+            if (_Collision != null)
             {
-                _Jump.JumpUp();
-            }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                _Jump.JumpHolp();
-            }
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                _Jump._JumpBool_02 = false;
-            }
-        }
-        if (_Evade)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && _Evade._EvadeBool_01 == false)
-            {
-                _Evade.Evade();
-            }
-            if (_Evade._EvadeBool_01 == true)
-            {
-                _Evade.EvadeTime();
-            }
-        }
-        if (_Weapon)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {        
-                if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
+                if (Input.GetKeyDown(KeyCode.Space) && _Collision.JumpBool_01 == true )
                 {
-                    _Machine._HP.BeAttack();
-                    _Machine._HP._StrikeBool = false;
+                    _Jump.JumpUp();
                 }
-                    
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    _Jump.JumpHolp();
+                }
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    _Jump._JumpBool_02 = false;
+                }
             }
+            if (_Evade)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftShift) && _Evade._EvadeBool_01 == false)
+                {
+                    _Evade.Evade();
+                }
+                if (_Evade._EvadeBool_01 == true)
+                {
+                    _Evade.EvadeTime();
+                }
+            }
+            if (_Weapon)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {        
+                    if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
+                    {
+                        _Machine._HP.BeAttack();
+                        _Machine._HP._StrikeBool = false;
+                    }
+                    
+                }
+            }
+        }
+        if (Input.GetKey(KeyCode.R))
+        {
+            _Can_MOve = false;
+            _Move._Move_Player_RD.isKinematic = true;
+        }
+        else
+        {
+            _Can_MOve = true;
         }
     }
     private void FixedUpdate()
     {
-        _Move._Move_Player_RD.isKinematic = false;
-        if (_Trigger != null)
+        if (_Can_MOve)
         {
-            if (_Change == To2D3D.to2D || _Trigger._To2D)
+            _Move._Move_Player_RD.isKinematic = false;
+            if (_Trigger != null)
             {
-                _Change = To2D3D.to2D;
-                transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-                if (Input.GetKey(KeyCode.A))
+                if (_Change == To2D3D.to2D || _Trigger._To2D)
                 {
-                    _Move.Move2D(Player_2D.Right);
+                    _Change = To2D3D.to2D;
+                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                    if (Input.GetKey(KeyCode.A))
+                    {
+                        _Move.Move2D(Player_2D.Right);
+                    }
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        _Move.Move2D(Player_2D.Left);
+                    }
                 }
-                if (Input.GetKey(KeyCode.D))
+                if (_Change == To2D3D.to3D || _Trigger._To3D)
                 {
-                    _Move.Move2D(Player_2D.Left);
+                    _Change = To2D3D.to3D;
                 }
-            }
-            if (_Change == To2D3D.to3D || _Trigger._To3D)
-            {
-                _Change = To2D3D.to3D;
             }
         }
     }
-    public void Machine(GameObject aaa)
+    public void Machine(GameObject machine)
     {
-        test = aaa;
-        _Machine = test.GetComponent<Machine>();
+        _Any = machine;
+        _Machine = _Any.GetComponent<Machine>();
         
     }
 }

@@ -32,4 +32,9 @@ public class Machine_Attack : MonoBehaviour
             }
         }
     }
+    public void Dive()
+    {
+        Rigidbody _Dive = gameObject.GetComponent<Rigidbody>();
+        _Dive.AddForce(transform.forward * _Shoot_Speet);
+    }
 }

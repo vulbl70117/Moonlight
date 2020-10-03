@@ -11,6 +11,10 @@ public class Player_Jump : MonoBehaviour
     public bool _JumpBool_02;
     //
     public Rigidbody _Player_RD;
+    void Start()
+    {
+
+    }
     public void JumpUp()
     {
         _JumpBool_02 = true;
