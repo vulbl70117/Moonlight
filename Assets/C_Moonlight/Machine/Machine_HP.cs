@@ -15,19 +15,20 @@ public class Machine_HP : MonoBehaviour
     //
     private Transform _Machine_TF;
     //
-    private bool _Enable = true;
+    private Player_Trigger _Player_Trigger;
     // Start is called before the first frame update
     void Start()
     {
         _Machine_RD = GetComponent<Rigidbody>();
         _Machine_TF = GetComponent<Transform>();
         _Weapon_Trigger = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon_Trigger>();
+        _Player_Trigger = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Trigger>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(_Enable==false) gameObject.SetActive(false);
+        //if(_Enable==false) gameObject.SetActive(false);
     }
     public void BeAttack()
     {
@@ -38,9 +39,11 @@ public class Machine_HP : MonoBehaviour
             Strike();
             if (_Machine_HP < 0)
             {
-                transform.position = new Vector3(10.0f,1.5f,-50.0f);
-                _Enable = false;
-                return;
+                _Player_Trigger._Evade_ToMachine = false;
+                gameObject.SetActive(false);
+                //transform.position = new Vector3(10.0f,1.5f,-50.0f);
+                //_Enable = false;
+                //return;
             }
         }
     }

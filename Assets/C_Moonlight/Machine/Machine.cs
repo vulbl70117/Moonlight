@@ -32,6 +32,8 @@ public class Machine : MonoBehaviour
     private Machine_Attack _Attack;
     //
     private GameObject _Pos;
+    //
+    public Player_HP _Player_HP;
     void Start()
     {
         _Player_TF = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -55,7 +57,7 @@ public class Machine : MonoBehaviour
         }
         if (_Type == Enemy_Type.Fly)
         {
-            Fiy();
+            Fly();
         }
     }
     public void Ground()
@@ -76,7 +78,7 @@ public class Machine : MonoBehaviour
         else if (_Distance < _DrawGizmos._Attack_Radius)
         {
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            //if (Time.time > _Shoot_Time_02 + _Shoot_Time_01)
+            if (Time.time > _Shoot_Time_02 + _Shoot_Time_01)
             {
                 _Pos.transform.LookAt(_Player_TF);
                 _Shoot_Time_02 = Time.time;
@@ -84,7 +86,7 @@ public class Machine : MonoBehaviour
             }
         }
     }
-    public void Fiy()
+    public void Fly()
     {
         //未偵測到敵人+Bool
         _Distance = Vector3.Distance(transform.position, _Player_TF.position);
@@ -92,23 +94,27 @@ public class Machine : MonoBehaviour
         if (_Distance > _DrawGizmos._Detect_Radius)
         {
             _Move.Move_Time();
-            _DetectBool = false;
         }
-        else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius)
+        else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius && _DetectBool == false)
         {
-
-            if (Time.time > _Shoot_Time_02 + _Shoot_Time_01)
+            transform.LookAt(_Player_TF);
+            transform.position = Vector3.Lerp(transform.position, _Player_TF.position, Time.deltaTime * 5);
+            if (_Distance <= _DrawGizmos._Back_Radius)
             {
-                transform.LookAt(_Player_TF);
-                transform.position = Vector3.Lerp(transform.position, _Player_TF.position, Time.deltaTime*5);
+                _Player_HP.BeAttack();
+                _Shoot_Time_02 = _Shoot_Time_01;
                 _DetectBool = true;
             }
         }
-        if (_Distance < _DrawGizmos._Attack_Radius || _DetectBool)
+        else if (_Distance < _DrawGizmos._Attack_Radius || _Shoot_Time_02 > 0)
         {
-            _Shoot_Time_02 = Time.time;
+            _Shoot_Time_02 -= Time.deltaTime;
             Vector3 pos = transform.GetChild(0).transform.position;
-            transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * 5);
+            transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime );
+            if (_Shoot_Time_02 <= 0)
+            {
+                _DetectBool = false;
+            }
         }
     }
 }

@@ -15,4 +15,22 @@ public class Bullet : MonoBehaviour
     {
         
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Machine"))
+            return;
+        if (other.CompareTag("Weapon"))
+            Destroy(gameObject);
+
+        if (other.CompareTag("Player"))
+        {
+            //Destroy(other.gameObject);
+            Player_HP _player = other.gameObject.GetComponent<Player_HP>();
+            if (_player != null)
+            {
+                _player.BeAttack();
+                Destroy(gameObject);
+            }
+        }
+    }
 }

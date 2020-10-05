@@ -15,7 +15,7 @@ public class Weapon_Trigger : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (_Type == Weapon_Type.Sword)
+        if (_Type == Weapon_Type.Fist)
         {
             if(other.gameObject.CompareTag("Machine"))
             {

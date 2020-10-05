@@ -20,11 +20,19 @@ public class Player_Jump : MonoBehaviour
         _JumpBool_02 = true;
         _JumpTime_02 = _JumpTime_01;
         _Player_RD.velocity = Vector3.up * _JumpPower;
+        //_Player_RD.AddForce(Vector3.up * _JumpPower);
+        //if (_JumpTime_02 >= 0 && _JumpBool_02 == true)
+        //{
+
+        //    //_Player_RD.AddForce(Vector3.up * 3);
+        //    _JumpTime_02 -= Time.deltaTime;
+        //}
     }
     public void JumpHolp()
     {
-        if (_JumpTime_02 > 0 && _JumpBool_02 == true)
+        if (_JumpTime_02 >= 0 && _JumpBool_02 == true)
         {
+
             _Player_RD.velocity = Vector3.up * _JumpPower;
             _JumpTime_02 -= Time.deltaTime;
         }
