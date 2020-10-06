@@ -17,19 +17,26 @@ public enum Player_3D
 }
 public class Player_Move : MonoBehaviour
 {
-    public Transform _Player_Mod;
-    private Transform _Move_Player_TF;
-    //
-    private Rigidbody _Move_Player_RD;
-    //
-    public Collider _Move_Player_CD;
-    //
+    public float _UseEvadeTime_01 = 0.5f;
+    public float _EvadeTime_01 = 0.25f;
+    private float _NowEvadeTime_02;
+    private float _EvadeTime_02;
     public float _EavdeSpeed;
-    
+    //
+    public bool _EvadeBool_01;
+    //
+    private Transform _Move_Player_TF;
+    private Rigidbody _Move_Player_RD;
+    private Collider _Move_Player_CD;
+    //
+    private Player_Trigger _Trigger;
+
     void Start()
     {
         _Move_Player_TF = GetComponent<Transform>();
         _Move_Player_RD = GetComponent<Rigidbody>();
+        _Move_Player_CD = GetComponent<Collider>();
+        _Trigger = GetComponent<Player_Trigger>();
     }
 
     // Update is called once per frame
@@ -65,20 +72,33 @@ public class Player_Move : MonoBehaviour
                 }
         }
     }
-    public void Move_2D()
-    {
-        if (Input.GetKey(KeyCode.A))
-        {
-            Move2D(Player_2D.Right);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            Move2D(Player_2D.Left);
-        }
-    }
     public void Move3D(Player_3D _3D, bool isTrue = false)
     {
         if (_Move_Player_RD == null)
             return;
+    }
+    public void Evade_Time()
+    {
+        if (Time.time > _NowEvadeTime_02 + _UseEvadeTime_01)
+        {
+            Move2D(Player_2D.Evade);
+            _NowEvadeTime_02 = Time.time;
+            _EvadeTime_02 = _EvadeTime_01;
+            _EvadeBool_01 = true;
+        }
+    }
+    public void Evade_ToMachine()
+    {
+        if (_Move_Player_RD)
+        {
+            _EvadeTime_02 -= Time.deltaTime;
+            if ((_EvadeTime_02 < 0 && _Trigger._Evade_ToMachine == false))
+            {
+                _EvadeBool_01 = false;
+                _Move_Player_RD.useGravity = true;
+                _Move_Player_RD.isKinematic = true;
+                _Move_Player_CD.isTrigger = false;
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ public class Player_Jump : MonoBehaviour
     public float _BufferPower = 0.01f;
     public float _JumpTime_01 = 0.5f;
     public float _JumpTime_02;
+    private float _Player_Tall = 1.5f;
     //
     public bool _JumpBool_01;
     public bool _JumpBool_02;
@@ -30,27 +31,14 @@ public class Player_Jump : MonoBehaviour
     public void Jump()
     {
         Jump_Ray();
-        if (Input.GetKeyDown(KeyCode.Space) && _IsGrounded == true)
-        {
-            Jump_Up();
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            Jump_Continued();
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            _JumpBool_02 = false;
-        }
         if (_Player_RD.velocity.y < 0 && _Buffer && _JumpBool_01)
         {
-            _Player_TF.position = new Vector3(_Player_TF.position.x,hit_Y.point.y+1.5f,_Player_TF.position.z);
+            _Player_TF.position = new Vector3(_Player_TF.position.x,hit_Y.point.y + _Player_Tall, _Player_TF.position.z);
             _JumpBool_01 = false;
         }
     }
     public void Jump_Ray()
     {
-        
         if (Physics.Raycast(transform.position, -transform.up,out hit_Y, hitdistance, layer))
         {
             _IsGrounded = true;

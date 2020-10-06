@@ -9,9 +9,8 @@ public enum To2D3D
 
 public class Player : MonoBehaviour
 {
-    private int floor;
     //Player
-    private bool _Can_Jump = true;
+    private bool _Can_Evade = true;
     //
     public To2D3D _Change = To2D3D.to2D;
     //    
@@ -19,13 +18,9 @@ public class Player : MonoBehaviour
     //
     private Rigidbody _Player_RD;
     //
-    private Player_Collision _Collision;
-    //
     private Player_Move _Move;
     //
     private Player_Trigger _Trigger;
-    //
-    private Player_Evade _Evade;
     //
     private Player_Jump _Jump;
     //
@@ -43,12 +38,9 @@ public class Player : MonoBehaviour
     {
         //Player
         _Player_RD = GetComponent<Rigidbody>();
-        _Collision = GetComponent<Player_Collision>();
         _Move = GetComponent<Player_Move>();
         _Trigger = GetComponent<Player_Trigger>();
-        _Evade = GetComponent<Player_Evade>();
         _Jump = GetComponent<Player_Jump>();
-        //_Attack = GetComponent<Player_Attack>();
         //Machin
         
         //Weapon
@@ -65,19 +57,38 @@ public class Player : MonoBehaviour
         if (_Jump)
         {
             _Jump.Jump();
-        }
-        if (_Evade && _Can_Jump)
-        {
-            _Evade.Evade();
-        }
-        if (_Weapon)
-        {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space) && _Jump._IsGrounded == true)
             {
-                if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
+                _Jump.Jump_Up();
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _Jump.Jump_Continued();
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                _Jump._JumpBool_02 = false;
+            }
+            if (_Move && _Can_Evade)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false)
                 {
-                    _Machine._HP.BeAttack();
-                    _Machine._HP._StrikeBool = false;
+                    _Move.Evade_Time();
+                }
+                if (_Move._EvadeBool_01 == true)
+                {
+                    _Move.Evade_ToMachine();
+                }
+            }
+            if (_Weapon)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
+                    {
+                        _Machine._HP.BeAttack();
+                        _Machine._HP._StrikeBool = false;
+                    }
                 }
             }
         }
@@ -91,9 +102,7 @@ public class Player : MonoBehaviour
         {
             if (_Change == To2D3D.to2D || _Trigger._To2D)
             {
-                _Change = To2D3D.to2D;
-                transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-                _Move.Move_2D();
+                Move_2D();
             }
             if (_Change == To2D3D.to3D || _Trigger._To3D)
             {
@@ -101,6 +110,19 @@ public class Player : MonoBehaviour
             }
         }
         
+    }
+    public void Move_2D()
+    {
+        _Change = To2D3D.to2D;
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        if (Input.GetKey(KeyCode.A))
+        {
+            _Move.Move2D(Player_2D.Right);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            _Move.Move2D(Player_2D.Left);
+        }
     }
     public void Machine(GameObject machine)
     {
@@ -112,11 +134,11 @@ public class Player : MonoBehaviour
     {
         if (_Weapon._nowType == Weapon_Type.Fist)
         {
-            _Can_Jump = true;
+            _Can_Evade = true;
         }
         if(_Weapon._nowType == Weapon_Type.Shield)
         {
-            _Can_Jump = false;
+            _Can_Evade = false;
         }
     }
 }

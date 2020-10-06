@@ -40,7 +40,4 @@ public class Weapon : MonoBehaviour
             _Weapon_TG = transform.GetChild(1).GetComponent<Weapon_Trigger>();
         }
     }
-   
-    
-
 }
