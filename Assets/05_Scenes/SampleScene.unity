@@ -5845,11 +5845,9 @@ GameObject:
   - component: {fileID: 657890237}
   - component: {fileID: 657890236}
   - component: {fileID: 657890234}
-  - component: {fileID: 657890240}
   - component: {fileID: 657890233}
   - component: {fileID: 657890241}
   - component: {fileID: 657890243}
-  - component: {fileID: 657890242}
   m_Layer: 4
   m_Name: Player
   m_TagString: Player
@@ -5886,9 +5884,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12521749cac35ac41ab97a0be17ebc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Player_Mod: {fileID: 39143015}
-  _Move_Player_CD: {fileID: 657890237}
+  _UseEvadeTime_01: 0.5
+  _EvadeTime_01: 0.25
   _EavdeSpeed: 10
+  _EvadeBool_01: 0
 --- !u!114 &657890236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5947,21 +5946,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &657890240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657890232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d59777f603089e54cb80b38d715525fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _UseEvadeTime_01: 0.5
-  _EvadeTime_01: 0.25
-  _EvadeBool_01: 0
 --- !u!114 &657890241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5986,18 +5970,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 1024
---- !u!114 &657890242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657890232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04483b4990918614aad00bee05577d88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &657890243
 MonoBehaviour:
   m_ObjectHideFlags: 0
