@@ -20,7 +20,7 @@ public class Player_Move : MonoBehaviour
     public Transform _Player_Mod;
     private Transform _Move_Player_TF;
     //
-    public Rigidbody _Move_Player_RD;
+    private Rigidbody _Move_Player_RD;
     //
     public Collider _Move_Player_CD;
     //
@@ -29,6 +29,7 @@ public class Player_Move : MonoBehaviour
     void Start()
     {
         _Move_Player_TF = GetComponent<Transform>();
+        _Move_Player_RD = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -64,10 +65,20 @@ public class Player_Move : MonoBehaviour
                 }
         }
     }
+    public void Move_2D()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
+            Move2D(Player_2D.Right);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            Move2D(Player_2D.Left);
+        }
+    }
     public void Move3D(Player_3D _3D, bool isTrue = false)
     {
         if (_Move_Player_RD == null)
             return;
-
     }
 }

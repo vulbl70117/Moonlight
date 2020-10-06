@@ -5846,7 +5846,6 @@ GameObject:
   - component: {fileID: 657890236}
   - component: {fileID: 657890234}
   - component: {fileID: 657890240}
-  - component: {fileID: 657890235}
   - component: {fileID: 657890233}
   - component: {fileID: 657890241}
   - component: {fileID: 657890243}
@@ -5888,22 +5887,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Player_Mod: {fileID: 39143015}
-  _Move_Player_RD: {fileID: 657890238}
   _Move_Player_CD: {fileID: 657890237}
   _EavdeSpeed: 10
---- !u!114 &657890235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657890232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a748a1620aba14149b41e6d4cc002a42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  JumpBool_01: 0
 --- !u!114 &657890236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5918,12 +5903,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Change: 0
   _Player_Mod: {fileID: 39143015}
-  JumpSpeed: 10
-  hitdistance: 1.6
-  m_IsGrounded: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!65 &657890237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5995,11 +5974,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b6cc03d196d364b8d1968b1f2ca880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _JumpPower: 5
+  _JumpPower: 10
+  _BufferPower: 0.01
   _JumpTime_01: 0.5
   _JumpTime_02: 0
+  _JumpBool_01: 0
   _JumpBool_02: 0
-  _Player_RD: {fileID: 657890238}
+  _Buffer: 0
+  hitdistance: 2
+  _IsGrounded: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &657890242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6941,7 +6927,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356043939}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.3999996}
+  m_LocalPosition: {x: 0, y: 0, z: 1.6}
   m_LocalScale: {x: 1, y: 0.65, z: 0.3}
   m_Children: []
   m_Father: {fileID: 680928797}
@@ -7586,7 +7572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1955644558
 BoxCollider:
   m_ObjectHideFlags: 0
