@@ -44,27 +44,17 @@ public class Camera_Follow2D : MonoBehaviour
             if (_Change_Camera == To2D3D.to2D || _Trigger_Camera._To2D)
             {
                 _Change_Camera = To2D3D.to2D;
-                
                  nowtime += Time.deltaTime;
-                
-                //Debug.Log();
                 if (Vector3.Distance(_Camera.position, _Player.position) > 20)
                 {
-                    
                     Follow_To2D();
-
                 }
                 //if (z.velocity.z <= 0)
                 //{
-
                 //    follow = new Vector3(_Camera.position.x, _Player.position.y - deviation2D, _Player.position.z - deviation2D);
                 //    _Camera.position = Vector3.Lerp(_Camera.position, follow, Zero * Time.deltaTime);
                 //    nowtime -= Time.deltaTime;
-                   
-
-
                 //}
-                
                 //Debug.Log(Vector3.Distance(_Camera.position, _Player.position));
             }
         }
@@ -74,7 +64,6 @@ public class Camera_Follow2D : MonoBehaviour
         nowtime = 0;
         follow = new Vector3(_Camera.position.x, _Player.position.y - deviation2D, _Player.position.z - deviation2D);
         _Camera.position = Vector3.Lerp(_Camera.position, follow, speed * Time.deltaTime);
-        
         //Debug.Log(_Camera.position);
 
     }
