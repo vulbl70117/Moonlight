@@ -22,9 +22,6 @@ public class Weapon_Trigger : MonoBehaviour
                 _Weapon_BadyBool = true;
                 _Anything = other.gameObject;
                 Player.Machine(_Anything);
-                //Machine_HP _HP = other.GetComponent<Machine_HP>();
-                //_HP.BeAttack();
-                //_HP._StrikeBool = false;
                 Debug.Log(_Weapon_BadyBool);
             }
         }
@@ -34,9 +31,6 @@ public class Weapon_Trigger : MonoBehaviour
             {
                 _Anything = other.gameObject;
                 Player.Machine(_Anything);
-                //Machine_HP _HP = other.GetComponent<Machine_HP>();
-                //_HP.BeAttack();
-                //_HP._StrikeBool = false;
                 Debug.Log(_Weapon_BadyBool);
             }
         }

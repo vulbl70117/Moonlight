@@ -11,8 +11,6 @@ public class Mahine_AI : MonoBehaviour
     void Start()
     {
         _Machion_NMA = GetComponent<NavMeshAgent>();
-        //_Player_TF = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        
     }
     void Update()
     {

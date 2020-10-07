@@ -21,15 +21,18 @@ public class Bullet : MonoBehaviour
             return;
         if (other.CompareTag("Weapon"))
             Destroy(gameObject);
-
         if (other.CompareTag("Player"))
         {
-            //Destroy(other.gameObject);
-            Player_HP _player = other.gameObject.GetComponent<Player_HP>();
-            if (_player != null)
+            Player _Player = other.gameObject.GetComponent<Player>();
+            Player_Renderer _Player_RD = other.gameObject.GetComponent<Player_Renderer>();
+            if (_Player._Move._EvadeBool_01 == false)
             {
-                _player.BeAttack();
-                Destroy(gameObject);
+                if (_Player_RD != null)
+                {
+                    _Player_RD.BeAttack();
+                    Destroy(gameObject);
+                }
+
             }
         }
     }

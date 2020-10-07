@@ -16,6 +16,8 @@ public class Machine : MonoBehaviour
     private float _Shoot_Time_02;
     //
     private float _Distance;
+     public   float stop = 2f;
+    public bool s=false;
     //
     public bool _DetectBool=false;
     //
@@ -33,7 +35,7 @@ public class Machine : MonoBehaviour
     //
     private GameObject _Pos;
     //
-    public Player_HP _Player_HP;
+    public Player_Renderer _Player_HP;
     void Start()
     {
         _Player_TF = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -90,30 +92,40 @@ public class Machine : MonoBehaviour
     {
         //未偵測到敵人+Bool
         _Distance = Vector3.Distance(transform.position, _Player_TF.position);
-
+                //Debug.Log(_Shoot_Time_02);
         if (_Distance > _DrawGizmos._Detect_Radius)
         {
             _Move.Move_Time();
         }
         else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius && _DetectBool == false)
         {
+            Debug.Log(1);
+            if (stop == 0.5/* || s*/)
+                transform.position = Vector3.Lerp(transform.position, _Player_TF.position, Time.deltaTime * 5);
             transform.LookAt(_Player_TF);
-            transform.position = Vector3.Lerp(transform.position, _Player_TF.position, Time.deltaTime * 5);
-            if (_Distance <= _DrawGizmos._Back_Radius)
+            s = true;
+            if (_Distance < _DrawGizmos._Back_Radius)
             {
-                _Player_HP.BeAttack();
-                _Shoot_Time_02 = _Shoot_Time_01;
-                _DetectBool = true;
+                //_Player_HP.BeAttack();
+                    stop -= Time.deltaTime;
+                    _Shoot_Time_02 = _Shoot_Time_01;
+                s = false;
+                if (stop < 0)
+                {
+                    _DetectBool = true;
+                }
             }
         }
-        else if (_Distance < _DrawGizmos._Attack_Radius || _Shoot_Time_02 > 0)
+        else if (_Distance < _DrawGizmos._Attack_Radius || _DetectBool)
         {
             _Shoot_Time_02 -= Time.deltaTime;
             Vector3 pos = transform.GetChild(0).transform.position;
             transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime );
             if (_Shoot_Time_02 <= 0)
             {
+                stop = 0.5f;
                 _DetectBool = false;
+                s = true;
             }
         }
     }

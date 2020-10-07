@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 39143015}
   - component: {fileID: 39143014}
   - component: {fileID: 39143013}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Wolf_3*1m
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5190,7 +5190,7 @@ GameObject:
   - component: {fileID: 341854711}
   - component: {fileID: 341854715}
   - component: {fileID: 341854714}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -5205,7 +5205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341854709}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.6800003}
+  m_LocalPosition: {x: 0, y: 0.26, z: 0.6800003}
   m_LocalScale: {x: 0.1, y: 0.10000001, z: 1}
   m_Children: []
   m_Father: {fileID: 680928797}
@@ -5446,6 +5446,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 0
   _Shoot_Time_01: 1
+  stop: 2
+  s: 0
   _DetectBool: 1
   _HP: {fileID: 384071768}
   _Player_HP: {fileID: 657890243}
@@ -5636,7 +5638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &504902360
 Transform:
   m_ObjectHideFlags: 0
@@ -5645,7 +5647,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504902359}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14, y: 0.19, z: 1}
+  m_LocalPosition: {x: 0, y: 0.19, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1779156236}
@@ -5664,7 +5666,6 @@ GameObject:
   - component: {fileID: 534977425}
   - component: {fileID: 534977428}
   - component: {fileID: 534977429}
-  - component: {fileID: 534977430}
   m_Layer: 0
   m_Name: Camera_2D
   m_TagString: MainCamera
@@ -5810,28 +5811,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Change_Camera: 0
-  _Player: {fileID: 657890239}
-  speed: 0.4
-  Zero: 3
+  _Camera_Speed: 0.27
+  _Camera_ZeroTime: 1.5
   deviation2D: -2
-  _Trigger_Camera: {fileID: 657890233}
-  time: 2
---- !u!54 &534977430
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534977424}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  _Player_GO: {fileID: 657890232}
 --- !u!1 &657890232
 GameObject:
   m_ObjectHideFlags: 0
@@ -5848,7 +5831,7 @@ GameObject:
   - component: {fileID: 657890233}
   - component: {fileID: 657890241}
   - component: {fileID: 657890243}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5885,8 +5868,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _UseEvadeTime_01: 0.5
-  _EvadeTime_01: 0.25
+  _EvadeTime_01: 0.4
+  _EvadeTime_02: 0
   _EavdeSpeed: 10
+  _Camera_Time: 2
   _EvadeBool_01: 0
 --- !u!114 &657890236
 MonoBehaviour:
@@ -5901,7 +5886,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Change: 0
-  _Player_Mod: {fileID: 39143015}
+  _Move: {fileID: 0}
+  _Trigger: {fileID: 0}
 --- !u!65 &657890237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6007,7 +5993,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677463495}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14, y: 0.19, z: 1}
+  m_LocalPosition: {x: -0.14, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 384071767}
@@ -6023,7 +6009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 680928797}
   - component: {fileID: 680928800}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -6089,7 +6075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &803944152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6164,6 +6150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 1
   _Shoot_Time_01: 1
+  stop: 0.5
+  s: 0
   _DetectBool: 0
   _HP: {fileID: 803944156}
   _Player_HP: {fileID: 657890243}
@@ -6181,7 +6169,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 90
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!65 &803944160
 BoxCollider:
@@ -6191,7 +6179,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803944151}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -6251,7 +6239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803944151}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 12.8, z: 86.2}
+  m_LocalPosition: {x: 10, y: 13.6, z: 42.8}
   m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
   - {fileID: 1726324792}
@@ -6419,6 +6407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 1
   _Shoot_Time_01: 1
+  stop: 2
+  s: 0
   _DetectBool: 0
   _HP: {fileID: 888626294}
   _Player_HP: {fileID: 657890243}
@@ -6884,7 +6874,7 @@ GameObject:
   - component: {fileID: 1356043944}
   - component: {fileID: 1356043946}
   - component: {fileID: 1356043945}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -7410,6 +7400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 0
   _Shoot_Time_01: 1
+  stop: 2
+  s: 0
   _DetectBool: 1
   _HP: {fileID: 1779156229}
   _Player_HP: {fileID: 657890243}
@@ -7538,13 +7530,13 @@ GameObject:
   - component: {fileID: 1955644560}
   - component: {fileID: 1955644559}
   - component: {fileID: 1955644558}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1955644558
 BoxCollider:
   m_ObjectHideFlags: 0

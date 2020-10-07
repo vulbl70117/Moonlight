@@ -20,14 +20,16 @@ public class Player_Move : MonoBehaviour
     public float _UseEvadeTime_01 = 0.5f;
     public float _EvadeTime_01 = 0.25f;
     private float _NowEvadeTime_02;
-    private float _EvadeTime_02;
+    public float _EvadeTime_02;
     public float _EavdeSpeed;
+    public float _Camera_Time;
     //
     public bool _EvadeBool_01;
     //
     private Transform _Move_Player_TF;
     private Rigidbody _Move_Player_RD;
     private Collider _Move_Player_CD;
+    private Vector3 _Move_Player_VT;
     //
     private Player_Trigger _Trigger;
 
@@ -44,22 +46,25 @@ public class Player_Move : MonoBehaviour
     {
         
     }
-    public void Move2D(Player_2D _2D, bool isTrue = false)
+    public void Move2D(Player_2D _2D, float speed,bool isTrue = false)
     {
+        _Move_Player_VT = new Vector3(_Move_Player_TF.position.x, _Move_Player_TF.position.y, _Move_Player_TF.position.z + speed * Time.deltaTime );
         if (_Move_Player_RD == null)
             return;
         switch (_2D)
         {
             case Player_2D.Right:
                 {
-                    _Move_Player_TF.Translate(0, 0, 5 * Time.deltaTime);
-                    _Move_Player_TF.rotation = Quaternion.Euler(0, 180, 0);
+                    _Move_Player_RD.MovePosition(_Move_Player_VT);
+                    _Move_Player_TF.rotation = Quaternion.Euler(0, 0, 0);
+                    Camera_Time();
                     break;
                 }
             case Player_2D.Left:
                 {
-                    _Move_Player_TF.Translate(0, 0, 5 * Time.deltaTime);
-                    _Move_Player_TF.rotation = Quaternion.Euler(0, 360, 0);
+                    _Move_Player_RD.MovePosition(_Move_Player_VT);
+                    _Move_Player_TF.rotation = Quaternion.Euler(0, 180, 0);
+                    Camera_Time();
                     break;
                 }
             case Player_2D.Evade:
@@ -68,6 +73,7 @@ public class Player_Move : MonoBehaviour
                     _Move_Player_RD.velocity = _Move_Player_TF.forward * _EavdeSpeed;
                     _Move_Player_RD.useGravity = false;
                     _Move_Player_CD.isTrigger = true;
+                    Camera_Time();
                     break;
                 }
         }
@@ -81,7 +87,7 @@ public class Player_Move : MonoBehaviour
     {
         if (Time.time > _NowEvadeTime_02 + _UseEvadeTime_01)
         {
-            Move2D(Player_2D.Evade);
+            Move2D(Player_2D.Evade,0);
             _NowEvadeTime_02 = Time.time;
             _EvadeTime_02 = _EvadeTime_01;
             _EvadeBool_01 = true;
@@ -100,5 +106,9 @@ public class Player_Move : MonoBehaviour
                 _Move_Player_CD.isTrigger = false;
             }
         }
+    }
+    public void Camera_Time()
+    {
+        _Camera_Time = 0;
     }
 }
