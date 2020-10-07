@@ -6,27 +6,20 @@ public class Camera_Follow2D : MonoBehaviour
 {
     public To2D3D _Change_Camera;
     //
-    public Transform _Player;
     private Transform _Camera;
-    private Vector3 player;
-    
     //
-    private Vector3 follow;
-    public float speed = 5f;
-    public float Zero;
+    private Vector3 _Follow;
+    public float _Camera_Speed = 0.1f;
+    public float _Camera_ZeroTime=1.5f;
     public float deviation2D = 2f;//偏移量
     //
-    public Player_Trigger _Trigger_Camera;
-    public float time=3f;
-    private float nowtime=0f;
-    private Rigidbody z;
-
+    public GameObject _Player_GO;
+    private Player _Player;
     // Start is called before the first frame update
     void Start()
     {
         _Camera = GetComponent<Transform>();
-        z = GetComponent<Rigidbody>();
-        
+        _Player = _Player_GO.GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -36,14 +29,12 @@ public class Camera_Follow2D : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        player = new Vector3(_Player.position.x, _Player.position.y, _Player.position.z);
-        
-        //Debug.Log(nowtime);
         if (_Camera != null)
         {
-            if (_Change_Camera == To2D3D.to2D || _Trigger_Camera._To2D)
+            if (_Change_Camera == To2D3D.to2D || _Player._Trigger._To2D)
             {
                 _Change_Camera = To2D3D.to2D;
+<<<<<<< HEAD
                  nowtime += Time.deltaTime;
                 if (Vector3.Distance(_Camera.position, _Player.position) > 20)
                 {
@@ -56,15 +47,32 @@ public class Camera_Follow2D : MonoBehaviour
                 //    nowtime -= Time.deltaTime;
                 //}
                 //Debug.Log(Vector3.Distance(_Camera.position, _Player.position));
+=======
+                _Player._Move._Camera_Time += Time.deltaTime;
+                //Debug.Log(_Player._Move._Camera_Time);
+                if (Vector3.Distance(_Camera.position, _Player_GO.transform.position) > 20 )
+                {   
+                    Follow_To2D();
+                }
+                if(_Player._Move._Camera_Time > _Camera_ZeroTime)
+                {
+                    Follow_To2D();
+                }
+>>>>>>> d62f6f841727fa2cb4bcabb7660f01af00ce2bec
             }
         }
     }
     public void Follow_To2D()
     {
+<<<<<<< HEAD
         nowtime = 0;
         follow = new Vector3(_Camera.position.x, _Player.position.y - deviation2D, _Player.position.z - deviation2D);
         _Camera.position = Vector3.Lerp(_Camera.position, follow, speed * Time.deltaTime);
         //Debug.Log(_Camera.position);
 
+=======
+        _Follow = new Vector3(_Camera.position.x, _Player_GO.transform.position.y - deviation2D, _Player_GO.transform.position.z - deviation2D);
+        _Camera.position = Vector3.Lerp(_Camera.position, _Follow, _Camera_Speed * Time.deltaTime);
+>>>>>>> d62f6f841727fa2cb4bcabb7660f01af00ce2bec
     }
 }

@@ -12,15 +12,17 @@ public class Player : MonoBehaviour
     //Player
     private bool _Can_Evade = true;
     //
+    private float _Player_Move_Speed = 5;
+    //
     public To2D3D _Change = To2D3D.to2D;
     //    
-    public Transform _Player_Mod;
+    private Transform _Player_Mod;
     //
     private Rigidbody _Player_RD;
     //
-    private Player_Move _Move;
+    public Player_Move _Move;
     //
-    private Player_Trigger _Trigger;
+    public Player_Trigger _Trigger;
     //
     private Player_Jump _Jump;
     //
@@ -115,13 +117,13 @@ public class Player : MonoBehaviour
     {
         _Change = To2D3D.to2D;
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        if (Input.GetKey(KeyCode.A))
-        {
-            _Move.Move2D(Player_2D.Right);
-        }
         if (Input.GetKey(KeyCode.D))
         {
-            _Move.Move2D(Player_2D.Left);
+            _Move.Move2D(Player_2D.Right, _Player_Move_Speed);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            _Move.Move2D(Player_2D.Left, -_Player_Move_Speed);
         }
     }
     public void Machine(GameObject machine)

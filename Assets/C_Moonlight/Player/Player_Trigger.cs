@@ -39,7 +39,6 @@ public class Player_Trigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Machine"))
         {
-            
             _Evade_ToMachine = false;
             Debug.Log(_Evade_ToMachine);
         }
