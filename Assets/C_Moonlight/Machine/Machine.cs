@@ -12,14 +12,6 @@ public class Machine : MonoBehaviour
 {
     public Enemy_Type _Type;
     //
-    public float _Shoot_Time_01;
-    private float _Shoot_Time_02;
-    private float _Distance;
-    public  float _Stop_Time = 2f;
-    //
-    public bool _StopBool=false;
-    public bool _DetectBool=false;
-    //
     public Machine_Renderer _HP;
     //
     private Machine_Move _Move;
@@ -29,8 +21,6 @@ public class Machine : MonoBehaviour
     {        
         _Move = GetComponent<Machine_Move>();
     }
-
-    // Update is called once per frame
     void Update()
     {
        
