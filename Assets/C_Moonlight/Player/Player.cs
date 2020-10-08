@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
             }
             if (_Change == To2D3D.to3D || _Trigger._To3D)
             {
-                _Change = To2D3D.to3D;
+                Move_3D();
             }
         }
         
@@ -126,6 +126,18 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             _Move.Move2D(Player_2D.Left, -_Player_Move_Speed);
+        }
+    }
+    public void Move_3D()
+    {
+        _Change = To2D3D.to3D;
+        if (Input.GetKey(KeyCode.D))
+        {
+            _Move.Move3D(Player_3D.Right, _Player_Move_Speed);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            _Move.Move3D(Player_3D.Left, -_Player_Move_Speed);
         }
     }
     public void Machine(GameObject machine)

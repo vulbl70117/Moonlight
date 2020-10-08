@@ -5,18 +5,23 @@ using UnityEngine;
 public class Camera_Follow3D : MonoBehaviour
 {
     public To2D3D _Change_Camera;
-    public Transform _Player;
-    public Transform _Camera_Obj;
+    public Transform _Player_TF;
+    //public Transform _Camera_Obj;
     private Transform _Camera;
     //
-    private Vector3 follow;
+    private Vector3 _Follow;
     public float speed = 5f;
+    public float deviation2D = 2f;
+    public float _Camera_Speed = 0.1f;
     //public float deviation3D = 2f;//偏移量    
     public Player_Trigger _Trigger_Camera;
+    public GameObject _Player_GO;
+    private Player _Player;
     // Start is called before the first frame update
     void Start()
     {
         _Camera = GetComponent<Transform>();
+        _Player = _Player_GO.GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -27,16 +32,8 @@ public class Camera_Follow3D : MonoBehaviour
             if (_Change_Camera == To2D3D.to3D || _Trigger_Camera._To3D)
             {
                 _Change_Camera = To2D3D.to3D;
-                Debug.Log(_Camera.localEulerAngles);
-                if ((_Camera.localEulerAngles.y <= 1)
-                    || (_Camera.localEulerAngles.x > 270 && Input.GetAxis("Mouse Y") > 0)
-                    || (_Camera.localEulerAngles.x < 90 && Input.GetAxis("Mouse Y") < 0))
-                {
-                    _Camera.RotateAround(_Player.position, _Player.right, (Input.GetAxis("Mouse Y")) * 180 * Time.deltaTime);
-                }
-                follow = new Vector3(_Player.position.x, _Player.position.y, _Player.position.z);
-                _Camera_Obj.Rotate(Vector3.up * Input.GetAxis("Mouse X") * 180 * Time.deltaTime);
-                _Camera_Obj.position = follow;
+                //_Follow = new Vector3(_Camera.position.x, _Player_GO.transform.position.y - deviation2D, _Player_GO.transform.position.z - deviation2D);
+                //_Camera.position = Vector3.Lerp(_Camera.position, _Follow, _Camera_Speed * Time.deltaTime);
             }
         } 
     }

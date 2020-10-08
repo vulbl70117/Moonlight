@@ -29,7 +29,9 @@ public class Player_Move : MonoBehaviour
     private Transform _Move_Player_TF;
     private Rigidbody _Move_Player_RD;
     private Collider _Move_Player_CD;
+    //
     private Vector3 _Move_Player_VT;
+    public Transform _Boos;
     //
     private Player_Trigger _Trigger;
 
@@ -46,7 +48,7 @@ public class Player_Move : MonoBehaviour
     {
         
     }
-    public void Move2D(Player_2D _2D, float speed,bool isTrue = false)
+    public void Move2D(Player_2D _2D, float speed, bool isTrue = false)
     {
         _Move_Player_VT = new Vector3(_Move_Player_TF.position.x, _Move_Player_TF.position.y, _Move_Player_TF.position.z + speed * Time.deltaTime );
         if (_Move_Player_RD == null)
@@ -78,10 +80,35 @@ public class Player_Move : MonoBehaviour
                 }
         }
     }
-    public void Move3D(Player_3D _3D, bool isTrue = false)
+    public void Move3D(Player_3D _3D, float speed, bool isTrue = false)
     {
         if (_Move_Player_RD == null)
             return;
+        switch (_3D)
+        {
+            case Player_3D.Forward:
+                {
+                    break;
+                }
+            case Player_3D.Back:
+                {
+                    break;
+                }
+            case Player_3D.Right:
+                {
+                    _Move_Player_TF.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    break;
+                }
+            case Player_3D.Left:
+                {
+                    _Move_Player_TF.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    break;
+                }
+            case Player_3D.Evade:
+                {
+                    break;
+                }
+        }
     }
     public void Evade_Time()
     {
