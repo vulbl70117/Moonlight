@@ -18,6 +18,7 @@ public class Camera_Follow2D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("X");
         _Camera = GetComponent<Transform>();
         _Player = _Player_GO.GetComponent<Player>();
     }
