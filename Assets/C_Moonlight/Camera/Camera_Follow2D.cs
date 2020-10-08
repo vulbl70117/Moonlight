@@ -6,7 +6,6 @@ public class Camera_Follow2D : MonoBehaviour
 {
     public To2D3D _Change_Camera;
     //
-    partial 
     private Transform _Camera;
     //
     private Vector3 _Follow;
