@@ -7,12 +7,13 @@ public class Machine_Attack : MonoBehaviour
     public GameObject _Bullet;
     public Transform Pos;
     public float _Shoot_Speet = 5;
+    public bool _DiveBool_01;
+    public bool _DiveBool_02;
     // Start is called before the first frame update
     void Start()
     {
  
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -32,9 +33,21 @@ public class Machine_Attack : MonoBehaviour
             }
         }
     }
-    public void Dive()
+    public void OnTriggerEnter(Collider other)
     {
-        Rigidbody _Dive = gameObject.GetComponent<Rigidbody>();
-        _Dive.AddForce(transform.forward * _Shoot_Speet);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Player _Player = other.GetComponent<Player>();
+            _DiveBool_01 = true;
+            if (_Player._Move._EvadeBool_01 == false)
+                _Player._Renderer.BeAttack();
+        }
+        if (other.CompareTag("Weapon"))
+            _DiveBool_02 = true;
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        _DiveBool_01 = false;
+        _DiveBool_02 = false;
     }
 }

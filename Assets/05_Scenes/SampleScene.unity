@@ -5196,7 +5196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &341854710
 Transform:
   m_ObjectHideFlags: 0
@@ -5317,7 +5317,6 @@ GameObject:
   - component: {fileID: 384071768}
   - component: {fileID: 384071771}
   - component: {fileID: 384071772}
-  - component: {fileID: 384071773}
   - component: {fileID: 384071775}
   m_Layer: 9
   m_Name: Cube (1)
@@ -5446,8 +5445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 0
   _Shoot_Time_01: 1
-  stop: 2
-  s: 0
+  _Stop_Time: 2
+  _StopBool: 0
   _DetectBool: 1
   _HP: {fileID: 384071768}
   _Player_HP: {fileID: 657890243}
@@ -5466,6 +5465,11 @@ MonoBehaviour:
   _Move_Time_01: 3
   _Move_Idle_Time_01: 1
   _Move_Speed: 5
+  _Shoot_Time_01: 1
+  _Stop_Time_01: 2
+  _StopBool: 0
+  _DetectBool: 0
+  _Player_TF: {fileID: 657890239}
 --- !u!114 &384071772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5481,19 +5485,6 @@ MonoBehaviour:
   _Detect_Radius: 20
   _Attack_Radius: 15
   _Back_Radius: 0
---- !u!114 &384071773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384071763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15031979e8250964589040b0ab43d946, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Player_TF: {fileID: 657890239}
 --- !u!195 &384071774
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5531,6 +5522,8 @@ MonoBehaviour:
   _Bullet: {fileID: 5363863069836341866, guid: 94c40d5fd77befd4e84ed2a87b642513, type: 3}
   Pos: {fileID: 677463496}
   _Shoot_Speet: 3000
+  _DiveBool_01: 0
+  _DiveBool_02: 0
 --- !u!1 &428327697
 GameObject:
   m_ObjectHideFlags: 0
@@ -5888,6 +5881,7 @@ MonoBehaviour:
   _Change: 0
   _Move: {fileID: 0}
   _Trigger: {fileID: 0}
+  _Renderer: {fileID: 0}
 --- !u!65 &657890237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6091,6 +6085,8 @@ MonoBehaviour:
   _Bullet: {fileID: 5363863069836341866, guid: 94c40d5fd77befd4e84ed2a87b642513, type: 3}
   Pos: {fileID: 1726324792}
   _Shoot_Speet: 500
+  _DiveBool_01: 0
+  _DiveBool_02: 0
 --- !u!114 &803944154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6121,6 +6117,11 @@ MonoBehaviour:
   _Move_Time_01: 3
   _Move_Idle_Time_01: 1
   _Move_Speed: 5
+  _Shoot_Time_01: 1
+  _Stop_Time_01: 2
+  _StopBool: 0
+  _DetectBool: 0
+  _Player_TF: {fileID: 657890239}
 --- !u!114 &803944156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6150,8 +6151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 1
   _Shoot_Time_01: 1
-  stop: 0.5
-  s: 0
+  _Stop_Time: 2
+  _StopBool: 0
   _DetectBool: 0
   _HP: {fileID: 803944156}
   _Player_HP: {fileID: 657890243}
@@ -6348,6 +6349,8 @@ MonoBehaviour:
   _Bullet: {fileID: 5363863069836341866, guid: 94c40d5fd77befd4e84ed2a87b642513, type: 3}
   Pos: {fileID: 492391928}
   _Shoot_Speet: 500
+  _DiveBool_01: 0
+  _DiveBool_02: 0
 --- !u!114 &888626292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6378,6 +6381,11 @@ MonoBehaviour:
   _Move_Time_01: 3
   _Move_Idle_Time_01: 1
   _Move_Speed: 5
+  _Shoot_Time_01: 1
+  _Stop_Time_01: 2
+  _StopBool: 0
+  _DetectBool: 0
+  _Player_TF: {fileID: 657890239}
 --- !u!114 &888626294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6407,8 +6415,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 1
   _Shoot_Time_01: 1
-  stop: 2
-  s: 0
+  _Stop_Time: 2
+  _StopBool: 0
   _DetectBool: 0
   _HP: {fileID: 888626294}
   _Player_HP: {fileID: 657890243}
@@ -6880,7 +6888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1356043940
 Transform:
   m_ObjectHideFlags: 0
@@ -7304,7 +7312,6 @@ GameObject:
   - component: {fileID: 1779156229}
   - component: {fileID: 1779156228}
   - component: {fileID: 1779156227}
-  - component: {fileID: 1779156226}
   - component: {fileID: 1779156225}
   m_Layer: 9
   m_Name: Cube (2)
@@ -7328,19 +7335,8 @@ MonoBehaviour:
   _Bullet: {fileID: 5363863069836341866, guid: 94c40d5fd77befd4e84ed2a87b642513, type: 3}
   Pos: {fileID: 504902360}
   _Shoot_Speet: 3000
---- !u!114 &1779156226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1779156224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15031979e8250964589040b0ab43d946, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Player_TF: {fileID: 657890239}
+  _DiveBool_01: 0
+  _DiveBool_02: 0
 --- !u!114 &1779156227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7371,6 +7367,11 @@ MonoBehaviour:
   _Move_Time_01: 3
   _Move_Idle_Time_01: 1
   _Move_Speed: 5
+  _Shoot_Time_01: 1
+  _Stop_Time_01: 2
+  _StopBool: 0
+  _DetectBool: 0
+  _Player_TF: {fileID: 657890239}
 --- !u!114 &1779156229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7400,8 +7401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Type: 0
   _Shoot_Time_01: 1
-  stop: 2
-  s: 0
+  _Stop_Time: 2
+  _StopBool: 0
   _DetectBool: 1
   _HP: {fileID: 1779156229}
   _Player_HP: {fileID: 657890243}

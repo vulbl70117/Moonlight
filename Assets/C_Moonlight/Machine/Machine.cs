@@ -14,36 +14,20 @@ public class Machine : MonoBehaviour
     //
     public float _Shoot_Time_01;
     private float _Shoot_Time_02;
-    //
     private float _Distance;
-     public   float stop = 2f;
-    public bool s=false;
+    public  float _Stop_Time = 2f;
     //
+    public bool _StopBool=false;
     public bool _DetectBool=false;
     //
-    private Transform _Player_TF;
-    //
-    public Machine_HP _HP;
+    public Machine_Renderer _HP;
     //
     private Machine_Move _Move;
     //
-    private Machine_DrawGizmos _DrawGizmos;
-    //
-    private Mahine_AI _AI;
-    //
-    private Machine_Attack _Attack;
-    //
-    private GameObject _Pos;
-    //
     public Player_Renderer _Player_HP;
     void Start()
-    {
-        _Player_TF = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+    {        
         _Move = GetComponent<Machine_Move>();
-        _DrawGizmos = GetComponent<Machine_DrawGizmos>();
-        _AI = GetComponent<Mahine_AI>();
-        _Attack = GetComponent<Machine_Attack>();
-        _Pos = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -55,78 +39,11 @@ public class Machine : MonoBehaviour
     {
         if (_Type == Enemy_Type.Ground)
         {
-            Ground();
+            _Move.Ground();
         }
         if (_Type == Enemy_Type.Fly)
         {
-            Fly();
-        }
-    }
-    public void Ground()
-    {
-        //未偵測到敵人+Bool
-        _Distance = Vector3.Distance(transform.position, _Player_TF.position);
-
-        if (_Distance > _DrawGizmos._Detect_Radius)
-        {
-            _Move.Move_Time();
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        }
-        else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius)
-        {
-            gameObject.GetComponent<NavMeshAgent>().enabled = true;
-            _AI.Machion_Chase();
-        }
-        else if (_Distance < _DrawGizmos._Attack_Radius)
-        {
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if (Time.time > _Shoot_Time_02 + _Shoot_Time_01)
-            {
-                _Pos.transform.LookAt(_Player_TF);
-                _Shoot_Time_02 = Time.time;
-                _Attack.Shoot();
-            }
-        }
-    }
-    public void Fly()
-    {
-        //未偵測到敵人+Bool
-        _Distance = Vector3.Distance(transform.position, _Player_TF.position);
-                //Debug.Log(_Shoot_Time_02);
-        if (_Distance > _DrawGizmos._Detect_Radius)
-        {
-            _Move.Move_Time();
-        }
-        else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius && _DetectBool == false)
-        {
-            Debug.Log(1);
-            if (stop == 0.5/* || s*/)
-                transform.position = Vector3.Lerp(transform.position, _Player_TF.position, Time.deltaTime * 5);
-            transform.LookAt(_Player_TF);
-            s = true;
-            if (_Distance < _DrawGizmos._Back_Radius)
-            {
-                //_Player_HP.BeAttack();
-                    stop -= Time.deltaTime;
-                    _Shoot_Time_02 = _Shoot_Time_01;
-                s = false;
-                if (stop < 0)
-                {
-                    _DetectBool = true;
-                }
-            }
-        }
-        else if (_Distance < _DrawGizmos._Attack_Radius || _DetectBool)
-        {
-            _Shoot_Time_02 -= Time.deltaTime;
-            Vector3 pos = transform.GetChild(0).transform.position;
-            transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime );
-            if (_Shoot_Time_02 <= 0)
-            {
-                stop = 0.5f;
-                _DetectBool = false;
-                s = true;
-            }
+            _Move.Fly();
         }
     }
 }

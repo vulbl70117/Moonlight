@@ -24,15 +24,10 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Player _Player = other.gameObject.GetComponent<Player>();
-            Player_Renderer _Player_RD = other.gameObject.GetComponent<Player_Renderer>();
             if (_Player._Move._EvadeBool_01 == false)
-            {
-                if (_Player_RD != null)
-                {
-                    _Player_RD.BeAttack();
-                    Destroy(gameObject);
-                }
-
+            {   
+                _Player._Renderer.BeAttack();
+                Destroy(gameObject);
             }
         }
     }

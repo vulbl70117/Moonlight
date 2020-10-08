@@ -6,6 +6,7 @@ public class Camera_Follow2D : MonoBehaviour
 {
     public To2D3D _Change_Camera;
     //
+    partial 
     private Transform _Camera;
     //
     private Vector3 _Follow;
@@ -34,20 +35,6 @@ public class Camera_Follow2D : MonoBehaviour
             if (_Change_Camera == To2D3D.to2D || _Player._Trigger._To2D)
             {
                 _Change_Camera = To2D3D.to2D;
-<<<<<<< HEAD
-                 nowtime += Time.deltaTime;
-                if (Vector3.Distance(_Camera.position, _Player.position) > 20)
-                {
-                    Follow_To2D();
-                }
-                //if (z.velocity.z <= 0)
-                //{
-                //    follow = new Vector3(_Camera.position.x, _Player.position.y - deviation2D, _Player.position.z - deviation2D);
-                //    _Camera.position = Vector3.Lerp(_Camera.position, follow, Zero * Time.deltaTime);
-                //    nowtime -= Time.deltaTime;
-                //}
-                //Debug.Log(Vector3.Distance(_Camera.position, _Player.position));
-=======
                 _Player._Move._Camera_Time += Time.deltaTime;
                 //Debug.Log(_Player._Move._Camera_Time);
                 if (Vector3.Distance(_Camera.position, _Player_GO.transform.position) > 20 )
@@ -58,21 +45,12 @@ public class Camera_Follow2D : MonoBehaviour
                 {
                     Follow_To2D();
                 }
->>>>>>> d62f6f841727fa2cb4bcabb7660f01af00ce2bec
             }
         }
     }
     public void Follow_To2D()
     {
-<<<<<<< HEAD
-        nowtime = 0;
-        follow = new Vector3(_Camera.position.x, _Player.position.y - deviation2D, _Player.position.z - deviation2D);
-        _Camera.position = Vector3.Lerp(_Camera.position, follow, speed * Time.deltaTime);
-        //Debug.Log(_Camera.position);
-
-=======
         _Follow = new Vector3(_Camera.position.x, _Player_GO.transform.position.y - deviation2D, _Player_GO.transform.position.z - deviation2D);
         _Camera.position = Vector3.Lerp(_Camera.position, _Follow, _Camera_Speed * Time.deltaTime);
->>>>>>> d62f6f841727fa2cb4bcabb7660f01af00ce2bec
     }
 }

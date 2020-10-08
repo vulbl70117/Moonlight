@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     //
     private Player_Jump _Jump;
     //
+    public Player_Renderer _Renderer;
+    //
     //private Player_Attack _Attack;
     //
     //Machine
@@ -43,8 +45,8 @@ public class Player : MonoBehaviour
         _Move = GetComponent<Player_Move>();
         _Trigger = GetComponent<Player_Trigger>();
         _Jump = GetComponent<Player_Jump>();
+        _Renderer = GetComponent<Player_Renderer>();
         //Machin
-        
         //Weapon
         _Weapon = GetComponentInChildren<Weapon>();
         //_Weapon_All = GetComponentInChildren<GameObject>();

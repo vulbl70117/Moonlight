@@ -22,7 +22,7 @@ public class Weapon_Trigger : MonoBehaviour
                 _Weapon_BadyBool = true;
                 _Anything = other.gameObject;
                 Player.Machine(_Anything);
-                Debug.Log(_Weapon_BadyBool);
+                //Debug.Log(_Weapon_BadyBool);
             }
         }
         if (_Type == Weapon_Type.Shield)
@@ -31,7 +31,7 @@ public class Weapon_Trigger : MonoBehaviour
             {
                 _Anything = other.gameObject;
                 Player.Machine(_Anything);
-                Debug.Log(_Weapon_BadyBool);
+                //Debug.Log(_Weapon_BadyBool);
             }
         }
     }

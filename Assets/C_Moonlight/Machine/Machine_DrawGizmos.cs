@@ -24,7 +24,5 @@ public class Machine_DrawGizmos : MonoBehaviour
         Gizmos.DrawSphere(transform.position, _Attack_Radius);
         Gizmos.color = Color.blue * 0.4f;
         Gizmos.DrawSphere(transform.position, _Detect_Radius);
-        Gizmos.color = Color.green * 0.4f;
-        Gizmos.DrawSphere(transform.position, _Back_Radius);
     }
 }
