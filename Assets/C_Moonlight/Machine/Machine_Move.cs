@@ -16,12 +16,13 @@ public class Machine_Move : MonoBehaviour
     private float _Distance;
     public float _Stop_Time_01 = 2f;
     private float _Stop_Time_02;
+    public float _Move_Rotat = 5f;
     //
     private bool _MoveBool = true;
     public bool _StopBool = false;
     public bool _DetectBool = false;
     //
-    private NavMeshAgent _Machion_NMA;
+    private Quaternion _Machion_QR;
     //
     public Transform _Player_TF;
     private Transform _Machine_TF;
@@ -34,7 +35,7 @@ public class Machine_Move : MonoBehaviour
     //private Vector3 _MachineOri_TF;
     void Start()
     {
-        _Machion_NMA = GetComponent<NavMeshAgent>();
+        
         _DrawGizmos = GetComponent<Machine_DrawGizmos>();
         _Attack = GetComponent<Machine_Attack>();
         _Pos = transform.GetChild(0).gameObject;
@@ -49,7 +50,9 @@ public class Machine_Move : MonoBehaviour
     }
     public void Machion_Chase()
     {
-        _Machion_NMA.SetDestination(_Player_TF.position);
+        transform.Translate(Vector3.forward * Time.deltaTime * 5);
+        _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
     }
     public void Move_Time()
     {
@@ -71,9 +74,9 @@ public class Machine_Move : MonoBehaviour
             _MoveBool = !_MoveBool;
             _Move_Time_02 = _Move_Time_01;
             if (_MoveBool)
-                _Machine_TF.rotation = Quaternion.Euler(0, 360, 0);
+                _Machine_TF.rotation = Quaternion.Euler(0, 0, 0);
             else
-                _Machine_TF.rotation = Quaternion.Euler(0, 180, 0);
+                _Machine_TF.rotation = Quaternion.Euler(0, -180, 0);
             _Move_Idle_Time_02 = 0;
         }
     }
@@ -89,16 +92,13 @@ public class Machine_Move : MonoBehaviour
         if (_Distance > _DrawGizmos._Detect_Radius)
         {
             Move_Time();
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
         }
         else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius)
         {
-            gameObject.GetComponent<NavMeshAgent>().enabled = true;
             Machion_Chase();
         }
         else if (_Distance < _DrawGizmos._Attack_Radius)
         {
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
             Attack();
         }
     }
@@ -109,6 +109,8 @@ public class Machine_Move : MonoBehaviour
             _Pos.transform.LookAt(_Player_TF);
             _Shoot_Time_02 = Time.time;
             _Attack.Shoot();
+            _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
         }
     }
     public void Fly()

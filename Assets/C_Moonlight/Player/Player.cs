@@ -10,13 +10,20 @@ public enum To2D3D
 public class Player : MonoBehaviour
 {
     //Player
+    public bool _EvadeBool_01;
     private bool _Can_Evade = true;
     //
-    private float _Player_Move_Speed = 5;
+    public float _UseEvadeTime_01 = 0.5f;
+    public float _EvadeTime_01 = 0.25f;
+    private float _NowEvadeTime_02;
+    public float _EvadeTime_02;
+    private float _Move_Speed = 5;
     //
     public To2D3D _Change = To2D3D.to2D;
     //    
-    private Transform _Player_Mod;
+    public GameObject _Player_Camera3D;
+    //
+    private Collider _Player_CD;
     //
     private Rigidbody _Player_RD;
     //
@@ -27,8 +34,6 @@ public class Player : MonoBehaviour
     private Player_Jump _Jump;
     //
     public Player_Renderer _Renderer;
-    //
-    //private Player_Attack _Attack;
     //
     //Machine
     private Machine _Machine;
@@ -41,11 +46,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         //Player
-        _Player_RD = GetComponent<Rigidbody>();
+        _Player_RD = GetComponent < Rigidbody>();
+        _Player_CD = GetComponent<Collider>();
         _Move = GetComponent<Player_Move>();
         _Trigger = GetComponent<Player_Trigger>();
         _Jump = GetComponent<Player_Jump>();
         _Renderer = GetComponent<Player_Renderer>();
+        
         //Machin
         //Weapon
         _Weapon = GetComponentInChildren<Weapon>();
@@ -60,44 +67,20 @@ public class Player : MonoBehaviour
         Weapon_();
         if (_Jump)
         {
-            _Jump.Jump();
-            if (Input.GetKeyDown(KeyCode.Space) && _Jump._IsGrounded == true)
-            {
-                _Jump.Jump_Up();
-            }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                _Jump.Jump_Continued();
-            }
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                _Jump._JumpBool_02 = false;
-            }
-            if (_Move && _Can_Evade)
-            {
-                if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false)
-                {
-                    _Move.Evade_Time();
-                }
-                if (_Move._EvadeBool_01 == true)
-                {
-                    _Move.Evade_ToMachine();
-                }
-            }
-            if (_Weapon)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
-                    {
-                        _Machine._HP.BeAttack();
-                        _Machine._HP._StrikeBool = false;
-                    }
-                }
-            }
+            Jump();
         }
-        
-        
+        if (_Weapon)
+        {
+            Attack();
+        }
+        if (_Change == To2D3D.to2D || _Trigger._To2D)
+        {
+            Sport_2D();
+        }
+        if(_Change == To2D3D.to3D || _Trigger._To3D)
+        {
+            Sport_3D();
+        }
     }
     private void FixedUpdate()
     {
@@ -121,24 +104,54 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         if (Input.GetKey(KeyCode.D))
         {
-            _Move.Move2D(Player_2D.Right, _Player_Move_Speed);
+            _Move.Move2D(Player_2D.Right, _Move_Speed);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            _Move.Move2D(Player_2D.Left, -_Player_Move_Speed);
+            _Move.Move2D(Player_2D.Left, -_Move_Speed);
         }
+    }
+    public void Sport_2D()
+    {
+        if (_Move && _Can_Evade)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift) && _EvadeBool_01 == false)
+            {
+                UseEvade_Time();
+            }
+            if (_EvadeBool_01 == true)
+            {
+                Evade_ToMachine();
+            }
+        }
+        
     }
     public void Move_3D()
     {
         _Change = To2D3D.to3D;
         if (Input.GetKey(KeyCode.D))
         {
-            _Move.Move3D(Player_3D.Right, _Player_Move_Speed);
+            _Move.Move3D(Player_3D.Right, -_Move_Speed);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            _Move.Move3D(Player_3D.Left, -_Player_Move_Speed);
+            _Move.Move3D(Player_3D.Left, _Move_Speed);
         }
+    }
+    public void Sport_3D()
+    {
+        if (_Move && _Can_Evade)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift) && _EvadeBool_01 == false)
+            {
+                UseEvade_Time();
+            }
+            if (_EvadeBool_01 == true)
+            {
+                Evade_ToMachine();
+            }
+        }
+       
     }
     public void Machine(GameObject machine)
     {
@@ -155,6 +168,64 @@ public class Player : MonoBehaviour
         if(_Weapon._nowType == Weapon_Type.Shield)
         {
             _Can_Evade = false;
+        }
+    }
+    public void Attack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
+            {
+                _Machine._HP.BeAttack();
+                _Machine._HP._StrikeBool = false;
+            }
+        }
+    }
+    public void Jump()
+    {
+        _Jump.Jump();
+        if (Input.GetKeyDown(KeyCode.Space) && _Jump._IsGrounded == true)
+        {
+            _Jump.Jump_Up();
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            _Jump.Jump_Continued();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            _Jump._JumpBool_02 = false;
+        }
+    }
+    public void UseEvade_Time()
+    {
+        if (Time.time > _NowEvadeTime_02 + _UseEvadeTime_01)
+        {
+            if (_Change == To2D3D.to2D)
+            {   
+                _Move.Move2D(Player_2D.Evade, 0);
+            }
+            if (_Change == To2D3D.to3D)
+            {
+                _Move.Move3D(Player_3D.Evade, 100);
+            }
+            _NowEvadeTime_02 = Time.time;
+            _EvadeTime_02 = _EvadeTime_01;
+            _EvadeBool_01 = true;
+        }
+    }
+    public void Evade_ToMachine()
+    {
+        if (_Player_RD)
+        {
+            _EvadeTime_02 -= Time.deltaTime;
+            if ((_EvadeTime_02 < 0 && _Trigger._Evade_ToMachine == false))
+            {
+                _EvadeBool_01 = false;
+                _Player_RD.useGravity = true;
+                _Player_RD.isKinematic = true;
+                _Player_CD.isTrigger = false;
+            }
         }
     }
 }

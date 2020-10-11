@@ -17,14 +17,9 @@ public enum Player_3D
 }
 public class Player_Move : MonoBehaviour
 {
-    public float _UseEvadeTime_01 = 0.5f;
-    public float _EvadeTime_01 = 0.25f;
-    private float _NowEvadeTime_02;
-    public float _EvadeTime_02;
+
     public float _EavdeSpeed;
     public float _Camera_Time;
-    //
-    public bool _EvadeBool_01;
     //
     private Transform _Move_Player_TF;
     private Rigidbody _Move_Player_RD;
@@ -71,7 +66,6 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_2D.Evade:
                 {
-
                     _Move_Player_RD.velocity = _Move_Player_TF.forward * _EavdeSpeed;
                     _Move_Player_RD.useGravity = false;
                     _Move_Player_CD.isTrigger = true;
@@ -106,32 +100,11 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_3D.Evade:
                 {
+                    _Move_Player_TF.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime * _EavdeSpeed);
+                    _Move_Player_RD.useGravity = false;
+                    _Move_Player_CD.isTrigger = true;
                     break;
                 }
-        }
-    }
-    public void Evade_Time()
-    {
-        if (Time.time > _NowEvadeTime_02 + _UseEvadeTime_01)
-        {
-            Move2D(Player_2D.Evade,0);
-            _NowEvadeTime_02 = Time.time;
-            _EvadeTime_02 = _EvadeTime_01;
-            _EvadeBool_01 = true;
-        }
-    }
-    public void Evade_ToMachine()
-    {
-        if (_Move_Player_RD)
-        {
-            _EvadeTime_02 -= Time.deltaTime;
-            if ((_EvadeTime_02 < 0 && _Trigger._Evade_ToMachine == false))
-            {
-                _EvadeBool_01 = false;
-                _Move_Player_RD.useGravity = true;
-                _Move_Player_RD.isKinematic = true;
-                _Move_Player_CD.isTrigger = false;
-            }
         }
     }
     public void Camera_Time()
