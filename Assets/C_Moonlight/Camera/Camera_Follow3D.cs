@@ -26,8 +26,6 @@ public class Camera_Follow3D : MonoBehaviour
                 _Follow = new Vector3(_Player_3D.position.x, _Camera.position.y, _Player_3D.position.z);
                 _Camera.transform.position = Vector3.Lerp(transform.position, _Follow, _Camera_Speed);
                 _Camera.transform.LookAt(_Boss_TF.transform);
-                //Debug.Log(Vector3.Distance(_Camera.position, _Boss_TF.position));
-                Debug.Log(_Follow);
             }
         }
     }

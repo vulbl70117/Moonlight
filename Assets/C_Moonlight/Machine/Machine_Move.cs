@@ -5,14 +5,15 @@ using UnityEngine.AI;
 
 public class Machine_Move : MonoBehaviour
 {
+    public Enemy_Type _Type;
     //
-    public float _Move_Time_01 = 3f;
-    private float _Move_Time_02;
-    public float _Move_Idle_Time_01 = 1f;
-    private float _Move_Idle_Time_02 = 0f;
+    public float _Move_AllTime_01 = 3f;
+    private float _Move_AllTime_02;
+    public float _Move_Patrol_Time_01 = 1f;
+    private float _Move_Patrol_Time_02 = 0f;
     public float _Move_Speed = 5f;
-    public float _Shoot_Time_01 = 1f;
-    private float _Shoot_Time_02;
+    public float _Attack_Time_01 = 1f;
+    private float _Attack_Time_02;
     private float _Distance;
     public float _Stop_Time_01 = 2f;
     private float _Stop_Time_02;
@@ -40,58 +41,58 @@ public class Machine_Move : MonoBehaviour
         _Attack = GetComponent<Machine_Attack>();
         _Pos = transform.GetChild(0).gameObject;
         _Machine_TF = GetComponent<Transform>();
-        _Move_Time_02 = _Move_Time_01;
-        _Stop_Time_02 = _Stop_Time_01;
+        _Move_AllTime_02 = _Move_AllTime_01;
+        if (_Type == Enemy_Type.Ground)
+        {
+            Move_GroundReset();
+        }
+        if (_Type == Enemy_Type.Fly)
+        {
+            Move_FlyReset();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-    public void Machion_Chase()
+    public void Move_Patrol()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * 5);
-        _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+        if (_Move_AllTime_02 >= 0)
+        {
+            _Move_AllTime_02 -= Time.deltaTime;
+            Move_Time();
+        }
     }
     public void Move_Time()
     {
-        if (_Move_Time_02 >= 0)
+        if (_Move_Patrol_Time_02 <= _Move_Patrol_Time_01)
         {
-            _Move_Time_02 -= Time.deltaTime;
-            Move_Idle();
-        }
-    }
-    public void Move_Idle()
-    {
-        if (_Move_Idle_Time_02 <= _Move_Idle_Time_01)
-        {
-            _Move_Idle_Time_02 += Time.deltaTime;
+            _Move_Patrol_Time_02 += Time.deltaTime;
             _Machine_TF.position += Vector3.forward * (_MoveBool ? 1 : -1) * Time.deltaTime * _Move_Speed;
         }
-        else if (_Move_Time_02 <= 0)
+        else if (_Move_AllTime_02 <= 0)
         {
             _MoveBool = !_MoveBool;
-            _Move_Time_02 = _Move_Time_01;
+            Move_Reset();
             if (_MoveBool)
                 _Machine_TF.rotation = Quaternion.Euler(0, 0, 0);
             else
                 _Machine_TF.rotation = Quaternion.Euler(0, -180, 0);
-            _Move_Idle_Time_02 = 0;
         }
     }
     public void Move_Reset()
     {
-        _Move_Time_02 = _Move_Time_01;
-        _Move_Idle_Time_02 = 0f;
+        _Move_AllTime_02 = _Move_AllTime_01;
+        _Move_Patrol_Time_02 = 0f;
     }
     public void Ground()
     {
-        _Distance = Vector3.Distance(transform.position, _Player_TF.position);
+        _Distance = Vector3.Distance(transform.position, _Player_TF.position);//距離
 
         if (_Distance > _DrawGizmos._Detect_Radius)
         {
-            Move_Time();
+            Move_Patrol();
         }
         else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius)
         {
@@ -99,15 +100,21 @@ public class Machine_Move : MonoBehaviour
         }
         else if (_Distance < _DrawGizmos._Attack_Radius)
         {
-            Attack();
+            Shoot();
         }
     }
-    public void Attack()
+    public void Machion_Chase()
     {
-        if (Time.time > _Shoot_Time_02 + _Shoot_Time_01)
+        transform.Translate(Vector3.forward * Time.deltaTime * 5);
+        _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+    }
+    public void Shoot()
+    {
+        if (Time.time > _Attack_Time_02 + _Attack_Time_01)
         {
             _Pos.transform.LookAt(_Player_TF);
-            _Shoot_Time_02 = Time.time;
+            _Attack_Time_02 = Time.time;
             _Attack.Shoot();
             _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
@@ -119,38 +126,42 @@ public class Machine_Move : MonoBehaviour
         _Distance = Vector3.Distance(transform.position, _Player_TF.position);
         if (_Distance > _DrawGizmos._Detect_Radius)
         {
-            Move_Time();
+            Move_FlyReset();
+            Move_Patrol();
         }
         else if (_Distance < _DrawGizmos._Detect_Radius && _DetectBool == false)
         {
             Dive();
         }
-        else if (_DetectBool)
+        if (_DetectBool)
         {
             Back();
         }
     }
     public void Dive()
     {
-        if (_Stop_Time_02 == _Stop_Time_01 && _Attack._DiveBool_02==false)
+        if (_Attack_Time_02 == _Attack_Time_01 && _Attack._DiveBool_02==false)
             transform.position = Vector3.Lerp(transform.position, _Player_TF.position, Time.deltaTime * _Move_Speed);
         transform.LookAt(_Player_TF);
         if (_Attack._DiveBool_01 || _Attack._DiveBool_02)
         {
-            _Shoot_Time_02 = _Shoot_Time_01;
+            _Stop_Time_02 = _Stop_Time_01;
             _StopBool = true;
         }
-        if (_Stop_Time_02 < 0)
+        if (_Attack_Time_02 < 0)
+        {
             _DetectBool = true;
+
+        }
     }
     public void Back()
     {
-        _Shoot_Time_02 -= Time.deltaTime;
+        _Stop_Time_02 -= Time.deltaTime;
         Vector3 pos = transform.GetChild(0).transform.position;
         transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime);
-        if (_Shoot_Time_02 <= 0)
+        if (_Stop_Time_02 <= 0)
         {
-            _Stop_Time_02 = _Stop_Time_01;
+            _Attack_Time_02 = _Attack_Time_01;
             _DetectBool = false;
             _StopBool = false;
         }
@@ -158,6 +169,18 @@ public class Machine_Move : MonoBehaviour
     public void Stop_Time()
     {
         if (_StopBool)
-            _Stop_Time_02 -= Time.deltaTime;
+            _Attack_Time_02 -= Time.deltaTime;
+    }
+    public void Move_FlyReset()
+    {
+        _Attack_Time_02 = _Attack_Time_01;
+        _Stop_Time_02 = 0;
+        _Attack._DiveBool_01 = false;
+        _Attack._DiveBool_02 = false;
+        _StopBool = false;
+    }
+    public void Move_GroundReset()
+    {
+        _Attack_Time_02 = 0;
     }
 }
