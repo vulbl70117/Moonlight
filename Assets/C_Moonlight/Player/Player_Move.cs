@@ -22,20 +22,21 @@ public class Player_Move : MonoBehaviour
     public float _Camera_Time;
     //
     private Transform _Move_Player_TF;
+    public Transform _Move_Player_ModTF;
     private Rigidbody _Move_Player_RD;
     private Collider _Move_Player_CD;
     //
     private Vector3 _Move_Player_VT;
     public Transform _Boos;
     //
-    private Player_Trigger _Trigger;
+    //private Player_Trigger _Trigger;
 
     void Start()
     {
         _Move_Player_TF = GetComponent<Transform>();
         _Move_Player_RD = GetComponent<Rigidbody>();
         _Move_Player_CD = GetComponent<Collider>();
-        _Trigger = GetComponent<Player_Trigger>();
+        //_Trigger = GetComponent<Player_Trigger>();
     }
 
     // Update is called once per frame
@@ -53,14 +54,14 @@ public class Player_Move : MonoBehaviour
             case Player_2D.Right:
                 {
                     _Move_Player_RD.MovePosition(_Move_Player_VT);
-                    _Move_Player_TF.rotation = Quaternion.Euler(0, 0, 0);
+                    _Move_Player_ModTF.rotation = Quaternion.Euler(0, 0, 0);
                     Camera_Time();
                     break;
                 }
             case Player_2D.Left:
                 {
                     _Move_Player_RD.MovePosition(_Move_Player_VT);
-                    _Move_Player_TF.rotation = Quaternion.Euler(0, 180, 0);
+                    _Move_Player_ModTF.rotation = Quaternion.Euler(0, 180, 0);
                     Camera_Time();
                     break;
                 }
@@ -91,16 +92,18 @@ public class Player_Move : MonoBehaviour
             case Player_3D.Right:
                 {
                     _Move_Player_TF.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    //_Move_Player_ModTF.rotation = Quaternion.AngleAxis(90, Vector3.up);
                     break;
                 }
             case Player_3D.Left:
                 {
                     _Move_Player_TF.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    //_Move_Player_ModTF.rotation = Quaternion.Euler(0, -90, 0);
                     break;
                 }
             case Player_3D.Evade:
                 {
-                    _Move_Player_TF.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime * _EavdeSpeed);
+                    _Move_Player_TF.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime /** _EavdeSpeed*/);
                     _Move_Player_RD.useGravity = false;
                     _Move_Player_CD.isTrigger = true;
                     break;
