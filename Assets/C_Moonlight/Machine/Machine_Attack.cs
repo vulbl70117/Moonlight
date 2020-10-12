@@ -40,7 +40,10 @@ public class Machine_Attack : MonoBehaviour
             Player _Player = other.GetComponent<Player>();
             _DiveBool_01 = true;
             if (_Player._EvadeBool_01 == false)
+            {
                 _Player._Renderer.BeAttack();
+                return;
+            }
         }
         if (other.CompareTag("Weapon"))
             _DiveBool_02 = true;
