@@ -46,7 +46,7 @@ public class Player_Move : MonoBehaviour
     }
     public void Move2D(Player_2D _2D, float speed, bool isTrue = false)
     {
-        _Move_Player_VT = new Vector3(_Move_Player_TF.position.x, _Move_Player_TF.position.y, _Move_Player_TF.position.z + speed * Time.deltaTime );
+        _Move_Player_VT = new Vector3(_Move_Player_TF.position.x + speed * Time.deltaTime, _Move_Player_TF.position.y, _Move_Player_TF.position.z  );
         if (_Move_Player_RD == null)
             return;
         switch (_2D)

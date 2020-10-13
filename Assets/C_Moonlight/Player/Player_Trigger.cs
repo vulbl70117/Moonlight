@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player_Trigger : MonoBehaviour
 {
+    public Weapon weapon;
+
     public bool _To2D;
     public bool _To3D;
     public bool _Evade_ToMachine;
@@ -13,7 +15,6 @@ public class Player_Trigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
     public void OnTriggerStay(Collider other)
     {
@@ -24,16 +25,24 @@ public class Player_Trigger : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-            if (other.gameObject.tag == "To2D")
-            {
-                _To2D = true;
-                Camera_2D();
-            }
-            else if(other.gameObject.tag == "To3D")
-            {
-                _To3D = true;
-                Camera_3D();
-            }
+        if (other.gameObject.tag == "To2D")
+        {
+            _To2D = true;
+            Camera_2D();
+        }
+        else if(other.gameObject.tag == "To3D")
+        {
+            _To3D = true;
+            Camera_3D();
+        }
+        //LayerMask.NameToLayer("Weapon")
+        
+        if (other.gameObject.tag == ("Weapon"))
+        {
+            //Debug.Log(other.gameObject.name);
+            weapon.SwitchWeapon(other.gameObject.name);
+            other.gameObject.SetActive(false);
+        }
     }
     public void OnTriggerExit(Collider other)
     {

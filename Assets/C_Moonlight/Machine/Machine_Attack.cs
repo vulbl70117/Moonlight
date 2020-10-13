@@ -6,7 +6,11 @@ public class Machine_Attack : MonoBehaviour
 {
     public GameObject _Bullet;
     public Transform Pos;
-    public float _Shoot_Speet = 5;
+    public float _Shoot_Speed = 5;
+    public float _TouchTime = 2;
+    public float _Next_AttackTime;
+    public float _Now_AttackTime;
+    private float _Attack_TouchTime;
     public bool _DiveBool_01;
     public bool _DiveBool_02;
     // Start is called before the first frame update
@@ -19,6 +23,14 @@ public class Machine_Attack : MonoBehaviour
     {
         
     }
+    public void Fire()
+    {
+        if (Time.time > _Now_AttackTime + _Next_AttackTime)
+        {
+            _Now_AttackTime = Time.time;
+            Shoot();
+        }
+    }
     public void Shoot()
     {
         GameObject _Attack = Instantiate(_Bullet);
@@ -29,7 +41,7 @@ public class Machine_Attack : MonoBehaviour
             Rigidbody _Bullet_RD = _Attack.GetComponent<Rigidbody>();
             if (_Bullet_RD)
             {
-                _Bullet_RD.AddForce(_Attack.transform.forward * _Shoot_Speet);
+                _Bullet_RD.AddForce(_Attack.transform.forward * _Shoot_Speed);
             }
         }
     }
@@ -41,8 +53,11 @@ public class Machine_Attack : MonoBehaviour
             _DiveBool_01 = true;
             if (_Player._EvadeBool_01 == false)
             {
-                _Player._Renderer.BeAttack();
-                return;
+                if (Time.time > _Attack_TouchTime + _TouchTime)
+                {
+                    _Attack_TouchTime = Time.time;
+                    _Player._Renderer.BeAttack();
+                }
             }
         }
         if (other.CompareTag("Weapon"))

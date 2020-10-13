@@ -98,9 +98,9 @@ public class Machine_Move : MonoBehaviour
         {
             Machion_Chase();
         }
-        else if (_Distance < _DrawGizmos._Attack_Radius)
+        if (_Distance < _DrawGizmos._Attack_Radius)
         {
-            Shoot();
+            Aim();
         }
     }
     public void Machion_Chase()
@@ -109,16 +109,12 @@ public class Machine_Move : MonoBehaviour
         _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
     }
-    public void Shoot()
+    public void Aim()
     {
-        if (Time.time > _Attack_Time_02 + _Attack_Time_01)
-        {
             _Pos.transform.LookAt(_Player_TF);
-            _Attack_Time_02 = Time.time;
-            _Attack.Shoot();
+            _Attack.Fire();
             _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
-        }
     }
     public void Fly()
     {
@@ -181,6 +177,6 @@ public class Machine_Move : MonoBehaviour
     }
     public void Move_GroundReset()
     {
-        _Attack_Time_02 = 0;
+        _Attack._Now_AttackTime = 0;
     }
 }

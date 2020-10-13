@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     //Player
     public bool _EvadeBool_01;
     private bool _Can_Evade = true;
+    public bool _RunBool;
     //
     public float _UseEvadeTime_01 = 0.5f;
     public float _EvadeTime_01 = 0.25f;
@@ -58,8 +59,6 @@ public class Player : MonoBehaviour
         _Weapon = GetComponentInChildren<Weapon>();
         //_Weapon_All = GetComponentInChildren<GameObject>();
         //
-        
-        
     }
 
     void Update()
@@ -67,6 +66,7 @@ public class Player : MonoBehaviour
         Weapon_();
         if (_Jump)
         {
+            _RunBool = false;
             Jump();
         }
         if (_Weapon)
@@ -100,14 +100,17 @@ public class Player : MonoBehaviour
     }
     public void Move_2D()
     {
+        _RunBool = false;
         _Change = To2D3D.to2D;
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         if (Input.GetKey(KeyCode.D))
         {
+            _RunBool = true;
             _Move.Move2D(Player_2D.Right, _Move_Speed);
         }
         if (Input.GetKey(KeyCode.A))
         {
+            _RunBool = true;
             _Move.Move2D(Player_2D.Left, -_Move_Speed);
         }
     }
@@ -161,11 +164,11 @@ public class Player : MonoBehaviour
     }
     public void Weapon_()
     {
-        if (_Weapon._nowType == Weapon_Type.Fist)
+        if (_Weapon._NowType == Weapon_Type.Fist)
         {
             _Can_Evade = true;
         }
-        if(_Weapon._nowType == Weapon_Type.Shield)
+        if(_Weapon._NowType == Weapon_Type.Shield)
         {
             _Can_Evade = false;
         }
