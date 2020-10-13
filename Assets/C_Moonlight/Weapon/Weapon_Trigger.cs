@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon_Trigger : MonoBehaviour
 {
-    public Weapon_Type _Type = Weapon_Type.Fist;
+    public Weapon_Type_enum _Type = Weapon_Type_enum.Fist;
     public bool _Weapon_BadyBool;
     public Player Player;
     private GameObject _Anything;
@@ -15,7 +15,7 @@ public class Weapon_Trigger : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (_Type == Weapon_Type.Fist)
+        if (_Type == Weapon_Type_enum.Fist)
         {
             if(other.gameObject.CompareTag("Machine"))
             {
@@ -24,7 +24,7 @@ public class Weapon_Trigger : MonoBehaviour
                 Player.Machine(_Anything);
             }
         }
-        if (_Type == Weapon_Type.Shield)
+        if (_Type == Weapon_Type_enum.Shield)
         {
             if (other.gameObject.CompareTag("Machine"))
             {

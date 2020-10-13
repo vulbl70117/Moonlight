@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon_Collision : MonoBehaviour
 {
-    public Weapon_Type _Type = Weapon_Type.Fist;
+    public Weapon_Type_enum _Type = Weapon_Type_enum.Fist;
     private GameObject _Anything;
     // Start is called before the first frame update
     void Start()

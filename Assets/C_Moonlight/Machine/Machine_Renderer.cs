@@ -30,12 +30,12 @@ public class Machine_Renderer : MonoBehaviour
     {
 
     }
-    public void BeAttack()
+    public void BeAttack(float damge)
     {
         Debug.Log("Target BeAttack!!/HP: " + _Machine_HP);
         if (_Machine_RD != null)
         {
-            _Machine_HP--;
+            _Machine_HP -= damge;
             Strike();
             if (_Machine_HP < 0)
             {

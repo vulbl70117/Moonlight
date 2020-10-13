@@ -164,11 +164,11 @@ public class Player : MonoBehaviour
     }
     public void Weapon_()
     {
-        if (_Weapon._NowType == Weapon_Type.Fist)
+        if (_Weapon._NowType == Weapon_Type_enum.Fist)
         {
             _Can_Evade = true;
         }
-        if(_Weapon._NowType == Weapon_Type.Shield)
+        if(_Weapon._NowType == Weapon_Type_enum.Shield)
         {
             _Can_Evade = false;
         }
@@ -177,9 +177,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
+            //if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
             {
-                _Machine._HP.BeAttack();
+                Weapon_Factory weapon_Factory = null;
+                float damga = weapon_Factory.Hurt();
+                //_Machine._HP.BeAttack();
                 _Machine._HP._StrikeBool = false;
             }
         }
