@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Player _Player = other.gameObject.GetComponent<Player>();
-            if (_Player._EvadeBool_01 == false)
+            if (_Player._Move._EvadeBool_01 == false)
             {   
                 _Player._Renderer.BeAttack();
                 Destroy(gameObject);

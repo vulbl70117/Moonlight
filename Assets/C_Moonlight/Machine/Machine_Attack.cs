@@ -51,7 +51,7 @@ public class Machine_Attack : MonoBehaviour
         {
             Player _Player = other.GetComponent<Player>();
             _DiveBool_01 = true;
-            if (_Player._EvadeBool_01 == false)
+            if (_Player._Move._EvadeBool_01 == false)
             {
                 if (Time.time > _Attack_TouchTime + _TouchTime)
                 {

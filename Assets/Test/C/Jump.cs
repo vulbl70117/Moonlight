@@ -13,15 +13,22 @@ public class Jump : MonoBehaviour
     public float jumplong;
     public float speed;
     public float _move = 10f;
+    public float _evade_time1=0.2f;
+    public float _evade_time2;
 
+    private Collider collider_;
     public Transform mod;
     public bool _JumpBool_01;
     public bool isground;
-    public bool _testbool;
+    public bool _testbool1;
+    public bool _testbool2;
     public Transform feet;
+    public Vector3 test_v;
     // Start is called before the first frame update
     void Start()
     {
+        _evade_time2 = 0;
+        collider_ = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -30,9 +37,19 @@ public class Jump : MonoBehaviour
         Rigidbody body = GetComponent<Rigidbody>();
         body.velocity = Vector3.zero;
         jump();
-        if (_testbool)
-            pr();
+        if (_testbool1)
+            Gravity();
         evade();
+        if (_evade_time2>0)
+        {
+            collider_.isTrigger = true;
+            _evade_time2 -= Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, test_v, 10 * Time.deltaTime);
+        }
+        else
+        {
+            _evade_time2 = 0;
+        }
     }
     private void FixedUpdate()
     {
@@ -45,15 +62,15 @@ public class Jump : MonoBehaviour
         if (isground && speed < 0)
         {
             speed = test;
-            _testbool = false;
+            _testbool1 = false;
         }
         else if(isground!=true)
         {
-            _testbool = true;
+            _testbool1 = true;
         }
         if (Input.GetKeyDown(KeyCode.Space) && isground)
         {
-            _testbool = true;
+            _testbool1 = true;
             speed = 10;
             _JumpBool_01 = true;
             _JumpTime_02 = _JumpTime_01;
@@ -78,23 +95,23 @@ public class Jump : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(transform.right * Time.deltaTime * _move);
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            mod.rotation = Quaternion.Euler(0, 0, 0);
         }
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(transform.right * Time.deltaTime * -_move);
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            mod.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
     public void evade()
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Rigidbody _Move_Player_RD = GetComponent<Rigidbody>();
-            _Move_Player_RD.velocity = mod.right*100;
+            test_v = new Vector3(transform.position.x + (mod.rotation.y == 0 ? 5f : -5), transform.position.y, transform.position.z);
+            _evade_time2 = _evade_time1;
         }
     }
-    public void pr()
+    public void Gravity()
     {
         speed += gravity * Time.deltaTime;
         jumplong = speed * Time.deltaTime;
@@ -108,4 +125,5 @@ public class Jump : MonoBehaviour
             speed = 0;
         }
     }
+   
 }

@@ -30,12 +30,11 @@ public class Player_Renderer : MonoBehaviour
     {
         if (_Player._RunBool)
         {
-            //_Player_AM.SetBool("Run", true);
+            _Player_AM.SetBool("Run", true);
         }
-        else
+        else if(_Player._RunBool==false)
         {
-
-            //_Player_AM.SetBool("Run", false);
+            _Player_AM.SetBool("Run", false);
         }
     }
 }
