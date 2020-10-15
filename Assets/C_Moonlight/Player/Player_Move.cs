@@ -21,15 +21,15 @@ public class Player_Move : MonoBehaviour
     public float _Camera_Time;
     //
     public bool _EvadeBool_01;
-    public bool _IsGround;
+    public bool _IsGround = true;
     public bool _GravityBool;
     public bool _JumpBool;
     //
     public float _Height_01 = 10f;
     public float _Acceleration_01 = 0f;
-    private float _Acceleration_02;
+    public float _Acceleration_02;
     public float _JumpTime_01 = 1f;
-    private float _JumpTime_02;
+    public float _JumpTime_02;
     //
     private float _Height_02;
     private float _Gravity = -9.81f;
@@ -44,19 +44,24 @@ public class Player_Move : MonoBehaviour
     //
     public Transform _Move_Player_ModTF;
     public Transform _Move_Player_Feet;
+    public Transform _Move_Player_Center;//外空物件
     public Transform _Boos;
     public Collider _Move_Player_CD;
     public Vector3 _Move_Player_VT;
     //
     public Player_Trigger _Move_Trigger;
+
+    public Player _Player;
     void Start()
     {
         _Move_Player_CD = GetComponent<Collider>();
         _Move_Trigger = GetComponent<Player_Trigger>();
+        _Player = GetComponent<Player>();
     }
     void Update()
     {
-        Gravity();
+        if(_GravityBool)
+            Gravity();
     }
     public void Move2D(Player_2D _2D, float speed, bool isTrue = false)
     {
@@ -102,19 +107,19 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_3D.Right:
                 {
-                    transform.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
-                    _Move_Player_ModTF.localRotation = Quaternion.Euler(0, 90, 0);
+                    _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    transform.localRotation = Quaternion.Euler(0, 90, 0);
                     break;
                 }
             case Player_3D.Left:
                 {
-                    transform.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
-                    _Move_Player_ModTF.localRotation = Quaternion.Euler(0, -90, 0);
+                    _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    transform.localRotation = Quaternion.Euler(0, -90, 0);
                     break;
                 }
             case Player_3D.Evade:
                 {
-                    _Move_Player_VT = new Vector3(transform.position.x + (_Move_Player_ModTF.localRotation.y > 0 ? speed : speed), transform.position.y, transform.position.z/* + (_Move_Player_ModTF.localRotation.y == 90 ? -speed : speed)*/);
+                    _Move_Player_VT = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z + (transform.rotation.y > 0 ? -speed : speed));
                     break;
                 }
         }
@@ -162,11 +167,17 @@ public class Player_Move : MonoBehaviour
     }
     public void Jump()
     {
-        _IsGround = Physics.CheckSphere(_Move_Player_Feet.position, _Grounddistance, 1 << 10);
-        if(_IsGround && _Acceleration_02 < 0)
+        if (_Player._IsJump)
         {
+            _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
+            _IsGround = Physics.CheckSphere(_Move_Player_Feet.position, _Grounddistance, 1 << 10);
+        }
+        if (_IsGround && _Acceleration_02 < 0)
+        {
+            _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
             _Acceleration_02 = _Acceleration_01;
             _GravityBool = false;
+            _Player._IsJump = false;
         }
         else if (_IsGround != true)
         {
@@ -199,4 +210,5 @@ public class Player_Move : MonoBehaviour
     {
         _Camera_Time = 0;
     }
+    
 }

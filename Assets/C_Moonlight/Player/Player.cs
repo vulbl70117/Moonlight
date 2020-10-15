@@ -5,20 +5,23 @@ public enum To2D3D
 {
     to2D,
     to3D
-}
+} 
 
 public class Player : MonoBehaviour
 {
     //Player
     private bool _Can_Evade = true;
     public bool _RunBool;
+    public bool _Jump;
     //
     
     private float _Move_Speed = 5;
+    public float _JumpRay = 0.15f;
     //
     public To2D3D _Change = To2D3D.to2D;
     //    
     public GameObject _Player_Camera3D;
+    public Transform _Ground;
     //
     public Collider _Player_CD;
     //
@@ -30,8 +33,9 @@ public class Player : MonoBehaviour
     //
     //Weapon
     private Weapon _Weapon;
-    
     private GameObject _Any;
+
+    public bool _IsJump = false;
     void Start()
     {
         
@@ -45,6 +49,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        RaycastHit _Hit_Ground;
+        _Jump = Physics.Raycast(_Ground.position, _Ground.up, out _Hit_Ground, _JumpRay, 1 << 12);
+        Debug.DrawLine(_Ground.position, _Hit_Ground.point, Color.white, _JumpRay);
         //Weapon_();
         if (_Move)
         {
@@ -172,6 +179,8 @@ public class Player : MonoBehaviour
         _Move.Jump();
         if (Input.GetKeyDown(KeyCode.Space) && _Move._IsGround == true)
         {
+            _IsJump = true;
+            _Renderer.Player_Anim(Player_Animator.Jump);
             _Move.Jump_Up();
         }
         if (Input.GetKey(KeyCode.Space))

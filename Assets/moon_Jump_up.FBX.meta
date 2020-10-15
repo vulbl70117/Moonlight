@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 7b4419c40fa388b4a855d46cb1f3ed5f
+guid: 5370815603b3d5048a1b2421b8c00ee4
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Take 001
+    second: moon_Jump_up
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,19 +35,19 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: moon_Jump_up
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 17
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

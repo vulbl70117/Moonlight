@@ -8,7 +8,7 @@ public class Player_Trigger : MonoBehaviour
 
     public bool _To2D;
     public bool _To3D;
-    public bool _Evade_ToMachine;
+    public bool _Evade_ToMachine = false;
 
     public GameObject _Camera_2D;
     public GameObject _Camera_3D;
@@ -22,6 +22,10 @@ public class Player_Trigger : MonoBehaviour
         {
             Evade_Trigger();
         }
+        //if (other == null)
+        //{
+        //    _Evade_ToMachine = false;
+        //}
     }
     public void OnTriggerEnter(Collider other)
     {

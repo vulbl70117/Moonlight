@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 201b31af9a285c2409ed95b5deb7b1a8
+guid: d4174f772af5f02489c25a480f54f218
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Run
+    second: Jump_ax_up
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,19 +35,19 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Run
+      name: Jump_ax_up
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 17
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
