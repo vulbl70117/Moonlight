@@ -12,16 +12,14 @@ public class Player : MonoBehaviour
     //Player
     private bool _Can_Evade = true;
     public bool _RunBool;
-    public bool _Jump;
+    public bool _Jump=false;
     //
-    
     private float _Move_Speed = 5;
     public float _JumpRay = 0.15f;
     //
     public To2D3D _Change = To2D3D.to2D;
     //    
     public GameObject _Player_Camera3D;
-    public Transform _Ground;
     //
     public Collider _Player_CD;
     //
@@ -35,7 +33,6 @@ public class Player : MonoBehaviour
     private Weapon _Weapon;
     private GameObject _Any;
 
-    public bool _IsJump = false;
     void Start()
     {
         
@@ -49,13 +46,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        RaycastHit _Hit_Ground;
-        _Jump = Physics.Raycast(_Ground.position, _Ground.up, out _Hit_Ground, _JumpRay, 1 << 12);
-        Debug.DrawLine(_Ground.position, _Hit_Ground.point, Color.white, _JumpRay);
         //Weapon_();
         if (_Move)
         {
-            //_RunBool = false;
             Jump();
         }
         if (_Weapon)
@@ -133,16 +126,15 @@ public class Player : MonoBehaviour
     {
         if (_Move && _Can_Evade)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false)
-            {
-                _Move.UseEvade_Time();
-            }
-            if (_Move._EvadeBool_01 == true)
-            {
-                _Move.Evade_ToMachine();
-            }
+            //if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false)
+            //{
+            //    _Move.UseEvade_Time();
+            //}
+            //if (_Move._EvadeBool_01 == true)
+            //{
+            //    _Move.Evade_ToMachine();
+            //}
         }
-       
     }
     public void Machine(GameObject machine)
     {
@@ -179,8 +171,8 @@ public class Player : MonoBehaviour
         _Move.Jump();
         if (Input.GetKeyDown(KeyCode.Space) && _Move._IsGround == true)
         {
-            _IsJump = true;
-            _Renderer.Player_Anim(Player_Animator.Jump);
+            _Jump = true;
+            _Renderer.Player_Anim(Player_Animator.Jump, true);
             _Move.Jump_Up();
         }
         if (Input.GetKey(KeyCode.Space))

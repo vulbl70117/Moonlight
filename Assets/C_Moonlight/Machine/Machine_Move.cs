@@ -69,7 +69,10 @@ public class Machine_Move : MonoBehaviour
         if (_Move_Patrol_Time_02 <= _Move_Patrol_Time_01)
         {
             _Move_Patrol_Time_02 += Time.deltaTime;
-            _Machine_TF.position += Vector3.forward * (_MoveBool ? 1 : -1) * Time.deltaTime * _Move_Speed;
+            _Machine_TF.position += Vector3.forward
+                                    * (_MoveBool ? 1 : -1)
+                                    * Time.deltaTime
+                                    * _Move_Speed;
         }
         else if (_Move_AllTime_02 <= 0)
         {
@@ -94,7 +97,8 @@ public class Machine_Move : MonoBehaviour
         {
             Move_Patrol();
         }
-        else if (_Distance < _DrawGizmos._Detect_Radius && _Distance > _DrawGizmos._Attack_Radius)
+        else if (_Distance < _DrawGizmos._Detect_Radius
+                 && _Distance > _DrawGizmos._Attack_Radius)
         {
             Machion_Chase();
         }
@@ -106,14 +110,18 @@ public class Machine_Move : MonoBehaviour
     public void Machion_Chase()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * 5);
-        _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
+        _Machion_QR = Quaternion.LookRotation(_Player_TF.position
+                                              - transform.position,
+                                              Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
     }
     public void Aim()
     {
             _Pos.transform.LookAt(_Player_TF);
             _Attack.Fire();
-            _Machion_QR = Quaternion.LookRotation(_Player_TF.position - transform.position, Vector3.up);
+            _Machion_QR = Quaternion.LookRotation(_Player_TF.position
+                                                  - transform.position,
+                                                  Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
     }
     public void Fly()
@@ -137,7 +145,9 @@ public class Machine_Move : MonoBehaviour
     public void Dive()
     {
         if (_Attack_Time_02 == _Attack_Time_01 && _Attack._DiveBool_02==false)
-            transform.position = Vector3.Lerp(transform.position, _Player_TF.position, Time.deltaTime * _Move_Speed);
+            transform.position = Vector3.Lerp(transform.position,
+                                              _Player_TF.position,
+                                              Time.deltaTime * _Move_Speed);
         transform.LookAt(_Player_TF);
         if (_Attack._DiveBool_01 || _Attack._DiveBool_02)
         {

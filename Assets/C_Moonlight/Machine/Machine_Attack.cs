@@ -6,7 +6,7 @@ public class Machine_Attack : MonoBehaviour
 {
     public GameObject _Bullet;
     public Transform Pos;
-    public float _Shoot_Speed = 5;
+    public float _Shoot_Speed = 2000;
     public float _TouchTime = 2;
     public float _Next_AttackTime;
     public float _Now_AttackTime;

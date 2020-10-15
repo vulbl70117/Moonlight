@@ -44,6 +44,7 @@ public class Player_Move : MonoBehaviour
     //
     public Transform _Move_Player_ModTF;
     public Transform _Move_Player_Feet;
+    public Transform _Move_Player_Ground;
     public Transform _Move_Player_Center;//外空物件
     public Transform _Boos;
     public Collider _Move_Player_CD;
@@ -85,13 +86,15 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_2D.Evade:
                 {
-                    _Move_Player_VT=new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y == 0 ? speed : -speed), transform.position.y, transform.position.z);
+                    _Move_Player_VT=new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y == 0 ? speed : -speed),
+                                                transform.position.y,
+                                                transform.position.z);
                     Camera_Time();
                     break;
                 }
         }
     }
-    public void Move3D(Player_3D _3D, float speed, bool isTrue = false)
+    public void Move3D(Player_3D _3D, float speed = 0, bool isTrue = false)
     {
         if (_Move_Player_CD == null)
             return;
@@ -107,19 +110,23 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_3D.Right:
                 {
-                    _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    _Move_Player_Center.RotateAround(_Boos.position,
+                                                     _Boos.up,
+                                                     speed * Time.deltaTime);
                     transform.localRotation = Quaternion.Euler(0, 90, 0);
                     break;
                 }
             case Player_3D.Left:
                 {
-                    _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+                    _Move_Player_Center.RotateAround(_Boos.position,
+                                                     _Boos.up,
+                                                     speed * Time.deltaTime);
                     transform.localRotation = Quaternion.Euler(0, -90, 0);
                     break;
                 }
             case Player_3D.Evade:
                 {
-                    _Move_Player_VT = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z + (transform.rotation.y > 0 ? -speed : speed));
+                    //_Move_Player_VT = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z + (transform.rotation.y > 0 ? -speed : speed));
                     break;
                 }
         }
@@ -134,7 +141,7 @@ public class Player_Move : MonoBehaviour
             }
             if (_Move_Change == To2D3D.to3D)
             {
-                Move3D(Player_3D.Evade, _EavdeSpeed_3D);
+                Move3D(Player_3D.Evade);
             }
             _NowEvadeTime_02 = Time.time;
             _EvadeTime_02 = _EvadeTime_01;
@@ -149,7 +156,9 @@ public class Player_Move : MonoBehaviour
             {
                 _EvadeTime_02 -= Time.deltaTime;
                 _Move_Player_CD.isTrigger = true;
-                transform.position = Vector3.Lerp(transform.position, _Move_Player_VT, 10 * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position,
+                                                  _Move_Player_VT,
+                                                  10 * Time.deltaTime);
             }
             if (_EvadeTime_02 < 0 && _Move_Trigger._Evade_ToMachine == false)
             {
@@ -167,17 +176,22 @@ public class Player_Move : MonoBehaviour
     }
     public void Jump()
     {
-        if (_Player._IsJump)
+        if (_Acceleration_02 > 0)
+            _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
+
+        if (_Player._Jump)
         {
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
-            _IsGround = Physics.CheckSphere(_Move_Player_Feet.position, _Grounddistance, 1 << 10);
+            _IsGround = Physics.CheckSphere(_Move_Player_Feet.position,
+                                            _Grounddistance,
+                                            1 << 10);
         }
         if (_IsGround && _Acceleration_02 < 0)
         {
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
             _Acceleration_02 = _Acceleration_01;
             _GravityBool = false;
-            _Player._IsJump = false;
+            _Player._Jump = false;
         }
         else if (_IsGround != true)
         {
@@ -210,5 +224,4 @@ public class Player_Move : MonoBehaviour
     {
         _Camera_Time = 0;
     }
-    
 }
