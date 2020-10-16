@@ -8,6 +8,8 @@ TagManager:
   - To3D
   - Machine
   - Weapon
+  - Sword
+  - Axe
   layers:
   - Default
   - TransparentFX

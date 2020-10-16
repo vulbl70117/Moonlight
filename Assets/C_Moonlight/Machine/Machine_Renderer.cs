@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Machine_Renderer : MonoBehaviour
 {
+    public Weapon_Type_enum _WeaponType;
     public float _Machine_HP = 3;
     public float _StrikePower = 1;
     //
@@ -11,17 +12,11 @@ public class Machine_Renderer : MonoBehaviour
     //
     private Rigidbody _Machine_RD;
     //
-    private Weapon_Trigger _Weapon_Trigger;
-    //
-    private Transform _Machine_TF;
-    //
     private Player _Player;
     // Start is called before the first frame update
     void Start()
     {
         _Machine_RD = GetComponent<Rigidbody>();
-        _Machine_TF = GetComponent<Transform>();
-        _Weapon_Trigger = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon_Trigger>();
         _Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
@@ -36,7 +31,7 @@ public class Machine_Renderer : MonoBehaviour
         if (_Machine_RD != null)
         {
             _Machine_HP -= damge;
-            Strike();
+            _Player._Attack.Attack();
             if (_Machine_HP < 0)
             {
                 _Player._Trigger._Evade_ToMachine = false;
@@ -44,17 +39,5 @@ public class Machine_Renderer : MonoBehaviour
             }
         }
     }
-    public void Strike()
-    {
-        if (_StrikeBool == true)
-            return;
-        if (_Weapon_Trigger)
-        {
-            if (_Weapon_Trigger._Weapon_BadyBool == true)
-            {
-                //瘦瘠動畫
-                _StrikeBool = true;
-            }
-        }
-    }
+    
 }

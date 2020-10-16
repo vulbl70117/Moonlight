@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player_Attack : MonoBehaviour
 {
     private Weapon_Trigger _Trigger;
+    public bool _StrikeBool;
+    public Weapon _Weapon;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +20,15 @@ public class Player_Attack : MonoBehaviour
     }
     public void Attack()
     {
-        //if (_Trigger != null)
-        //{
-        //    _Trigger._HP.BeAttack();
-        //    _Machine._HP._StrikeBool = false;
-        //}
+        if (_StrikeBool == true)
+            return;
+        if (_Weapon._Weapon_TG)
+        {
+            if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
+            {
+                //瘦瘠動畫
+                _StrikeBool = true;
+            }
+        }
     }
 }

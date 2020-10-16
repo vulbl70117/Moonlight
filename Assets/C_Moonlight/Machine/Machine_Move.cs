@@ -69,7 +69,7 @@ public class Machine_Move : MonoBehaviour
         if (_Move_Patrol_Time_02 <= _Move_Patrol_Time_01)
         {
             _Move_Patrol_Time_02 += Time.deltaTime;
-            _Machine_TF.position += Vector3.forward
+            _Machine_TF.position += Vector3.right
                                     * (_MoveBool ? 1 : -1)
                                     * Time.deltaTime
                                     * _Move_Speed;
@@ -110,19 +110,20 @@ public class Machine_Move : MonoBehaviour
     public void Machion_Chase()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * 5);
-        _Machion_QR = Quaternion.LookRotation(_Player_TF.position
-                                              - transform.position,
-                                              Vector3.up);
+        _Machion_QR = Quaternion.LookRotation(Vector3.up
+                                              , _Player_TF.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+        
     }
     public void Aim()
     {
-            _Pos.transform.LookAt(_Player_TF);
-            _Attack.Fire();
-            _Machion_QR = Quaternion.LookRotation(_Player_TF.position
-                                                  - transform.position,
-                                                  Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+        _Pos.transform.rotation= Quaternion.FromToRotation(Vector3.right
+                                                , _Player_TF.position - _Pos.transform.position);
+        _Attack.Fire();
+        _Machion_QR = Quaternion.FromToRotation(Vector3.right
+                                                , _Player_TF.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+        
     }
     public void Fly()
     {

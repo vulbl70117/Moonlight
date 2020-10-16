@@ -12,7 +12,8 @@ public class Player_Renderer : MonoBehaviour
 {
     public float _HP = 30f;
     public Animator _Player_AM;
-    public Weapon_Type_enum _Type=Weapon_Type_enum.Fist;
+    private Animator _Fist_AM;
+    public Weapon _Weapon;
     private Player _Player;
 
     public AnimatorOverrideController[] OverrideController;
@@ -20,13 +21,18 @@ public class Player_Renderer : MonoBehaviour
     void Start()
     {
         _Player = GetComponent<Player>();
+        _Fist_AM = _Player_AM;
     }
     void Update()
     {
         Player_Anim(Player_Animator.Run);
-        if (_Type == Weapon_Type_enum.Axe)
+        if (_Weapon._NowType == Weapon_Type_enum.Axe)
         {
             _Player_AM.runtimeAnimatorController = OverrideController[0];
+        }
+        if (_Weapon._NowType == Weapon_Type_enum.Fist)
+        {
+            _Player_AM = _Fist_AM;
         }
     }
     public void BeAttack()
@@ -56,6 +62,7 @@ public class Player_Renderer : MonoBehaviour
                 }
             case Player_Animator.Attack:
                 {
+                    _Player_AM.SetTrigger("Attack");
                     break;
                 }
             case Player_Animator.Jump:

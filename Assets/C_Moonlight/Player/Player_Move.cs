@@ -44,7 +44,6 @@ public class Player_Move : MonoBehaviour
     //
     public Transform _Move_Player_ModTF;
     public Transform _Move_Player_Feet;
-    public Transform _Move_Player_Ground;
     public Transform _Move_Player_Center;//外空物件
     public Transform _Boos;
     public Collider _Move_Player_CD;
@@ -113,7 +112,7 @@ public class Player_Move : MonoBehaviour
                     _Move_Player_Center.RotateAround(_Boos.position,
                                                      _Boos.up,
                                                      speed * Time.deltaTime);
-                    transform.localRotation = Quaternion.Euler(0, 90, 0);
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
                     break;
                 }
             case Player_3D.Left:
@@ -121,7 +120,7 @@ public class Player_Move : MonoBehaviour
                     _Move_Player_Center.RotateAround(_Boos.position,
                                                      _Boos.up,
                                                      speed * Time.deltaTime);
-                    transform.localRotation = Quaternion.Euler(0, -90, 0);
+                    transform.localRotation = Quaternion.Euler(0, -180, 0);
                     break;
                 }
             case Player_3D.Evade:

@@ -12,7 +12,8 @@ public class Player_Trigger : MonoBehaviour
 
     public GameObject _Camera_2D;
     public GameObject _Camera_3D;
-    // Start is called before the first frame update
+    public static Weapon_Type_enum _NewType = Weapon_Type_enum.Fist;//把偵測到的武器先存起來
+    public static bool intag = false;//是否在武器感應範圍內
     void Start()
     {
     }
@@ -22,10 +23,6 @@ public class Player_Trigger : MonoBehaviour
         {
             Evade_Trigger();
         }
-        //if (other == null)
-        //{
-        //    _Evade_ToMachine = false;
-        //}
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -39,14 +36,33 @@ public class Player_Trigger : MonoBehaviour
             _To3D = true;
             Camera_3D();
         }
-        //LayerMask.NameToLayer("Weapon")
-        
-        if (other.gameObject.tag == ("Weapon"))
+
+        if (other.gameObject.CompareTag("Weapon"))
         {
-            //Debug.Log(other.gameObject.name);
-            weapon.SwitchWeapon(other.gameObject.name);
-            other.gameObject.SetActive(false);
-        }
+            Weapon_Collision weapon_coll = other.gameObject.GetComponent<Weapon_Collision>();          
+            intag = true;
+            
+            if(weapon_coll._Type == Weapon_Type_enum.Sword)
+            {
+                _NewType = Weapon_Type_enum.Sword;
+
+                if (Weapon.pick_weapon == true)
+                {
+                    intag = false;
+                    other.gameObject.SetActive(false);
+                }
+            }
+            else if (weapon_coll._Type == Weapon_Type_enum.Axe)
+            {
+                _NewType = Weapon_Type_enum.Axe;
+
+                if (Weapon.pick_weapon == true)
+                {
+                    intag = false;
+                    other.gameObject.SetActive(false);
+                }
+            }
+        }    
     }
     public void OnTriggerExit(Collider other)
     {

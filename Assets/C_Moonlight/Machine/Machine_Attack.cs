@@ -41,7 +41,7 @@ public class Machine_Attack : MonoBehaviour
             Rigidbody _Bullet_RD = _Attack.GetComponent<Rigidbody>();
             if (_Bullet_RD)
             {
-                _Bullet_RD.AddForce(_Attack.transform.forward * _Shoot_Speed);
+                _Bullet_RD.AddForce(_Attack.transform.right * _Shoot_Speed);
             }
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 
 public class Boss : MonoBehaviour
 {
-    public Material[] _Boss_MR;
+    public Material _Boss_MR;
     public GameObject _Player;
     public Transform _Boundary;
     public GameObject _Bullet;
@@ -32,7 +32,8 @@ public class Boss : MonoBehaviour
         //Boss_Rush();
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //_Boss_MR[]= _Boss_MR[1];
+            _Boss_MR.SetColor("_EmissionColor", Color.black);
+            Debug.Log("X");
         }
     }
     public void Look_Player()
