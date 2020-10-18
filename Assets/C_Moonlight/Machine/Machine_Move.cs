@@ -23,7 +23,7 @@ public class Machine_Move : MonoBehaviour
     public bool _StopBool = false;
     public bool _DetectBool = false;
     //
-    private Quaternion _Machion_QR;
+    private Vector3 _Machion_QR;
     //
     public Transform _Player_TF;
     private Transform _Machine_TF;
@@ -32,14 +32,16 @@ public class Machine_Move : MonoBehaviour
     //
     private Machine_Attack _Attack;
     //
-    private GameObject _Pos;
-    //private Vector3 _MachineOri_TF;
+    public GameObject _Pos;
+    //
+    private Rigidbody rd;
+    public Vector3 _Machine;
     void Start()
     {
-        
+        rd = GetComponent<Rigidbody>();
         _DrawGizmos = GetComponent<Machine_DrawGizmos>();
         _Attack = GetComponent<Machine_Attack>();
-        _Pos = transform.GetChild(0).gameObject;
+        //_Pos = transform.GetChild(0).gameObject;
         _Machine_TF = GetComponent<Transform>();
         _Move_AllTime_02 = _Move_AllTime_01;
         if (_Type == Enemy_Type.Ground)
@@ -109,21 +111,25 @@ public class Machine_Move : MonoBehaviour
     }
     public void Machion_Chase()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * 5);
-        _Machion_QR = Quaternion.LookRotation(Vector3.up
-                                              , _Player_TF.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
-        
+        _Machine = _Player_TF.position - transform.position;
+        //transform.Translate(Vector3.right * Time.deltaTime * 5);
+        //_Machion_QR = Quaternion.FromToRotation(Vector3.right
+        //, _Player_TF.position - transform.position);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+        float angle = Mathf.Atan2(_Machine.y, _Machine.x) * Mathf.Rad2Deg;
+        transform.Rotate(0, angle, 0);
+        //_Machine.Normalize();
+
     }
     public void Aim()
     {
-        _Pos.transform.rotation= Quaternion.FromToRotation(Vector3.right
-                                                , _Player_TF.position - _Pos.transform.position);
-        _Attack.Fire();
-        _Machion_QR = Quaternion.FromToRotation(Vector3.right
-                                                , _Player_TF.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
-        
+        //_Pos.transform.rotation = Quaternion.FromToRotation(Vector3.up
+        //                                        , _Player_TF.position - _Pos.transform.position);
+        //_Attack.Fire();
+        //_Machion_QR = Quaternion.FromToRotation(Vector3.right
+        //                                        , _Player_TF.position - transform.position);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+
     }
     public void Fly()
     {

@@ -35,7 +35,6 @@ public class Camera_Follow2D : MonoBehaviour
             {
                 _Change_Camera = To2D3D.to2D;
                 _Player._Move._Camera_Time += Time.deltaTime;
-                transform.LookAt(_Player_GO.transform);
                 if (Vector3.Distance(_Camera.position, _Player_GO.transform.position) > 3 )
                 {   
                     Follow_To2D();
