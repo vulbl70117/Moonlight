@@ -10,7 +10,7 @@ Animator:
   m_GameObject: {fileID: 1699138316535549890}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1e9605ecc761a2c4a938d21ba230b94e, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   _DetectBool: 0
   _Player_TF: {fileID: 0}
   _Pos: {fileID: 1969731763976599264}
-  _Machine: {x: 0, y: 0, z: 0}
+  _Machine_VT: {x: 0, y: 0, z: 0}
 --- !u!114 &1969731762455973947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,14 +278,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969731764039951626}
-  m_LocalRotation: {x: -0, y: -0.70710635, z: -0, w: 0.70710725}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2080484801733399928}
   m_Father: {fileID: 1969731762455973938}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1001 &1969731762142999187
 PrefabInstance:
   m_ObjectHideFlags: 0

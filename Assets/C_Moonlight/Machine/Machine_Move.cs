@@ -70,8 +70,8 @@ public class Machine_Move : MonoBehaviour
         if (_Move_Patrol_Time_02 <= _Move_Patrol_Time_01)
         {
             _Move_Patrol_Time_02 += Time.deltaTime;
-            _Machine_TF.position += Vector3.right
-                                    * (_MoveBool ? 1 : -1)
+            _Machine_TF.position += _Machine_TF.forward
+                                    * (_MoveBool ? 1 : 1)
                                     * Time.deltaTime
                                     * _Move_Speed;
         }
@@ -80,9 +80,9 @@ public class Machine_Move : MonoBehaviour
             _MoveBool = !_MoveBool;
             Move_Reset();
             if (_MoveBool)
-                _Machine_TF.rotation = Quaternion.Euler(0, 0, 0);
+                _Machine_TF.rotation = Quaternion.Euler(0, 90, 0);
             else
-                _Machine_TF.rotation = Quaternion.Euler(0, -180, 0);
+                _Machine_TF.rotation = Quaternion.Euler(0, 270, 0);
         }
     }
     public void Move_Reset()
