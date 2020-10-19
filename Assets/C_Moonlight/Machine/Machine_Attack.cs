@@ -13,12 +13,10 @@ public class Machine_Attack : MonoBehaviour
     private float _Attack_TouchTime;
     public bool _DiveBool_01;
     public bool _DiveBool_02;
-    // Start is called before the first frame update
     void Start()
     {
  
     }
-    // Update is called once per frame
     void Update()
     {
         
@@ -41,7 +39,7 @@ public class Machine_Attack : MonoBehaviour
             Rigidbody _Bullet_RD = _Attack.GetComponent<Rigidbody>();
             if (_Bullet_RD)
             {
-                _Bullet_RD.AddForce(_Attack.transform.right * _Shoot_Speed);
+                _Bullet_RD.AddForce(_Attack.transform.forward * _Shoot_Speed);
             }
         }
     }

@@ -11,16 +11,28 @@ public class rotation : MonoBehaviour
 
     void Update()
     {
-        GetAnglev3();
-        //GetAngle(m_target1, m_target2);
+        Vector3 relative = Vector3.ProjectOnPlane(target.position - transform.position, transform.up);
+        Debug.DrawLine(transform.position, transform.position + (target.position - transform.position).normalized * 100f, Color.green);
+        Debug.DrawLine(transform.position, transform.position + (relative).normalized * 100f, Color.red);
+        Debug.Log(relative);
+        transform.rotation = Quaternion.LookRotation(relative);
+        //if (relative.x < 0)
+        //{
+        //    transform.eulerAngles = Vector3.up * -90;
+        //}
+        //else if (relative.x > 0)
+        //{
+        //    transform.eulerAngles = Vector3.up * 90;
+        //}
+        
     }
 
     void GetAnglev3()
     {
         //Vector3 relative = target1.InverseTransformPoint(target.position);
-        Vector3 relative = target.position - target1.position;
-        float angle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg;
-        target1.rotation = Quaternion.Euler(transform.position.x, angle, transform.position.z);
+        //Vector3 relative = Vector3.ProjectOnPlane(target.position - transform.position, transform.up);
+        //float angle = Vector3.SignedAngle(relative, transform.up, transform.forward);
+        //target1.rotation = Quaternion.Euler(0, angle, 0);
     }
 
     void GetAngle(Transform target1, Transform target2)

@@ -13,7 +13,7 @@ public class Player_Trigger : MonoBehaviour
     public GameObject _Camera_2D;
     public GameObject _Camera_3D;
     public static Weapon_Type_enum _NewType = Weapon_Type_enum.Fist;//把偵測到的武器先存起來
-    public static bool intag = false;//是否在武器感應範圍內
+    public static bool _Intag = false;//是否在武器感應範圍內
     void Start()
     {
     }
@@ -39,16 +39,16 @@ public class Player_Trigger : MonoBehaviour
 
         if (other.gameObject.CompareTag("Weapon"))
         {
-            Weapon_Collision weapon_coll = other.gameObject.GetComponent<Weapon_Collision>();          
-            intag = true;
+            Weapon_Collision weapon_coll = other.gameObject.GetComponent<Weapon_Collision>();
+            _Intag = true;
             
             if(weapon_coll._Type == Weapon_Type_enum.Sword)
             {
                 _NewType = Weapon_Type_enum.Sword;
 
-                if (Weapon.pick_weapon == true)
+                if (Weapon._Pick_Weapon == true)
                 {
-                    intag = false;
+                    _Intag = false;
                     other.gameObject.SetActive(false);
                 }
             }
@@ -56,9 +56,9 @@ public class Player_Trigger : MonoBehaviour
             {
                 _NewType = Weapon_Type_enum.Axe;
 
-                if (Weapon.pick_weapon == true)
+                if (Weapon._Pick_Weapon == true)
                 {
-                    intag = false;
+                    _Intag = false;
                     other.gameObject.SetActive(false);
                 }
             }
@@ -69,7 +69,10 @@ public class Player_Trigger : MonoBehaviour
         if (other.gameObject.CompareTag("Machine"))
         {
             _Evade_ToMachine = false;
-            //Debug.Log(_Evade_ToMachine);
+        }
+        if (other.gameObject.CompareTag("Weapon"))
+        {
+            _Intag = false;
         }
     }
     private void Camera_2D()

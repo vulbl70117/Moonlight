@@ -23,7 +23,7 @@ public class Machine_Move : MonoBehaviour
     public bool _StopBool = false;
     public bool _DetectBool = false;
     //
-    private Vector3 _Machion_QR;
+    private Quaternion _Machion_QR;
     //
     public Transform _Player_TF;
     private Transform _Machine_TF;
@@ -35,7 +35,7 @@ public class Machine_Move : MonoBehaviour
     public GameObject _Pos;
     //
     private Rigidbody rd;
-    public Vector3 _Machine;
+    public Vector3 _Machine_VT;
     void Start()
     {
         rd = GetComponent<Rigidbody>();
@@ -54,7 +54,6 @@ public class Machine_Move : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
     }
@@ -111,24 +110,16 @@ public class Machine_Move : MonoBehaviour
     }
     public void Machion_Chase()
     {
-        _Machine = _Player_TF.position - transform.position;
-        //transform.Translate(Vector3.right * Time.deltaTime * 5);
-        //_Machion_QR = Quaternion.FromToRotation(Vector3.right
-        //, _Player_TF.position - transform.position);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
-        float angle = Mathf.Atan2(_Machine.y, _Machine.x) * Mathf.Rad2Deg;
-        transform.Rotate(0, angle, 0);
-        //_Machine.Normalize();
-
+        _Machine_VT = Vector3.ProjectOnPlane(_Player_TF.position - transform.position, transform.up);
+        transform.Translate(Vector3.forward * Time.deltaTime * 5);
+        transform.rotation=Quaternion.LookRotation(_Machine_VT);
     }
     public void Aim()
     {
-        //_Pos.transform.rotation = Quaternion.FromToRotation(Vector3.up
-        //                                        , _Player_TF.position - _Pos.transform.position);
-        //_Attack.Fire();
-        //_Machion_QR = Quaternion.FromToRotation(Vector3.right
-        //                                        , _Player_TF.position - transform.position);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, _Machion_QR, _Move_Rotat);
+        _Machine_VT = Vector3.ProjectOnPlane(_Player_TF.position - transform.position, transform.up);
+        _Pos.transform.rotation = Quaternion.LookRotation(_Machine_VT);
+        _Attack.Fire();
+        transform.rotation = Quaternion.LookRotation(_Machine_VT);
 
     }
     public void Fly()

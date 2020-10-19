@@ -71,14 +71,14 @@ public class Player_Move : MonoBehaviour
         {
             case Player_2D.Right:
                 {
-                    transform.Translate(transform.right * Time.deltaTime * speed);
+                    transform.Translate(Vector3.forward * Time.deltaTime * speed);
                     _Move_Player_ModTF.rotation = Quaternion.Euler(0, 0, 0);
                     Camera_Time();
                     break;
                 }
             case Player_2D.Left:
                 {
-                    transform.Translate(transform.right * Time.deltaTime * speed);
+                    transform.Translate(Vector3.forward * Time.deltaTime * speed);
                     _Move_Player_ModTF.rotation = Quaternion.Euler(0, 180, 0);
                     Camera_Time();
                     break;
