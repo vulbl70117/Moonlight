@@ -26,7 +26,6 @@ public class Player_Attack : MonoBehaviour
         {
             if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
             {
-                //瘦瘠動畫
                 _StrikeBool = true;
             }
         }

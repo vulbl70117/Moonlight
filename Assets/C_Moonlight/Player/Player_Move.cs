@@ -24,6 +24,7 @@ public class Player_Move : MonoBehaviour
     public bool _IsGround = true;
     public bool _GravityBool;
     public bool _JumpBool;
+    public bool _Jump_AinTrigger;
     //
     public float _Height_01 = 10f;
     public float _Acceleration_01 = 0f;
@@ -32,7 +33,7 @@ public class Player_Move : MonoBehaviour
     public float _JumpTime_02;
     //
     private float _Height_02;
-    private float _Gravity = -9.81f;
+    public float _Gravity = -9.81f;
     public float _Grounddistance = 0.4f;
     //
     public float _EavdeSpeed_2D = 5f;
@@ -85,9 +86,9 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_2D.Evade:
                 {
-                    _Move_Player_VT=new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y == 0 ? speed : -speed),
-                                                transform.position.y,
-                                                transform.position.z);
+                    _Move_Player_VT=new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y == 0 ? speed : -speed)
+                                                ,transform.position.y
+                                                ,transform.position.z);
                     Camera_Time();
                     break;
                 }
@@ -109,17 +110,17 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_3D.Right:
                 {
-                    _Move_Player_Center.RotateAround(_Boos.position,
-                                                     _Boos.up,
-                                                     speed * Time.deltaTime);
+                    _Move_Player_Center.RotateAround(_Boos.position
+                                                     ,_Boos.up
+                                                     ,speed * Time.deltaTime);
                     transform.localRotation = Quaternion.Euler(0, 0, 0);
                     break;
                 }
             case Player_3D.Left:
                 {
-                    _Move_Player_Center.RotateAround(_Boos.position,
-                                                     _Boos.up,
-                                                     speed * Time.deltaTime);
+                    _Move_Player_Center.RotateAround(_Boos.position
+                                                    ,_Boos.up
+                                                    ,speed * Time.deltaTime);
                     transform.localRotation = Quaternion.Euler(0, -180, 0);
                     break;
                 }
@@ -153,14 +154,17 @@ public class Player_Move : MonoBehaviour
         {
             if (_EvadeTime_02 > 0)
             {
+                _Player._Renderer.Player_Anim(Player_Animator.Dash, true);
                 _EvadeTime_02 -= Time.deltaTime;
                 _Move_Player_CD.isTrigger = true;
-                transform.position = Vector3.Lerp(transform.position,
-                                                  _Move_Player_VT,
-                                                  10 * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position
+                                                  ,_Move_Player_VT
+                                                  ,10 * Time.deltaTime);
             }
             if (_EvadeTime_02 < 0 && _Move_Trigger._Evade_ToMachine == false)
             {
+                _Player._DashBool = false;
+                _Player._Renderer.Player_Anim(Player_Animator.Dash, false);
                 _EvadeBool_01 = false;
                 _Move_Player_CD.isTrigger = false;
             }
@@ -181,16 +185,18 @@ public class Player_Move : MonoBehaviour
         if (_Player._Jump)
         {
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
-            _IsGround = Physics.CheckSphere(_Move_Player_Feet.position,
-                                            _Grounddistance,
-                                            1 << 10);
+            _IsGround = Physics.CheckSphere(_Move_Player_Feet.position
+                                            ,_Grounddistance
+                                            ,1 << 10);
         }
         if (_IsGround && _Acceleration_02 < 0)
         {
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
+            _Player._Renderer.Player_Anim(Player_Animator.JumpIdle);
             _Acceleration_02 = _Acceleration_01;
             _GravityBool = false;
             _Player._Jump = false;
+            _Jump_AinTrigger = false;
         }
         else if (_IsGround != true)
         {
@@ -199,6 +205,7 @@ public class Player_Move : MonoBehaviour
     }
     public void Jump_Up()
     {
+        _Jump_AinTrigger = true;
         _GravityBool = true;
         _Acceleration_02 = _Height_01;
         _JumpBool = true;

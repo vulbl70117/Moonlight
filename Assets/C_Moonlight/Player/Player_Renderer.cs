@@ -6,7 +6,10 @@ public enum Player_Animator
     Run,
     Attack,
     Jump,
-    JumpDown
+    JumpDown,
+    JumpIdle,
+    BeAttack,
+    Dash
 }
 public class Player_Renderer : MonoBehaviour
 {
@@ -15,6 +18,9 @@ public class Player_Renderer : MonoBehaviour
     private Animator _Fist_AM;
     public Weapon _Weapon;
     private Player _Player;
+    public float _BeAttack_DelayTime_01;
+    public float _BeAttack_DelayTime_02;
+    //private float _NowTime;
 
     public AnimatorOverrideController[] OverrideController;
 
@@ -22,6 +28,7 @@ public class Player_Renderer : MonoBehaviour
     {
         _Player = GetComponent<Player>();
         _Fist_AM = _Player_AM;
+        _BeAttack_DelayTime_02 = _BeAttack_DelayTime_01;
     }
     void Update()
     {
@@ -34,11 +41,23 @@ public class Player_Renderer : MonoBehaviour
         {
             _Player_AM = _Fist_AM;
         }
+         _BeAttack_DelayTime_02 -= Time.deltaTime;
     }
     public void BeAttack()
     {
         _HP--;
         Debug.Log("剩餘" + _HP);
+        Player_Anim(Player_Animator.BeAttack);
+        if (_BeAttack_DelayTime_02 ==_BeAttack_DelayTime_01)
+        {
+            _Player._BeAttackBool = true;
+        }
+        else if (_BeAttack_DelayTime_02 < 0)
+        {
+            _Player._BeAttackBool = false;
+            _BeAttack_DelayTime_02 = _BeAttack_DelayTime_01;
+
+        }
         if (_HP < 0)
             gameObject.SetActive(false);
     }
@@ -75,6 +94,29 @@ public class Player_Renderer : MonoBehaviour
                     _Player_AM.SetBool("JumpDown", isTrue);
                     break;
                 }
+            case Player_Animator.JumpIdle:
+                {
+                    _Player_AM.SetTrigger("Jump Trigger");
+                    break;
+                }
+            case Player_Animator.BeAttack:
+                {
+                    _Player_AM.SetTrigger("BeAttack");
+                    break;
+                }
+            case Player_Animator.Dash:
+                {
+                    _Player_AM.SetBool("Dash", isTrue);
+                    break;
+                }
         }
+    }
+    public bool Ground_Already()
+    {
+        if (_Player_AM)//check
+        {
+            return _Player_AM.GetBool("Jump Trigger");
+        }
+        return false;
     }
 }

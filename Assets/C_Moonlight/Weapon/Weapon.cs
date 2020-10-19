@@ -13,15 +13,12 @@ public class Weapon : MonoBehaviour
 {
     public Weapon_Type_enum _NowType = Weapon_Type_enum.Fist;//現在手上拿的武器
     public List<Weapon_Type_enum> _TypeList = new List<Weapon_Type_enum>();//武器欄
-
     public GameObject[] _Weapon_Type;
     public Weapon_Trigger _Weapon_TG;
     public static bool _Pick_Weapon = false;//開啟撿武器的Tag
-
     public Weapon_UI _Weapon_UI;//武器UI script
     void Start()
     {
-        _Weapon_TG = transform.GetChild(0).GetComponent<Weapon_Trigger>();
     }
     void Update()
     {

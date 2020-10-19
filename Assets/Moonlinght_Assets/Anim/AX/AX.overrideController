@@ -9,27 +9,23 @@ AnimatorOverrideController:
   m_Name: AX
   m_Controller: {fileID: 9100000, guid: 345a3e431a3e20f41a5e7ec21b8bab51, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 1827226128182048838, guid: 30a437d3cd783f042b7fdc65c97b2dc7,
+  - m_OriginalClip: {fileID: 1827226128182048838, guid: e4db0da359a8550499401f075cfce186,
       type: 3}
-    m_OverrideClip: {fileID: 1827226128182048838, guid: d726edba20bc34e48bd06cce5d80ce3a,
+    m_OverrideClip: {fileID: 1827226128182048838, guid: caf20a03f703fc44f83ef836038778f0,
       type: 3}
   - m_OriginalClip: {fileID: 1827226128182048838, guid: 2f80957044d69a540a90594b7ffe797b,
       type: 3}
-    m_OverrideClip: {fileID: 1827226128182048838, guid: fae496e5b4f911a4c9326776e3d0baac,
-      type: 3}
-  - m_OriginalClip: {fileID: 1827226128182048838, guid: 764f3c5b10b08ee4a84e14fac952a541,
-      type: 3}
-    m_OverrideClip: {fileID: 1827226128182048838, guid: 143b8ad0a1e26174ab9832deb61b3233,
+    m_OverrideClip: {fileID: 1827226128182048838, guid: fc95bc80aa89d8e49891a93149004529,
       type: 3}
   - m_OriginalClip: {fileID: 1827226128182048838, guid: 201b31af9a285c2409ed95b5deb7b1a8,
       type: 3}
-    m_OverrideClip: {fileID: 1827226128182048838, guid: 14bf7eccda618be4c97d6e7f640a8ee3,
+    m_OverrideClip: {fileID: 1827226128182048838, guid: dde0eeb99a5f07042826a01cae0da652,
       type: 3}
-  - m_OriginalClip: {fileID: 1827226128182048838, guid: e4db0da359a8550499401f075cfce186,
+  - m_OriginalClip: {fileID: 1827226128182048838, guid: 8741353c074bf2544931a509b889de74,
       type: 3}
-    m_OverrideClip: {fileID: 1827226128182048838, guid: c95ea3851137b664882c098b0bffffbd,
+    m_OverrideClip: {fileID: 1827226128182048838, guid: 9f77b88b8acbda347b3730f266c86e8d,
       type: 3}
-  - m_OriginalClip: {fileID: 1827226128182048838, guid: e4175227bf8b942418310c75055bebd9,
+  - m_OriginalClip: {fileID: 1827226128182048838, guid: 925a8c1ccbea8a549893dce3cfd1dece,
       type: 3}
     m_OverrideClip: {fileID: 1827226128182048838, guid: cd67d77d8c5c9f848b7589dab146e016,
       type: 3}

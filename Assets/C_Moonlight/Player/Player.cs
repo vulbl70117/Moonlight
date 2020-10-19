@@ -11,8 +11,10 @@ public class Player : MonoBehaviour
 {
     //Player
     private bool _Can_Evade = true;
-    public bool _RunBool;
-    public bool _Jump=false;
+    public bool _RunBool = false;
+    public bool _Jump = false;
+    public bool _DashBool = false;
+    public bool _BeAttackBool = false;
     //
     public float _Move_Speed = 5;
     public float _JumpRay = 0.15f;
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour
     {
         if (_Trigger != null)
         {
-            if (_Change == To2D3D.to2D || _Trigger._To2D)
+            if (_Change == To2D3D.to2D || _Trigger._To2D && _BeAttackBool == false)
             {
                 Move_2D();
             }
@@ -85,15 +87,18 @@ public class Player : MonoBehaviour
         _RunBool = false;
         _Change = To2D3D.to2D;
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        if (Input.GetKey(KeyCode.D))
+        if (_DashBool == false && _BeAttackBool == false)
         {
-            _RunBool = true;
-            _Move.Move2D(Player_2D.Right, _Move_Speed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            _RunBool = true;
-            _Move.Move2D(Player_2D.Left, -_Move_Speed);
+            if (Input.GetKey(KeyCode.D))
+            {
+                _RunBool = true;
+                _Move.Move2D(Player_2D.Right, _Move_Speed);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                _RunBool = true;
+                _Move.Move2D(Player_2D.Left, -_Move_Speed);
+            }
         }
     }
     public void Sport_2D()
@@ -102,10 +107,12 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false)
             {
+                _DashBool = false;
                 _Move.UseEvade_Time();
             }
-            if (_Move._EvadeBool_01 == true)
+            else if (_Move._EvadeBool_01 == true)
             {
+                _DashBool = true;
                 _Move.Evade_ToMachine();
             }
         }
@@ -148,7 +155,9 @@ public class Player : MonoBehaviour
     }
     public void Weapon_()
     {
-        if (_Weapon._NowType == Weapon_Type_enum.Fist)
+        if (_Weapon._NowType == Weapon_Type_enum.Fist
+            || _Weapon._NowType == Weapon_Type_enum.Sword
+            || _Weapon._NowType == Weapon_Type_enum.Axe)
         {
             _Can_Evade = true;
         }
@@ -172,7 +181,10 @@ public class Player : MonoBehaviour
     public void Jump()
     {
         _Move.Jump();
-        if (Input.GetKeyDown(KeyCode.Space) && _Move._IsGround == true)
+        if (Input.GetKeyDown(KeyCode.Space) 
+            && _Renderer._Player_AM.GetBool("Jump Trigger") == false
+            && _Move._IsGround == true 
+            && _Move._Jump_AinTrigger == false)
         {
             _Jump = true;
             _Renderer.Player_Anim(Player_Animator.Jump, true);
