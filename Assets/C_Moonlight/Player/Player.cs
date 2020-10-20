@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     //Player
     private bool _Can_Evade = true;
     public bool _RunBool = false;
-    public bool _Jump = false;
+    public bool _JumpBool = false;
     public bool _DashBool = false;
     public bool _Player_Attacking = false;
     //
@@ -192,8 +192,9 @@ public class Player : MonoBehaviour
             && _Move._Jump_AinTrigger == false
             && _Player_Attacking==false)
         {
-            _Jump = true;
+            _JumpBool = true;
             _Renderer.Player_Anim(Player_Animator.Jump, true);
+            _Renderer.Player_Anim(Player_Animator.JumpDown, true);
             _Move.Jump_Up();
         }
         if (Input.GetKey(KeyCode.Space))

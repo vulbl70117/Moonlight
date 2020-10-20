@@ -31,11 +31,13 @@ public class Player_Move : MonoBehaviour
     public float _Acceleration_02;
     public float _JumpTime_01 = 1f;
     public float _JumpTime_02;
+    public float _Tall;
     //
     private float _Height_02;
     public float _Gravity = -9.81f;
     public float _Grounddistance = 0.4f;
     //
+    public float _Airdistance = 3f;
     public float _EavdeSpeed_2D = 5f;
     public float _EavdeSpeed_3D = 5f;
     public float _UseEvadeTime_01 = 0.5f;
@@ -45,13 +47,15 @@ public class Player_Move : MonoBehaviour
     //
     public Transform _Move_Player_ModTF;
     public Transform _Move_Player_Feet;
+    public Transform _Move_Player_Feet1;
     public Transform _Move_Player_Center;//外空物件
     public Transform _Boos;
     public Collider _Move_Player_CD;
     public Vector3 _Move_Player_VT;
+    public RaycastHit Y_HitDown;
+    public RaycastHit Y_HitUp;
     //
     public Player_Trigger _Move_Trigger;
-
     public Player _Player;
     void Start()
     {
@@ -61,7 +65,22 @@ public class Player_Move : MonoBehaviour
     }
     void Update()
     {
-        if(_GravityBool)
+        _IsGround = Physics.Raycast(_Move_Player_Feet.position
+                                    , -_Move_Player_Feet.up
+                                    , out Y_HitDown
+                                    , _Grounddistance
+                                    , 1 << 10);
+        if (_IsGround == false)
+        {
+            if (Physics.Raycast(_Move_Player_Feet1.position, -_Move_Player_Feet1.up
+                                    , out Y_HitUp, _Airdistance, 1 << 10))
+                {
+                    transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
+                    _Acceleration_02 = _Acceleration_01;
+                }
+        }
+        
+        if (_GravityBool)
             Gravity();
     }
     public void Move2D(Player_2D _2D, float speed, bool isTrue = false)
@@ -87,8 +106,8 @@ public class Player_Move : MonoBehaviour
             case Player_2D.Evade:
                 {
                     _Move_Player_VT=new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y == 0 ? speed : -speed)
-                                                ,transform.position.y
-                                                ,transform.position.z);
+                                                , transform.position.y
+                                                , transform.position.z);
                     Camera_Time();
                     break;
                 }
@@ -175,32 +194,23 @@ public class Player_Move : MonoBehaviour
         _Acceleration_02 += _Gravity * Time.deltaTime;
         _Height_02 = _Acceleration_02 * Time.deltaTime;
         transform.Translate(transform.up * _Height_02);
-
     }
     public void Jump()
     {
         if (_Acceleration_02 < 0)
             _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
-        if (_Player._Jump)
+        if (_IsGround && _Acceleration_02 <= 0)
         {
-            _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
-            _IsGround = Physics.CheckSphere(_Move_Player_Feet.position
-                                            ,_Grounddistance
-                                            ,1 << 10);
-        }
-        if (_IsGround && _Acceleration_02 < 0)
-        {
+            if (_Player._JumpBool)
+                _Player._Renderer.Player_Anim(Player_Animator.JumpIdle);
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
-            _Player._Renderer.Player_Anim(Player_Animator.JumpIdle);
-            _Acceleration_02 = _Acceleration_01;
+            transform.position = new Vector3(transform.position.x, Y_HitDown.point.y + _Tall, transform.position.z);
             _GravityBool = false;
-            _Player._Jump = false;
+            _Player._JumpBool = false;
             _Jump_AinTrigger = false;
         }
         else if (_IsGround != true)
-        {
             _GravityBool = true;
-        }
     }
     public void Jump_Up()
     {
