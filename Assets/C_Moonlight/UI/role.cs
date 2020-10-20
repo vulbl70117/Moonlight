@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class role : MonoBehaviour
+public class Role : MonoBehaviour
 {
     public Text curHP;//放當前血量
     public Text maxHP;//放最高血量

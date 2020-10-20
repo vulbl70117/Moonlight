@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public bool _RunBool = false;
     public bool _Jump = false;
     public bool _DashBool = false;
-    public bool _BeAttackBool = false;
+    public bool _Player_Attacking = false;
     //
     public float _Move_Speed = 5;
     public float _JumpRay = 0.15f;
@@ -58,43 +58,48 @@ public class Player : MonoBehaviour
         {
             Attack();
         }
-        if (_Change == To2D3D.to2D || _Trigger._To2D)
+        if ((_Change == To2D3D.to2D || _Trigger._To2D) && _Renderer._BeAttackBool == false)
         {
             Sport_2D();
         }
-        if(_Change == To2D3D.to3D || _Trigger._To3D)
+        if ((_Change == To2D3D.to3D || _Trigger._To3D) && _Renderer._BeAttackBool == false)
         {
             Sport_3D();
+        }
+        if (_Renderer._Player_AM.GetCurrentAnimatorStateInfo(0).IsName("Attack Already"))
+        {
+            _Player_Attacking = false;
         }
     }
     private void FixedUpdate()
     {
         if (_Trigger != null)
         {
-            if (_Change == To2D3D.to2D || _Trigger._To2D && _BeAttackBool == false)
+            if ((_Change == To2D3D.to2D || _Trigger._To2D) && _Renderer._BeAttackBool == false)
             {
                 Move_2D();
             }
-            if (_Change == To2D3D.to3D || _Trigger._To3D)
+            if ((_Change == To2D3D.to3D || _Trigger._To3D) && _Renderer._BeAttackBool == false)
             {
                 Move_3D();
             }
         }
-        
     }
     public void Move_2D()
     {
-        _RunBool = false;
         _Change = To2D3D.to2D;
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        if (_DashBool == false && _BeAttackBool == false)
+        _RunBool = false;
+        if (_Move._IsGround && _Player_Attacking)
+            return;
+        if (_DashBool == false)
         {
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D) && _Renderer._BeAttackBool == false)
             {
                 _RunBool = true;
                 _Move.Move2D(Player_2D.Right, _Move_Speed);
             }
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A) && _Renderer._BeAttackBool == false)
             {
                 _RunBool = true;
                 _Move.Move2D(Player_2D.Left, -_Move_Speed);
@@ -103,7 +108,7 @@ public class Player : MonoBehaviour
     }
     public void Sport_2D()
     {
-        if (_Move && _Can_Evade)
+        if (_Move && _Can_Evade && _Renderer._BeAttackBool == false)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false)
             {
@@ -116,7 +121,6 @@ public class Player : MonoBehaviour
                 _Move.Evade_ToMachine();
             }
         }
-        
     }
     public void Move_3D()
     {
@@ -151,7 +155,6 @@ public class Player : MonoBehaviour
     {
         _Any = machine;
         _Machine = _Any.GetComponent<Machine>();
-        
     }
     public void Weapon_()
     {
@@ -170,6 +173,8 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (_Move._IsGround)
+                _Player_Attacking = true;
             _Renderer.Player_Anim(Player_Animator.Attack);
             if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
             {
@@ -184,7 +189,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) 
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
-            && _Move._Jump_AinTrigger == false)
+            && _Move._Jump_AinTrigger == false
+            && _Player_Attacking==false)
         {
             _Jump = true;
             _Renderer.Player_Anim(Player_Animator.Jump, true);

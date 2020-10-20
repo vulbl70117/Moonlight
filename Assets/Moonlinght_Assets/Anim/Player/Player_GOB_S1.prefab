@@ -308,6 +308,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _RunBool: 0
   _Jump: 0
+  _DashBool: 0
+  _BeAttackBool: 0
   _Move_Speed: 5
   _JumpRay: 0.15
   _Change: 0
@@ -330,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _StrikeBool: 0
-  _Weapon: {fileID: 0}
+  _Weapon: {fileID: 5495430707938745108}
 --- !u!114 &5495430707699438999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,16 +363,18 @@ MonoBehaviour:
   _IsGround: 1
   _GravityBool: 0
   _JumpBool: 0
+  _Jump_AinTrigger: 0
   _Height_01: 10
   _Acceleration_01: 0
   _Acceleration_02: 0
   _JumpTime_01: 1
   _JumpTime_02: 0
+  _Gravity: -15
   _Grounddistance: 0.4
   _EavdeSpeed_2D: 5
   _EavdeSpeed_3D: 5
   _UseEvadeTime_01: 0.5
-  _EvadeTime_01: 0.6
+  _EvadeTime_01: 0.4
   _Move_Player_ModTF: {fileID: 5495430708178867277}
   _Move_Player_Feet: {fileID: 5495430706824665121}
   _Move_Player_Center: {fileID: 5495430706659282646}
@@ -391,11 +395,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbe6b159ded3c143a47e9cdb39fbded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 30
+  _HP: 100
   _Player_AM: {fileID: 5495430706677876065}
   _Weapon: {fileID: 5495430707938745108}
+  _BeAttack_DelayTime_01: 0.3
+  _BeAttack_DelayTime_02: 0
+  _BeAttackBool: 0
   OverrideController:
-  - {fileID: 22100000, guid: cbf4ee31b95e1cc4394f999971dad24f, type: 2}
+  - {fileID: 0}
   - {fileID: 22100000, guid: 60e2144586c63454aaefeffce91c3f72, type: 2}
 --- !u!114 &5495430707699438987
 MonoBehaviour:
@@ -668,13 +675,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _NowType: 0
+  _TypeList: 0000000000000000
   _Weapon_Type:
   - {fileID: 5495430706345645213}
   - {fileID: 4648516142468834438}
   - {fileID: 4648516141440996137}
-  _TypeList: 0000000000000000
   _Weapon_TG: {fileID: 5495430706345645210}
-  weapon_UI: {fileID: 0}
+  _Weapon_UI: {fileID: 0}
 --- !u!1 &5495430708178867265
 GameObject:
   m_ObjectHideFlags: 0

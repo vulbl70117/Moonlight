@@ -12,6 +12,7 @@ public class Player_Trigger : MonoBehaviour
 
     public GameObject _Camera_2D;
     public GameObject _Camera_3D;
+
     public static Weapon_Type_enum _NewType = Weapon_Type_enum.Fist;//把偵測到的武器先存起來
     public static bool _Intag = false;//是否在武器感應範圍內
     void Start()
@@ -36,7 +37,6 @@ public class Player_Trigger : MonoBehaviour
             _To3D = true;
             Camera_3D();
         }
-
         if (other.gameObject.CompareTag("Weapon"))
         {
             Weapon_Collision weapon_coll = other.gameObject.GetComponent<Weapon_Collision>();

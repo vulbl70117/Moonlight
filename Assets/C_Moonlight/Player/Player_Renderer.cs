@@ -20,10 +20,11 @@ public class Player_Renderer : MonoBehaviour
     private Player _Player;
     public float _BeAttack_DelayTime_01;
     public float _BeAttack_DelayTime_02;
-    //private float _NowTime;
+    public bool _BeAttackBool;
 
     public AnimatorOverrideController[] OverrideController;
 
+    public AudioSource _Walk_AS;
     void Start()
     {
         _Player = GetComponent<Player>();
@@ -41,25 +42,22 @@ public class Player_Renderer : MonoBehaviour
         {
             _Player_AM = _Fist_AM;
         }
-         _BeAttack_DelayTime_02 -= Time.deltaTime;
+        if (_BeAttackBool == true)
+            AnimTime_BeAttack();
     }
     public void BeAttack()
     {
+        _BeAttackBool = true;
+        Player_Anim(Player_Animator.BeAttack);
         _HP--;
         Debug.Log("剩餘" + _HP);
-        Player_Anim(Player_Animator.BeAttack);
-        if (_BeAttack_DelayTime_02 ==_BeAttack_DelayTime_01)
-        {
-            _Player._BeAttackBool = true;
-        }
-        else if (_BeAttack_DelayTime_02 < 0)
-        {
-            _Player._BeAttackBool = false;
-            _BeAttack_DelayTime_02 = _BeAttack_DelayTime_01;
-
-        }
+        _Player._RunBool = false;
         if (_HP < 0)
             gameObject.SetActive(false);
+        if (_Player_AM && _Player._Move._IsGround ==false)//check
+        {
+            _Player_AM.GetBool("Jump Trigger");
+        }
     }
     public void Player_Anim(Player_Animator _Animator,bool isTrue = false)
     {
@@ -72,10 +70,13 @@ public class Player_Renderer : MonoBehaviour
                     if (_Player._RunBool)
                     {
                         _Player_AM.SetBool("Run", true);
+                        if (!_Walk_AS.isPlaying)
+                            _Walk_AS.Play();
                     }
                     else if (_Player._RunBool == false)
                     {
                         _Player_AM.SetBool("Run", false);
+                            _Walk_AS.Stop();
                     }
                     break;
                 }
@@ -87,11 +88,13 @@ public class Player_Renderer : MonoBehaviour
             case Player_Animator.Jump:
                 {
                     _Player_AM.SetBool("Jump", isTrue);
+                    _Walk_AS.Stop();
                     break;
                 }
             case Player_Animator.JumpDown:
                 {
                     _Player_AM.SetBool("JumpDown", isTrue);
+                    _Walk_AS.Stop();
                     break;
                 }
             case Player_Animator.JumpIdle:
@@ -118,5 +121,17 @@ public class Player_Renderer : MonoBehaviour
             return _Player_AM.GetBool("Jump Trigger");
         }
         return false;
+    }
+    public void AnimTime_BeAttack()
+    {
+        if (_BeAttack_DelayTime_02 <= _BeAttack_DelayTime_01)
+        {
+            _BeAttack_DelayTime_02 -= Time.deltaTime;
+        }
+        if (_BeAttack_DelayTime_02 <= 0 /*&& _Player_AM.GetCurrentAnimatorStateInfo(0).IsName("BeAttack")*/)
+        {
+            _BeAttack_DelayTime_02 = _BeAttack_DelayTime_01;
+            _BeAttackBool = false;
+        }
     }
 }

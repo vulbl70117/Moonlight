@@ -179,9 +179,8 @@ public class Player_Move : MonoBehaviour
     }
     public void Jump()
     {
-        if (_Acceleration_02 > 0)
+        if (_Acceleration_02 < 0)
             _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
-
         if (_Player._Jump)
         {
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
