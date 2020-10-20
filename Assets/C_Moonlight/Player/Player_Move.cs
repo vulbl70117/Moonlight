@@ -47,7 +47,7 @@ public class Player_Move : MonoBehaviour
     //
     public Transform _Move_Player_ModTF;
     public Transform _Move_Player_Feet;
-    public Transform _Move_Player_Feet1;
+    public Transform _Move_Player_Head;
     public Transform _Move_Player_Center;//外空物件
     public Transform _Boos;
     public Collider _Move_Player_CD;
@@ -72,14 +72,13 @@ public class Player_Move : MonoBehaviour
                                     , 1 << 10);
         if (_IsGround == false)
         {
-            if (Physics.Raycast(_Move_Player_Feet1.position, -_Move_Player_Feet1.up
+            if (Physics.Raycast(_Move_Player_Head.position, -_Move_Player_Head.up
                                     , out Y_HitUp, _Airdistance, 1 << 10))
                 {
                     transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
                     _Acceleration_02 = _Acceleration_01;
                 }
         }
-        
         if (_GravityBool)
             Gravity();
     }

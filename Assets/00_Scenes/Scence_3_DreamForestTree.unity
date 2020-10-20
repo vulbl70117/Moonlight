@@ -8442,7 +8442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1822906772}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11182,7 +11182,7 @@ MonoBehaviour:
   _EvadeTime_01: 0.4
   _Move_Player_ModTF: {fileID: 5495430706478921033}
   _Move_Player_Feet: {fileID: 5495430707825850661}
-  _Move_Player_Feet1: {fileID: 1822906772}
+  _Move_Player_Head: {fileID: 1822906772}
   _Move_Player_Center: {fileID: 5495430708124331986}
   _Boos: {fileID: 0}
   _Move_Player_CD: {fileID: 0}
