@@ -35,14 +35,15 @@ public class Camera_Follow2D : MonoBehaviour
             {
                 _Change_Camera = To2D3D.to2D;
                 _Player._Move._Camera_Time += Time.deltaTime;
-                if (Vector3.Distance(_Camera.position, _Player_GO.transform.position) > 3 )
-                {   
-                    Follow_To2D();
-                }
-                if(_Player._Move._Camera_Time > _Camera_ZeroTime)
-                {
-                    Follow_To2D();
-                }
+                //if (Vector3.Distance(_Camera.position, _Player_GO.transform.position) > 3 )
+                //{   
+                //    Follow_To2D();
+                //}
+                //if(_Player._Move._Camera_Time > _Camera_ZeroTime)
+                //{
+                //    Follow_To2D();
+                //}
+                Follow_To2D();
             }
         }
     }

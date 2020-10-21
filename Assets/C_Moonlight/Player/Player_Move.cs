@@ -31,17 +31,17 @@ public class Player_Move : MonoBehaviour
     public float _Acceleration_01 = 0f;
     public float _Acceleration_02;
     public float _JumpTime_01 = 1f;
-    public float _JumpTime_02;
+    private float _JumpTime_02;
     public float _Tall = 1.5f;
-    public float _Wall = 1.5f;
+    public float _Wall = 0.5f;
     //
     private float _Height_02;
-    public float _Gravity = -9.81f;
+    public float _Gravity = -15f;
     public float _Grounddistance = 0.4f;
     //
     public float _Airdistance = 3f;
-    public float _EavdeSpeed_2D = 5f;
-    public float _EavdeSpeed_3D = 5f;
+    public float _EvadeSpeed_2D = 5f;
+    public float _EvadeSpeed_3D = 5f;
     public float _UseEvadeTime_01 = 0.5f;
     private float _NowEvadeTime_02;
     public float _EvadeTime_01 = 0.6f;
@@ -57,8 +57,7 @@ public class Player_Move : MonoBehaviour
     public RaycastHit Y_HitDown;
     public RaycastHit Y_HitUp;
     //
-    //public Player_Trigger _Move_Trigger;
-    public Player _Player;
+    private Player _Player;
     void Start()
     {
         _Move_Player_CD = GetComponent<Collider>();
@@ -70,6 +69,7 @@ public class Player_Move : MonoBehaviour
         Feet();
         if (_GravityBool)
             Gravity();
+        Jump();
     }
     public void Move2D(Player_2D _2D, float speed, bool isTrue = false)
     {
@@ -96,6 +96,7 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_2D.Evade:
                 {
+                    if(_IsWall==false)
                     _Move_Player_VT=new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y == 0 ? speed : -speed)
                                                 , transform.position.y
                                                 , transform.position.z);
@@ -147,7 +148,7 @@ public class Player_Move : MonoBehaviour
         {
             if (_Move_Change == To2D3D.to2D)
             {
-                Move2D(Player_2D.Evade, _EavdeSpeed_2D);
+                Move2D(Player_2D.Evade, _EvadeSpeed_2D);
             }
             if (_Move_Change == To2D3D.to3D)
             {
@@ -166,7 +167,7 @@ public class Player_Move : MonoBehaviour
             {
                 _Player._Renderer.Player_Anim(Player_Animator.Dash, true);
                 _EvadeTime_02 -= Time.deltaTime;
-                _Move_Player_CD.isTrigger = true;
+                    _Move_Player_CD.isTrigger = true;
                 transform.position = Vector3.Lerp(transform.position
                                                   ,_Move_Player_VT
                                                   ,10 * Time.deltaTime);
@@ -176,6 +177,7 @@ public class Player_Move : MonoBehaviour
                 _Player._DashBool = false;
                 _Player._Renderer.Player_Anim(Player_Animator.Dash, false);
                 _EvadeBool_01 = false;
+                if (_IsWall == true)
                 _Move_Player_CD.isTrigger = false;
             }
         }

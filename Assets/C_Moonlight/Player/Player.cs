@@ -185,7 +185,6 @@ public class Player : MonoBehaviour
     }
     public void Jump()
     {
-        _Move.Jump();
         if (Input.GetKeyDown(KeyCode.Space) 
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
