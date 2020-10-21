@@ -21,6 +21,7 @@ public class Player_Renderer : MonoBehaviour
     public float _BeAttack_DelayTime_01;
     public float _BeAttack_DelayTime_02;
     public bool _BeAttackBool;
+    public float[] _SpeedMultiplier;
 
     public AnimatorOverrideController[] OverrideController;
 
@@ -34,19 +35,16 @@ public class Player_Renderer : MonoBehaviour
     void Update()
     {
         Player_Anim(Player_Animator.Run);
-        if (_Weapon._NowType == Weapon_Type_enum.Axe)
-        {
-            _Player_AM.runtimeAnimatorController = OverrideController[0];
-        }
-        if (_Weapon._NowType == Weapon_Type_enum.Fist)
-        {
-            _Player_AM = _Fist_AM;
-        }
+        Change_Anim();
         if (_BeAttackBool == true)
             AnimTime_BeAttack();
     }
     public void BeAttack()
     {
+        if(_Player_AM.GetBool("Jump Trigger"))//beattack re Jump Trigger
+        {
+            _Player_AM.ResetTrigger("Jump Trigger");
+        }
         _BeAttackBool = true;
         Player_Anim(Player_Animator.BeAttack);
         _HP--;
@@ -132,6 +130,24 @@ public class Player_Renderer : MonoBehaviour
         {
             _BeAttack_DelayTime_02 = _BeAttack_DelayTime_01;
             _BeAttackBool = false;
+        }
+    }
+    public void Change_Anim()
+    {
+        if (_Weapon._NowType == Weapon_Type_enum.Fist)
+        {
+            _Player_AM = _Fist_AM;
+            _Player_AM.SetFloat("Speed", _SpeedMultiplier[0]);
+        }
+        if (_Weapon._NowType == Weapon_Type_enum.Axe)
+        {
+            _Player_AM.runtimeAnimatorController = OverrideController[0];
+            _Player_AM.SetFloat("Speed", _SpeedMultiplier[1]);
+        }
+        if (_Weapon._NowType == Weapon_Type_enum.Sword)
+        {
+            _Player_AM.runtimeAnimatorController = OverrideController[1];
+            _Player_AM.SetFloat("Speed", _SpeedMultiplier[2]);
         }
     }
 }

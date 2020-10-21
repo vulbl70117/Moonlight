@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Player_Attack : MonoBehaviour
 {
-    private Weapon_Trigger _Trigger;
     public bool _StrikeBool;
     public Weapon _Weapon;
     // Start is called before the first frame update
     void Start()
     {
-        _Trigger = GetComponent<Weapon_Trigger>();
+
     }
 
     // Update is called once per frame

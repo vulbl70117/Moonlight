@@ -193,6 +193,8 @@ public class Player : MonoBehaviour
             && _Player_Attacking==false)
         {
             _JumpBool = true;
+            if (_JumpBool)
+                _Renderer.Player_Anim(Player_Animator.JumpIdle);
             _Renderer.Player_Anim(Player_Animator.Jump, true);
             _Renderer.Player_Anim(Player_Animator.JumpDown, true);
             _Move.Jump_Up();

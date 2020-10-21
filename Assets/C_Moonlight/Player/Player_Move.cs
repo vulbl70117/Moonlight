@@ -21,7 +21,8 @@ public class Player_Move : MonoBehaviour
     public float _Camera_Time;
     //
     public bool _EvadeBool_01;
-    public bool _IsGround = true;
+    public bool _IsGround;
+    public bool _IsWall;
     public bool _GravityBool;
     public bool _JumpBool;
     public bool _Jump_AinTrigger;
@@ -31,7 +32,8 @@ public class Player_Move : MonoBehaviour
     public float _Acceleration_02;
     public float _JumpTime_01 = 1f;
     public float _JumpTime_02;
-    public float _Tall;
+    public float _Tall = 1.5f;
+    public float _Wall = 1.5f;
     //
     private float _Height_02;
     public float _Gravity = -9.81f;
@@ -55,30 +57,17 @@ public class Player_Move : MonoBehaviour
     public RaycastHit Y_HitDown;
     public RaycastHit Y_HitUp;
     //
-    public Player_Trigger _Move_Trigger;
+    //public Player_Trigger _Move_Trigger;
     public Player _Player;
     void Start()
     {
         _Move_Player_CD = GetComponent<Collider>();
-        _Move_Trigger = GetComponent<Player_Trigger>();
         _Player = GetComponent<Player>();
     }
     void Update()
     {
-        _IsGround = Physics.Raycast(_Move_Player_Feet.position
-                                    , -_Move_Player_Feet.up
-                                    , out Y_HitDown
-                                    , _Grounddistance
-                                    , 1 << 10);
-        if (_IsGround == false)
-        {
-            if (Physics.Raycast(_Move_Player_Head.position, -_Move_Player_Head.up
-                                    , out Y_HitUp, _Airdistance, 1 << 10))
-                {
-                    transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
-                    _Acceleration_02 = _Acceleration_01;
-                }
-        }
+        _IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitUp, _Wall);
+        Feet();
         if (_GravityBool)
             Gravity();
     }
@@ -90,14 +79,17 @@ public class Player_Move : MonoBehaviour
         {
             case Player_2D.Right:
                 {
-                    transform.Translate(Vector3.forward * Time.deltaTime * speed);
+
+                    if (_Player._Move._IsWall == false)
+                        transform.Translate(Vector3.forward * Time.deltaTime * speed);
                     _Move_Player_ModTF.rotation = Quaternion.Euler(0, 0, 0);
                     Camera_Time();
                     break;
                 }
             case Player_2D.Left:
                 {
-                    transform.Translate(Vector3.forward * Time.deltaTime * speed);
+                    if (_Player._Move._IsWall == false)
+                        transform.Translate(Vector3.forward * Time.deltaTime * speed);
                     _Move_Player_ModTF.rotation = Quaternion.Euler(0, 180, 0);
                     Camera_Time();
                     break;
@@ -179,7 +171,7 @@ public class Player_Move : MonoBehaviour
                                                   ,_Move_Player_VT
                                                   ,10 * Time.deltaTime);
             }
-            if (_EvadeTime_02 < 0 && _Move_Trigger._Evade_ToMachine == false)
+            if (_EvadeTime_02 < 0 && _Player._Trigger._Evade_ToMachine == false)
             {
                 _Player._DashBool = false;
                 _Player._Renderer.Player_Anim(Player_Animator.Dash, false);
@@ -198,10 +190,9 @@ public class Player_Move : MonoBehaviour
     {
         if (_Acceleration_02 < 0)
             _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
+        
         if (_IsGround && _Acceleration_02 <= 0)
         {
-            if (_Player._JumpBool)
-                _Player._Renderer.Player_Anim(Player_Animator.JumpIdle);
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
             transform.position = new Vector3(transform.position.x, Y_HitDown.point.y + _Tall, transform.position.z);
             _GravityBool = false;
@@ -237,5 +228,22 @@ public class Player_Move : MonoBehaviour
     public void Camera_Time()
     {
         _Camera_Time = 0;
+    }
+    public void Feet()
+    {
+        _IsGround = Physics.Raycast(_Move_Player_Feet.position
+                                    , -_Move_Player_Feet.up
+                                    , out Y_HitDown
+                                    , _Grounddistance
+                                    , 1 << 10);
+        if (_IsGround == false)
+        {
+            if (Physics.Raycast(_Move_Player_Feet.position + _Move_Player_Feet.up *_Airdistance, -_Move_Player_Feet.up
+                                    , out Y_HitUp, _Airdistance, 1 << 10))
+            {
+                transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
+                _Acceleration_02 = _Acceleration_01;
+            }
+        }
     }
 }
