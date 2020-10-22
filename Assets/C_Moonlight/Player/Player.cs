@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     //Weapon
     private Weapon _Weapon;
     private GameObject _Any;
+    //
 
     void Start()
     {
@@ -46,7 +47,6 @@ public class Player : MonoBehaviour
 
         _Weapon = GetComponentInChildren<Weapon>();
     }
-
     void Update()
     {
         Weapon_();
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         }
         if ((_Change == To2D3D.to2D || _Trigger._To2D) && _Renderer._BeAttackBool == false)
         {
-            Sport_2D();
+            //Sport_2D();
         }
         if ((_Change == To2D3D.to3D || _Trigger._To3D) && _Renderer._BeAttackBool == false)
         {
@@ -171,6 +171,12 @@ public class Player : MonoBehaviour
     }
     public void Attack()
     {
+        if (_Renderer._Player_AM.GetBool("Attacking"))
+        {
+            _Weapon._Attack.WeaponRay();
+        }
+        else
+            _Weapon._Attack._IsRay = false;
         if (Input.GetMouseButtonDown(0))
         {
             if (_Move._IsGround)
@@ -178,8 +184,8 @@ public class Player : MonoBehaviour
             _Renderer.Player_Anim(Player_Animator.Attack);
             if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
             {
-                _Machine._HP.BeAttack(1);
-                _Machine._HP._StrikeBool = false;
+                _Machine._Renderer.BeAttack(1);
+                _Machine._Renderer._StrikeBool = false;
             }
         }
     }

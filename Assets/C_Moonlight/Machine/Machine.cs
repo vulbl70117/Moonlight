@@ -12,11 +12,11 @@ public class Machine : MonoBehaviour
 {
     public Enemy_Type _Type;
     //
-    public Machine_Renderer _HP;
+    public Machine_Renderer _Renderer;
     //
     private Machine_Move _Move;
     //
-    public Player_Renderer _Player_HP;
+    public Player_Renderer _Player_Renderer;
     void Start()
     {        
         _Move = GetComponent<Machine_Move>();

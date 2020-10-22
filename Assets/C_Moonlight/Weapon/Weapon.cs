@@ -18,11 +18,15 @@ public class Weapon : MonoBehaviour
     //public Weapon_UI _Weapon_UI;//武器UI script
     public Weapon_Trigger _Weapon_TG;
     public Weapon_Attack _Attack;
+    public Player _Player;
+
+    public WeaponSetting _WeaponSetting;
     void Start()
     {
     }
     void Update()
     {
+        _WeaponSetting.nowWeapon = _NowType;
         Chang_Weapon_TG();
         _Pick_Weapon = false;//常駐關閉撿武器的Tag
 

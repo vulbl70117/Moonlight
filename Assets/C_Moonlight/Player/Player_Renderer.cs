@@ -142,12 +142,12 @@ public class Player_Renderer : MonoBehaviour
         if (_Weapon._NowType == Weapon_Type_enum.Axe)
         {
             _Player_AM.runtimeAnimatorController = OverrideController[0];
-            _Player_AM.SetFloat("Speed", _SpeedMultiplier[1]);
+            _Player_AM.SetFloat("Speed", _SpeedMultiplier[2]);
         }
         if (_Weapon._NowType == Weapon_Type_enum.Sword)
         {
             _Player_AM.runtimeAnimatorController = OverrideController[1];
-            _Player_AM.SetFloat("Speed", _SpeedMultiplier[2]);
+            _Player_AM.SetFloat("Speed", _SpeedMultiplier[1]);
         }
     }
 }
