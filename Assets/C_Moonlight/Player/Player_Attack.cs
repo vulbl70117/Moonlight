@@ -6,6 +6,9 @@ public class Player_Attack : MonoBehaviour
 {
     public bool _StrikeBool;
     public Weapon _Weapon;
+    //Machine
+    public Machine _Machine;
+    private GameObject _Any;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,18 +18,11 @@ public class Player_Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
-    public void Attack()
+    
+    public void Machine(GameObject machine)
     {
-        if (_StrikeBool == true)
-            return;
-        if (_Weapon._Weapon_TG)
-        {
-            if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
-            {
-                _StrikeBool = true;
-            }
-        }
+        _Any = machine;
+        _Machine = _Any.gameObject.GetComponent<Machine>();
     }
 }

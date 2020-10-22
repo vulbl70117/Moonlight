@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Player_Anim : StateMachineBehaviour
 {
-    public WeaponSetting weaponSetting;
+    public WeaponSetting _WeaponSetting;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (stateInfo.normalizedTime >= weaponSetting.WeaponDataList[(int)weaponSetting.nowWeapon].AttackStartTime 
-            && stateInfo.normalizedTime <= weaponSetting.WeaponDataList[(int)weaponSetting.nowWeapon].AttackEndTime)
+        if (stateInfo.normalizedTime >= _WeaponSetting.WeaponDataList[(int)_WeaponSetting.nowWeapon].AttackStartTime 
+            && stateInfo.normalizedTime <= _WeaponSetting.WeaponDataList[(int)_WeaponSetting.nowWeapon].AttackEndTime)
+        {
             animator.SetBool("Attacking", true);
+            _WeaponSetting._AttackHit = true;
+        }
         else
             animator.SetBool("Attacking", false);
     }

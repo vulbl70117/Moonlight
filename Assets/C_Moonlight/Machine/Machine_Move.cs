@@ -96,7 +96,7 @@ public class Machine_Move : MonoBehaviour
 
         if (_Distance > _DrawGizmos._Detect_Radius)
         {
-            Move_Patrol();
+            //Move_Patrol();
         }
         else if (_Distance < _DrawGizmos._Detect_Radius
                  && _Distance > _DrawGizmos._Attack_Radius)

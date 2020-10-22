@@ -22,7 +22,7 @@ public class Player_Trigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Machine")
         {
-            Evade_Trigger();
+            _Evade_ToMachine = true;
         }
     }
     public void OnTriggerEnter(Collider other)
@@ -85,8 +85,5 @@ public class Player_Trigger : MonoBehaviour
         _Camera_3D.SetActive(true);
         _Camera_2D.SetActive(false);
     }
-    private void Evade_Trigger()
-    {
-        _Evade_ToMachine = true;
-    }
+    
 }

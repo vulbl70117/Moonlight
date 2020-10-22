@@ -29,12 +29,9 @@ public class Player : MonoBehaviour
     public Player_Trigger _Trigger;
     public Player_Renderer _Renderer;
     public Player_Attack _Attack;
-    //Machine
-    private Machine _Machine;
     //
     //Weapon
-    private Weapon _Weapon;
-    private GameObject _Any;
+    public Weapon _Weapon;
     //
 
     void Start()
@@ -151,11 +148,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public void Machine(GameObject machine)
-    {
-        _Any = machine;
-        _Machine = _Any.GetComponent<Machine>();
-    }
+    
     public void Weapon_()
     {
         if (_Weapon._NowType == Weapon_Type_enum.Fist
@@ -173,21 +166,21 @@ public class Player : MonoBehaviour
     {
         if (_Renderer._Player_AM.GetBool("Attacking"))
         {
-            _Weapon._Attack.WeaponRay();
+            _Attack._Machine._Renderer.BeAttack(1);
+
         }
-        else
-            _Weapon._Attack._IsRay = false;
+        else if (_Renderer._Player_AM.GetBool("Attacking") == false && _Weapon._WeaponSetting._AttackHit)
+        {
+            _Attack._Machine._Renderer._StrikeBool = false;
+            _Weapon._WeaponSetting._AttackHit = false;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (_Move._IsGround)
                 _Player_Attacking = true;
             _Renderer.Player_Anim(Player_Animator.Attack);
-            if (_Weapon._Weapon_TG._Weapon_BadyBool == true)
-            {
-                _Machine._Renderer.BeAttack(1);
-                _Machine._Renderer._StrikeBool = false;
-            }
         }
+       
     }
     public void Jump()
     {
@@ -211,6 +204,16 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             _Move._JumpBool = false;
+        }
+    }
+    private void LateUpdate()
+    {
+        if (_Weapon._Attack._IsRay && _Renderer._Player_AM.GetBool("Attacking")==false)
+        {
+
+            //_Attack._Machine._Renderer.BeAttack(1);
+            //_Attack._StrikeBool = false;
+            //_Weapon._WeaponSetting._AttackHit = false;
         }
     }
 }

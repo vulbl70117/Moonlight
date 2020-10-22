@@ -5,29 +5,33 @@ using UnityEngine;
 public class Weapon_Attack : MonoBehaviour
 {
     public bool _IsRay;
-
-    public float _FistRay = 0.5f;
-    public float _SwordRay = 0.8f;
-    public float _AxeRay = 1f;
-
     public Transform _Ray_TF;
-
-    public Weapon _Weapon;
-    public Weapon_Type_enum _Type;
+    private GameObject _Anything;
     public RaycastHit _Attack_Hit;
+    public LayerMask _LayerMask;
+
+    public Machine machine;
+    public Weapon _Weapon;
     void Start()
     {
         _Weapon = GetComponent<Weapon>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {   
+    private void Awake()
+    {
         
+    }
+    void Update()
+    {
+        WeaponRay();
+        if (_IsRay)
+        {
+            _Anything = _Attack_Hit.transform.gameObject;
+            _Weapon._Player._Attack.Machine(_Anything);
+        }
     }
     public void WeaponRay()
     {
         _IsRay = Physics.Raycast(transform.position, _Ray_TF.forward, out _Attack_Hit
-                                 , _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], 1 << 9);
+                                 , _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], _LayerMask);
     }
 }

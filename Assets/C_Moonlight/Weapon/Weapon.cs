@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
     public GameObject[] _Weapon_Type;
     public static bool _Pick_Weapon = false;//開啟撿武器的Tag
     //public Weapon_UI _Weapon_UI;//武器UI script
-    public Weapon_Trigger _Weapon_TG;
+    //public Weapon_Trigger _Weapon_TG;
     public Weapon_Attack _Attack;
     public Player _Player;
 
@@ -27,7 +27,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         _WeaponSetting.nowWeapon = _NowType;
-        Chang_Weapon_TG();
+        //Chang_Weapon_TG();
         _Pick_Weapon = false;//常駐關閉撿武器的Tag
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -73,19 +73,19 @@ public class Weapon : MonoBehaviour
         //_Weapon_UI.Chang_weapon(open);//傳入武器
     }
 
-    public void Chang_Weapon_TG()
-    {
-        if (_NowType == Weapon_Type_enum.Fist)
-        {
-            _Weapon_TG = _Weapon_Type[0].GetComponent<Weapon_Trigger>();
-        }
-        if (_NowType == Weapon_Type_enum.Sword)
-        {
-            _Weapon_TG = _Weapon_Type[1].GetComponent<Weapon_Trigger>();
-        }
-        if (_NowType == Weapon_Type_enum.Axe)
-        {
-            _Weapon_TG = _Weapon_Type[2].GetComponent<Weapon_Trigger>();
-        }
-    }
+    //public void Chang_Weapon_TG()
+    //{
+    //    if (_NowType == Weapon_Type_enum.Fist)
+    //    {
+    //        _Weapon_TG = _Weapon_Type[0].GetComponent<Weapon_Trigger>();
+    //    }
+    //    if (_NowType == Weapon_Type_enum.Sword)
+    //    {
+    //        _Weapon_TG = _Weapon_Type[1].GetComponent<Weapon_Trigger>();
+    //    }
+    //    if (_NowType == Weapon_Type_enum.Axe)
+    //    {
+    //        _Weapon_TG = _Weapon_Type[2].GetComponent<Weapon_Trigger>();
+    //    }
+    //}
 }

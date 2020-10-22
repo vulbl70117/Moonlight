@@ -14,12 +14,14 @@ public class Machine : MonoBehaviour
     //
     public Machine_Renderer _Renderer;
     //
-    private Machine_Move _Move;
+    public Machine_Move _Move;
     //
-    public Player_Renderer _Player_Renderer;
+    public Player _Player;
     void Start()
     {        
         _Move = GetComponent<Machine_Move>();
+        _Renderer = GetComponent<Machine_Renderer>();
+        _Player= GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
     void Update()
     {
