@@ -9,6 +9,7 @@ public class Player_Trigger : MonoBehaviour
     public bool _To2D;
     public bool _To3D;
     public bool _Evade_ToMachine = false;
+    public bool _OnMachine;
 
     public GameObject _Camera_2D;
     public GameObject _Camera_3D;
@@ -23,6 +24,7 @@ public class Player_Trigger : MonoBehaviour
         if (other.gameObject.tag == "Machine")
         {
             _Evade_ToMachine = true;
+            _OnMachine = true;
         }
     }
     public void OnTriggerEnter(Collider other)
@@ -69,6 +71,7 @@ public class Player_Trigger : MonoBehaviour
         if (other.gameObject.CompareTag("Machine"))
         {
             _Evade_ToMachine = false;
+            _OnMachine = false;
         }
         if (other.gameObject.CompareTag("Weapon"))
         {
@@ -85,5 +88,19 @@ public class Player_Trigger : MonoBehaviour
         _Camera_3D.SetActive(true);
         _Camera_2D.SetActive(false);
     }
-    
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Machine")
+        {
+            _OnMachine = true;
+        }
+    }
+    public void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Machine")
+        {
+            _OnMachine = false;
+        }
+    }
+
 }

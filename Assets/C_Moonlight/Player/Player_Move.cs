@@ -22,6 +22,7 @@ public class Player_Move : MonoBehaviour
     //
     public bool _EvadeBool_01;
     public bool _IsGround;
+    public bool _OnMachine;
     public bool _IsWall;
     public bool _GravityBool;
     public bool _JumpBool;
@@ -57,6 +58,7 @@ public class Player_Move : MonoBehaviour
     public Vector3 _Move_Player_VT;
     public RaycastHit Y_HitDown;
     public RaycastHit Y_HitUp;
+    public LayerMask _LayerMask;
     //
     private Player _Player;
     void Start()
@@ -66,7 +68,7 @@ public class Player_Move : MonoBehaviour
     }
     void Update()
     {
-        _IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitUp, _Wall);
+        _IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitUp, _Wall, _LayerMask);
         Feet();
         if (_GravityBool)
             Gravity();
@@ -164,22 +166,22 @@ public class Player_Move : MonoBehaviour
     {
         if (_Move_Player_CD)
         {
-            if (_EvadeTime_02 > 0)
+            if (_EvadeTime_02 > 0 )
             {
                 _Player._Renderer.Player_Anim(Player_Animator.Dash, true);
                 _EvadeTime_02 -= Time.deltaTime;
-                    _Move_Player_CD.isTrigger = true;
+                _Move_Player_CD.isTrigger = true;
                 transform.position = Vector3.Lerp(transform.position
                                                   ,_Move_Player_VT
                                                   ,10 * Time.deltaTime);
             }
-            if (_EvadeTime_02 < 0 && _Player._Trigger._Evade_ToMachine == false)
+            if (_EvadeTime_02 < 0 /*&& _Player._Trigger._Evade_ToMachine == false*/)
             {
                 _Player._DashBool = false;
                 _Player._Renderer.Player_Anim(Player_Animator.Dash, false);
                 _EvadeBool_01 = false;
                 if (_IsWall == true)
-                _Move_Player_CD.isTrigger = false;
+                    _Move_Player_CD.isTrigger = false;
             }
         }
     }
@@ -192,8 +194,8 @@ public class Player_Move : MonoBehaviour
     public void Jump()
     {
         if (_Acceleration_02 < 0)
-            _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
-        
+            _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
+
         if (_IsGround && _Acceleration_02 <= 0)
         {
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
@@ -201,6 +203,14 @@ public class Player_Move : MonoBehaviour
             _GravityBool = false;
             _Player._JumpBool = false;
             _Jump_AinTrigger = false;
+        }
+        if (_Player._Trigger._OnMachine)
+        {
+            _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
+            _GravityBool = false;
+            _Player._JumpBool = false;
+            _Jump_AinTrigger = false;
+            _Player._Renderer.Player_Anim(Player_Animator.JumpIdle);
         }
         else if (_IsGround != true)
             _GravityBool = true;
@@ -239,10 +249,13 @@ public class Player_Move : MonoBehaviour
                                     , out Y_HitDown
                                     , _Grounddistance
                                     , 1 << 10);
+    }
+    public void LateUpdate()
+    {
         if (_IsGround == false)
         {
-            if (Physics.Raycast(_Move_Player_Feet.position + _Move_Player_Feet.up *_Airdistance, -_Move_Player_Feet.up
-                                    , out Y_HitUp, _Airdistance, 1 << 10))
+            if (Physics.Raycast(_Move_Player_Feet.position + _Move_Player_Feet.up * _Airdistance, -_Move_Player_Feet.up
+                                    , out Y_HitUp, _Airdistance, 1 << 10 | 1 << 9))
             {
                 transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
                 _Acceleration_02 = _Acceleration_01;

@@ -81,11 +81,13 @@ public class Player_Renderer : MonoBehaviour
             case Player_Animator.Attack:
                 {
                     _Player_AM.SetTrigger("Attack");
+                    _Player_AM.SetTrigger("GroundAttacking");
                     break;
                 }
             case Player_Animator.Jump:
                 {
-                    _Player_AM.SetBool("Jump", isTrue);
+                    //_Player_AM.SetBool("Jump1", isTrue);
+                    _Player_AM.SetTrigger("Jump");
                     _Walk_AS.Stop();
                     break;
                 }
@@ -112,14 +114,6 @@ public class Player_Renderer : MonoBehaviour
                 }
         }
     }
-    public bool Ground_Already()
-    {
-        if (_Player_AM)//check
-        {
-            return _Player_AM.GetBool("Jump Trigger");
-        }
-        return false;
-    }
     public void AnimTime_BeAttack()
     {
         if (_BeAttack_DelayTime_02 <= _BeAttack_DelayTime_01)
@@ -139,15 +133,15 @@ public class Player_Renderer : MonoBehaviour
             _Player_AM = _Fist_AM;
             _Player_AM.SetFloat("Speed", _SpeedMultiplier[0]);
         }
-        if (_Weapon._NowType == Weapon_Type_enum.Axe)
-        {
-            _Player_AM.runtimeAnimatorController = OverrideController[0];
-            _Player_AM.SetFloat("Speed", _SpeedMultiplier[2]);
-        }
         if (_Weapon._NowType == Weapon_Type_enum.Sword)
         {
             _Player_AM.runtimeAnimatorController = OverrideController[1];
             _Player_AM.SetFloat("Speed", _SpeedMultiplier[1]);
+        }
+        if (_Weapon._NowType == Weapon_Type_enum.Axe)
+        {
+            _Player_AM.runtimeAnimatorController = OverrideController[0];
+            _Player_AM.SetFloat("Speed", _SpeedMultiplier[2]);
         }
     }
 }

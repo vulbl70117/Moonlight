@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public bool _RunBool = false;
     public bool _JumpBool = false;
     public bool _DashBool = false;
-    public bool _Player_Attacking = false;
+    public bool _Player_GroundAttacking = false;
     //
     public float _Move_Speed = 5;
     public float _JumpRay = 0.15f;
@@ -57,15 +57,15 @@ public class Player : MonoBehaviour
         }
         if ((_Change == To2D3D.to2D || _Trigger._To2D) && _Renderer._BeAttackBool == false)
         {
-            //Sport_2D();
+            Sport_2D();
         }
         if ((_Change == To2D3D.to3D || _Trigger._To3D) && _Renderer._BeAttackBool == false)
         {
             Sport_3D();
         }
-        if (_Renderer._Player_AM.GetCurrentAnimatorStateInfo(0).IsName("Attack Already"))
+        if (!_Renderer._Player_AM.GetBool("GroundAttacking"))
         {
-            _Player_Attacking = false;
+            _Player_GroundAttacking = false;
         }
     }
     private void FixedUpdate()
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         _Change = To2D3D.to2D;
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         _RunBool = false;
-        if (_Move._IsGround && _Player_Attacking)
+        if (_Move._IsGround && _Player_GroundAttacking)
             return;
         if (_DashBool == false)
         {
@@ -164,36 +164,38 @@ public class Player : MonoBehaviour
     }
     public void Attack()
     {
-        if (_Renderer._Player_AM.GetBool("Attacking"))
+        if (_Renderer._Player_AM.GetBool("Attacking") && _Weapon._Attack._IsRay)
         {
             _Attack._Machine._Renderer.BeAttack(1);
+            _Weapon._WeaponSetting._AttackHit = true;
 
         }
-        else if (_Renderer._Player_AM.GetBool("Attacking") == false && _Weapon._WeaponSetting._AttackHit)
+        else if (_Renderer._Player_AM.GetBool("Attacking") == false && _Weapon._WeaponSetting._AttackHit && _Weapon._Attack._IsRay)
         {
             _Attack._Machine._Renderer._StrikeBool = false;
             _Weapon._WeaponSetting._AttackHit = false;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !_Player_GroundAttacking)
         {
             if (_Move._IsGround)
-                _Player_Attacking = true;
+                _Player_GroundAttacking = true;
             _Renderer.Player_Anim(Player_Animator.Attack);
         }
-       
+
     }
     public void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) 
+        if ((Input.GetKeyDown(KeyCode.Space) 
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
             && _Move._Jump_AinTrigger == false
-            && _Player_Attacking==false)
+            && _Player_GroundAttacking == false)
+            || (Input.GetKeyDown(KeyCode.Space) && _Trigger._OnMachine == true))
         {
             _JumpBool = true;
             if (_JumpBool)
                 _Renderer.Player_Anim(Player_Animator.JumpIdle);
-            _Renderer.Player_Anim(Player_Animator.Jump, true);
+            _Renderer.Player_Anim(Player_Animator.Jump/*, true*/);
             _Renderer.Player_Anim(Player_Animator.JumpDown, true);
             _Move.Jump_Up();
         }
@@ -204,16 +206,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             _Move._JumpBool = false;
-        }
-    }
-    private void LateUpdate()
-    {
-        if (_Weapon._Attack._IsRay && _Renderer._Player_AM.GetBool("Attacking")==false)
-        {
-
-            //_Attack._Machine._Renderer.BeAttack(1);
-            //_Attack._StrikeBool = false;
-            //_Weapon._WeaponSetting._AttackHit = false;
         }
     }
 }

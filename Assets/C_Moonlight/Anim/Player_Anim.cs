@@ -15,7 +15,6 @@ public class Player_Anim : StateMachineBehaviour
             && stateInfo.normalizedTime <= _WeaponSetting.WeaponDataList[(int)_WeaponSetting.nowWeapon].AttackEndTime)
         {
             animator.SetBool("Attacking", true);
-            _WeaponSetting._AttackHit = true;
         }
         else
             animator.SetBool("Attacking", false);
