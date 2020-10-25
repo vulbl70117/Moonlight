@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Pixeye.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public enum To2D3D
@@ -6,42 +7,31 @@ public enum To2D3D
     to2D,
     to3D
 } 
-
 public class Player : MonoBehaviour
 {
-    //Player
+    
+    public Weapon _Weapon;
+    public To2D3D _Change = To2D3D.to2D;
+    public GameObject _Player_Camera3D;
+    [Foldout("Player", true)]
+    public PlayerSetting _PlayerSetting;
     private bool _Can_Evade = true;
     public bool _RunBool = false;
     public bool _JumpBool = false;
     public bool _DashBool = false;
     public bool _Player_GroundAttacking = false;
-    //
     public float _Move_Speed = 5;
-    public float _JumpRay = 0.15f;
-    //
-    public To2D3D _Change = To2D3D.to2D;
-    //    
-    public GameObject _Player_Camera3D;
-    //
-    public Collider _Player_CD;
-    //
+    [Foldout("Script", true)]
     public Player_Move _Move;
     public Player_Trigger _Trigger;
     public Player_Renderer _Renderer;
     public Player_Attack _Attack;
-    //
-    //Weapon
-    public Weapon _Weapon;
-    //
-
     void Start()
     {
         _Attack = GetComponent<Player_Attack>();
-        _Player_CD = GetComponent<Collider>();
         _Move = GetComponent<Player_Move>();
         _Trigger = GetComponent<Player_Trigger>();
         _Renderer = GetComponent<Player_Renderer>();
-
         _Weapon = GetComponentInChildren<Weapon>();
     }
     void Update()
@@ -148,7 +138,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
     public void Weapon_()
     {
         if (_Weapon._NowType == Weapon_Type_enum.Fist
@@ -181,31 +170,28 @@ public class Player : MonoBehaviour
                 _Player_GroundAttacking = true;
             _Renderer.Player_Anim(Player_Animator.Attack);
         }
-
     }
     public void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) 
+        if (Input.GetKeyDown(KeyCode.Space) 
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
             && _Move._Jump_AinTrigger == false
             && _Player_GroundAttacking == false)
-            || (Input.GetKeyDown(KeyCode.Space) && _Trigger._OnMachine == true))
         {
             _JumpBool = true;
             if (_JumpBool)
-                _Renderer.Player_Anim(Player_Animator.JumpIdle);
-            _Renderer.Player_Anim(Player_Animator.Jump/*, true*/);
+                _Renderer.Player_Anim(Player_Animator.JumpIdle, true);
+            _Renderer.Player_Anim(Player_Animator.Jump, true);
             _Renderer.Player_Anim(Player_Animator.JumpDown, true);
-            _Move.Jump_Up();
         }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            _Move.Jump_Continued();
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            _Move._JumpBool = false;
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    _Move.Jump_Continued();
+        //}
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    _Move._JumpBool = false;
+        //}
     }
 }

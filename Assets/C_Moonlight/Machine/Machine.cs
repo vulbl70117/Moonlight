@@ -21,7 +21,7 @@ public class Machine : MonoBehaviour
     {        
         _Move = GetComponent<Machine_Move>();
         _Renderer = GetComponent<Machine_Renderer>();
-        _Player= GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
     void Update()
     {

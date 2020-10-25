@@ -22,6 +22,7 @@ public class Machine_Move : MonoBehaviour
     private bool _MoveBool = true;
     public bool _StopBool = false;
     public bool _DetectBool = false;
+    public bool _MoveAnim;
     //
     private Quaternion _Machion_QR;
     //
@@ -32,16 +33,20 @@ public class Machine_Move : MonoBehaviour
     //
     private Machine_Attack _Attack;
     //
+    public Machine _Machine;
+    //
     public GameObject _Pos;
     //
     private Rigidbody rd;
     public Vector3 _Machine_VT;
+
+    public Machine_Renderer machine_renderer;
     void Start()
     {
+        machine_renderer = GetComponent<Machine_Renderer>();
         rd = GetComponent<Rigidbody>();
         _DrawGizmos = GetComponent<Machine_DrawGizmos>();
         _Attack = GetComponent<Machine_Attack>();
-        //_Pos = transform.GetChild(0).gameObject;
         _Machine_TF = GetComponent<Transform>();
         _Move_AllTime_02 = _Move_AllTime_01;
         if (_Type == Enemy_Type.Ground)
@@ -56,12 +61,15 @@ public class Machine_Move : MonoBehaviour
 
     void Update()
     {
+        
+        
     }
     public void Move_Patrol()
     {
         if (_Move_AllTime_02 >= 0)
         {
             _Move_AllTime_02 -= Time.deltaTime;
+            _MoveAnim = false;
             Move_Time();
         }
     }
@@ -69,6 +77,7 @@ public class Machine_Move : MonoBehaviour
     {
         if (_Move_Patrol_Time_02 <= _Move_Patrol_Time_01)
         {
+            _MoveAnim = true;
             _Move_Patrol_Time_02 += Time.deltaTime;
             _Machine_TF.position += _Machine_TF.forward
                                     * (_MoveBool ? 1 : 1)
@@ -93,23 +102,29 @@ public class Machine_Move : MonoBehaviour
     public void Ground()
     {
         _Distance = Vector3.Distance(transform.position, _Player_TF.position);//距離
-
-        if (_Distance > _DrawGizmos._Detect_Radius)
+        //if (_Machine._Renderer._MaterialBool == false)
         {
-            //Move_Patrol();
+            //Debug.Log("X");
+            if (_Distance > _DrawGizmos._Detect_Radius)
+                {
+                     //Move_Patrol();
+                }
+            else if (_Distance < _DrawGizmos._Detect_Radius
+                     && _Distance > _DrawGizmos._Attack_Radius)
+                {
+                    _MoveAnim = true;//
+                    Machion_Chase();
+                }
+            if (_Distance < _DrawGizmos._Attack_Radius)
+                {
+                    _MoveAnim = false;//
+                    Aim();
+                }
         }
-        else if (_Distance < _DrawGizmos._Detect_Radius
-                 && _Distance > _DrawGizmos._Attack_Radius)
-        {
-            Machion_Chase();
-        }
-        if (_Distance < _DrawGizmos._Attack_Radius)
-        {
-            Aim();
-        }
+        
     }
     public void Machion_Chase()
-    {
+    {       
         _Machine_VT = Vector3.ProjectOnPlane(_Player_TF.position - transform.position, transform.up);
         transform.Translate(Vector3.forward * Time.deltaTime * 5);
         transform.rotation=Quaternion.LookRotation(_Machine_VT);

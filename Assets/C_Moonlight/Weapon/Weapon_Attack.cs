@@ -10,7 +10,6 @@ public class Weapon_Attack : MonoBehaviour
     public RaycastHit _Attack_Hit;
     public LayerMask _LayerMask;
 
-    public Machine machine;
     public Weapon _Weapon;
     void Start()
     {

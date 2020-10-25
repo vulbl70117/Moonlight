@@ -18,8 +18,8 @@ public class Player_Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
-    
     public void Machine(GameObject machine)
     {
         _Any = machine;

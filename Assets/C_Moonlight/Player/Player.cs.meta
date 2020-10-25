@@ -3,7 +3,14 @@ guid: 9ce5ddd832f14f94a951850f45d9159d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _Player_Camera3D: {instanceID: 0}
+  - _Move: {instanceID: 0}
+  - _Trigger: {instanceID: 0}
+  - _Renderer: {instanceID: 0}
+  - _Attack: {instanceID: 0}
+  - _Weapon: {instanceID: 0}
+  - _PlayerSetting: {fileID: 11400000, guid: f7e010967a34acd4386a0ff5d7efed1b, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

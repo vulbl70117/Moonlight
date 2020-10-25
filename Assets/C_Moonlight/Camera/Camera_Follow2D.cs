@@ -11,7 +11,8 @@ public class Camera_Follow2D : MonoBehaviour
     private Vector3 _Follow;
     public float _Camera_Speed = 0.1f;
     public float _Camera_ZeroTime=1.5f;
-    public float deviation2D = 2f;//偏移量
+    public float deviation2D_x = 2f;//偏移量
+    public float deviation2D_y = 2f;//偏移量
     //
     public GameObject _Player_GO;
     private Player _Player;
@@ -34,7 +35,7 @@ public class Camera_Follow2D : MonoBehaviour
             if (_Change_Camera == To2D3D.to2D || _Player._Trigger._To2D)
             {
                 _Change_Camera = To2D3D.to2D;
-                _Player._Move._Camera_Time += Time.deltaTime;
+                //_Player._Move._Camera_Time += Time.deltaTime;
                 //if (Vector3.Distance(_Camera.position, _Player_GO.transform.position) > 3 )
                 //{   
                 //    Follow_To2D();
@@ -49,7 +50,7 @@ public class Camera_Follow2D : MonoBehaviour
     }
     public void Follow_To2D()
     {
-        _Follow = new Vector3(_Player_GO.transform.position.x + deviation2D, _Player_GO.transform.position.y + deviation2D, _Camera.position.z);
+        _Follow = new Vector3(_Player_GO.transform.position.x + deviation2D_x, _Player_GO.transform.position.y + deviation2D_y, _Camera.position.z);
         _Camera.position = Vector3.Lerp(_Camera.position, _Follow, _Camera_Speed * Time.deltaTime);
     }
 }

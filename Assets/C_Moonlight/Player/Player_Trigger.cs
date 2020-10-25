@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Player_Trigger : MonoBehaviour
 {
-    public Weapon weapon;
-
     public bool _To2D;
     public bool _To3D;
     public bool _Evade_ToMachine = false;
-    public bool _OnMachine;
 
     public GameObject _Camera_2D;
     public GameObject _Camera_3D;
@@ -24,7 +21,31 @@ public class Player_Trigger : MonoBehaviour
         if (other.gameObject.tag == "Machine")
         {
             _Evade_ToMachine = true;
-            _OnMachine = true;
+        }
+        if (other.gameObject.CompareTag("Weapon"))
+        {
+            Weapon_Collision weapon_coll = other.gameObject.GetComponent<Weapon_Collision>();
+            _Intag = true;
+
+            if (weapon_coll._Type == Weapon_Type_enum.Sword)
+            {
+                _NewType = Weapon_Type_enum.Sword;
+                if (Weapon._Pick_Weapon == true)
+                {
+                    other.gameObject.SetActive(false);
+                    _Intag = false; 
+                }
+            }
+            else if (weapon_coll._Type == Weapon_Type_enum.Axe)
+            {
+                _NewType = Weapon_Type_enum.Axe;
+
+                if (Weapon._Pick_Weapon == true)
+                {
+                    _Intag = false;
+                    other.gameObject.SetActive(false);
+                }
+            }
         }
     }
     public void OnTriggerEnter(Collider other)
@@ -39,39 +60,13 @@ public class Player_Trigger : MonoBehaviour
             _To3D = true;
             Camera_3D();
         }
-        if (other.gameObject.CompareTag("Weapon"))
-        {
-            Weapon_Collision weapon_coll = other.gameObject.GetComponent<Weapon_Collision>();
-            _Intag = true;
-            
-            if(weapon_coll._Type == Weapon_Type_enum.Sword)
-            {
-                _NewType = Weapon_Type_enum.Sword;
-
-                if (Weapon._Pick_Weapon == true)
-                {
-                    _Intag = false;
-                    other.gameObject.SetActive(false);
-                }
-            }
-            else if (weapon_coll._Type == Weapon_Type_enum.Axe)
-            {
-                _NewType = Weapon_Type_enum.Axe;
-
-                if (Weapon._Pick_Weapon == true)
-                {
-                    _Intag = false;
-                    other.gameObject.SetActive(false);
-                }
-            }
-        }    
+        
     }
     public void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Machine"))
         {
             _Evade_ToMachine = false;
-            _OnMachine = false;
         }
         if (other.gameObject.CompareTag("Weapon"))
         {
@@ -88,19 +83,4 @@ public class Player_Trigger : MonoBehaviour
         _Camera_3D.SetActive(true);
         _Camera_2D.SetActive(false);
     }
-    public void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Machine")
-        {
-            _OnMachine = true;
-        }
-    }
-    public void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Machine")
-        {
-            _OnMachine = false;
-        }
-    }
-
 }

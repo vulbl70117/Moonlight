@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb19a74723cdd04e949f0dcf6d67494, type: 3}
+  m_Name: PlayerSetting
+  m_EditorClassIdentifier: 
+  _Height_01: 20
+  _EavdeSpeed_2D: 5
+  _UseEvadeTime: 0.5
+  _EvadeTime_01: 0.4
+  _HP: 74
+  _BeAttack_DelayTime_01: 0.3
+  _SpeedMultiplier:
+  - 3
+  - 1
+  - 3
+  OverrideController:
+  - {fileID: 22100000, guid: e52d3c7698fe376499dc9a43e41adf95, type: 2}
+  - {fileID: 22100000, guid: 182dc71f83dbbbf4a83fcfec99c7482a, type: 2}
+  - {fileID: 22100000, guid: a2b7eadbe828a124d8162511e7f763de, type: 2}

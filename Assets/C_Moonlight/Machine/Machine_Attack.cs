@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Machine_Attack : MonoBehaviour
 {
+    public Machine_Renderer _Machine_Renderer;
+
     public GameObject _Bullet;
     public Transform Pos;
     public float _Shoot_Speed = 2000;
@@ -15,7 +17,7 @@ public class Machine_Attack : MonoBehaviour
     public bool _DiveBool_02;
     void Start()
     {
- 
+        _Machine_Renderer = GetComponent<Machine_Renderer>();
     }
     void Update()
     {
@@ -34,6 +36,7 @@ public class Machine_Attack : MonoBehaviour
         GameObject _Attack = Instantiate(_Bullet);
         if (_Bullet)
         {
+            _Machine_Renderer.Machine_Anim(Machine_Animator.Attack);
             _Attack.transform.position = Pos.transform.position;
             _Attack.transform.rotation = Pos.transform.rotation;
             Rigidbody _Bullet_RD = _Attack.GetComponent<Rigidbody>();
@@ -41,6 +44,7 @@ public class Machine_Attack : MonoBehaviour
             {
                 _Bullet_RD.AddForce(_Attack.transform.forward * _Shoot_Speed);
             }
+            Destroy(_Attack, 3);
         }
     }
     public void OnTriggerEnter(Collider other)

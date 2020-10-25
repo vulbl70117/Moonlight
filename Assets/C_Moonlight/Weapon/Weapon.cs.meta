@@ -3,7 +3,11 @@ guid: 9e2ea587967486841915f6469d7a77cc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _Weapon_TG: {instanceID: 0}
+  - _Attack: {instanceID: 0}
+  - _Player: {instanceID: 0}
+  - _WeaponSetting: {fileID: 11400000, guid: 573d61fb5ee006c47a05c2b2477d213c, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

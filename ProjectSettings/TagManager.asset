@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
-  - To3D
   - Machine
   - Weapon
   - Sword
@@ -19,11 +18,11 @@ TagManager:
   - UI
   - 
   - 
-  - Post Processing
-  - Machine
-  - Floor
+  - pp
   - Weapon
-  - Player
+  - Floor
+  - Machine
+  - 
   - 
   - 
   - 

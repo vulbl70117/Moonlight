@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Pixeye.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public enum Weapon_Type_enum
@@ -11,25 +12,23 @@ public enum Weapon_Type_enum
 
 public class Weapon : MonoBehaviour
 {
+    public WeaponSetting _WeaponSetting;
+    public Player _Player;
+    public Weapon_Attack _Attack;
+    [Foldout("換武器", true)]
     public Weapon_Type_enum _NowType = Weapon_Type_enum.Fist;//現在手上拿的武器
     public List<Weapon_Type_enum> _TypeList = new List<Weapon_Type_enum>();//武器欄
     public GameObject[] _Weapon_Type;
     public static bool _Pick_Weapon = false;//開啟撿武器的Tag
     //public Weapon_UI _Weapon_UI;//武器UI script
     //public Weapon_Trigger _Weapon_TG;
-    public Weapon_Attack _Attack;
-    public Player _Player;
-
-    public WeaponSetting _WeaponSetting;
     void Start()
     {
     }
     void Update()
     {
         _WeaponSetting.nowWeapon = _NowType;
-        //Chang_Weapon_TG();
-        _Pick_Weapon = false;//常駐關閉撿武器的Tag
-
+        Weapon._Pick_Weapon = false;//常駐關閉撿武器的Tag
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (_TypeList[0] != Weapon_Type_enum.Fist && _TypeList[1] != Weapon_Type_enum.Fist)//1，2武器欄都有武器才可交換
@@ -39,6 +38,7 @@ public class Weapon : MonoBehaviour
             if (Player_Trigger._Intag)//進入範圍內才可撿武器
             {
                 _Pick_Weapon = true;
+                Debug.Log(_Pick_Weapon);
                 this.SetType(Player_Trigger._NewType, 0);
             }
         }
@@ -63,7 +63,6 @@ public class Weapon : MonoBehaviour
         _Weapon_Type[(int)_TypeList[chWeapon]].SetActive(true);
         //_Weapon_UI.Chang_weapon(chWeapon);//傳入武器
         //_Weapon_UI.Pick_Weapon(eType, chWeapon);//傳入武器圖片
-
     }
     public void Chang_Type(int open)
     {
@@ -72,7 +71,6 @@ public class Weapon : MonoBehaviour
         _Weapon_Type[(int)_TypeList[open]].SetActive(true);
         //_Weapon_UI.Chang_weapon(open);//傳入武器
     }
-
     //public void Chang_Weapon_TG()
     //{
     //    if (_NowType == Weapon_Type_enum.Fist)

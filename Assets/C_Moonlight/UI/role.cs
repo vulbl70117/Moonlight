@@ -10,19 +10,19 @@ public class Role : MonoBehaviour
     public Text maxHP;//放最高血量
     public Slider barHP;//放血條
 
-    public Player_Renderer Player_Renderer; //放角色
+    public Player _Player; //放角色
     // Start is called before the first frame update
     void Start()
     {
-        maxHP.text = Player_Renderer._HP.ToString();//初始最高血量
+        maxHP.text = _Player._PlayerSetting._HP.ToString();//初始最高血量
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Player_Renderer != null)
+        if(_Player != null)
         {
-            curHP.text = Player_Renderer._HP.ToString();//更新當前血量
+            curHP.text = _Player._PlayerSetting._HP.ToString();//更新當前血量
             setSliderHP();
         }
     }
