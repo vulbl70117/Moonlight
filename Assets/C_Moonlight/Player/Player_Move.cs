@@ -93,16 +93,15 @@ public class Player_Move : MonoBehaviour
                 {
                     if (_IsWall == false)
                         transform.Translate(Vector3.forward * Time.deltaTime * speed);
-                    _Move_Player_ModTF.rotation = Quaternion.Euler(0, 180, 0);
+                    _Move_Player_ModTF.rotation = Quaternion.Euler(0, -180, 0);
                     Camera_Time();
                     break;
                 }
             case Player_2D.Evade:
                 {
-                    if (_IsWall == false)
-                        _Move_Player_VT =new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y == 0 ? speed : -speed)
-                                                , transform.position.y
-                                                , transform.position.z);
+                        _Move_Player_VT = new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y >= 0 ? speed : -speed)
+                                                      , transform.position.y
+                                                      , transform.position.z);
                     Camera_Time();
                     break;
                 }
@@ -147,7 +146,7 @@ public class Player_Move : MonoBehaviour
         {
             if (_Move_Change == To2D3D.to2D)
             {
-                Move2D(Player_2D.Evade, _Player._PlayerSetting._EavdeSpeed_2D);
+                Move2D(Player_2D.Evade, _Player._PlayerSetting._EavdeVT_Y);
             }
             if (_Move_Change == To2D3D.to3D)
             {
@@ -158,7 +157,7 @@ public class Player_Move : MonoBehaviour
             _EvadeBool_01 = true;
         }
     }
-    public void Evade_ToMachine()
+    public void Evadeing()
     {
         if (_Move_Player_CD)
         {
@@ -168,8 +167,8 @@ public class Player_Move : MonoBehaviour
                 _EvadeTime_02 -= Time.deltaTime;
                 _Move_Player_CD.isTrigger = true;
                 transform.position = Vector3.Lerp(transform.position
-                                                  ,_Move_Player_VT
-                                                  ,10 * Time.deltaTime);
+                                                  , _Move_Player_VT
+                                                  , _Player._PlayerSetting._EavdeSpeed_2D * Time.deltaTime);
             }
             if (_EvadeTime_02 < 0 && _Player._Trigger._Evade_ToMachine == false)
             {
@@ -179,6 +178,22 @@ public class Player_Move : MonoBehaviour
                 if (_IsWall == true)
                     _Move_Player_CD.isTrigger = false;
             }
+            Slide();
+        }
+    }
+    public void Slide()
+    {
+        if (_Player._Trigger._Evade_ToMachine == true && _EvadeTime_02 <= 0.2f)
+        {
+            _Move_Player_VT = new Vector3(transform.position.x
+                                          + (_Move_Player_ModTF.rotation.y >= 0
+                                             ? _Player._PlayerSetting._SlideVT_Y
+                                             : -_Player._PlayerSetting._SlideVT_Y)
+                                           , transform.position.y
+                                           , transform.position.z);
+            transform.position = Vector3.Lerp(transform.position
+                                              , _Move_Player_VT
+                                              , _Player._PlayerSetting._EavdeSpeed_2D * Time.deltaTime);
         }
     }
     public void Gravity()
@@ -225,13 +240,6 @@ public class Player_Move : MonoBehaviour
     //        _Acceleration_02 = _Height_01;
     //    }
     //}
-    public void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Machine"))
-        {
-            //_Acceleration_02 = _Acceleration_01;
-        }
-    }
     public void Camera_Time()
     {
         _Camera_Time = 0;

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: PlayerSetting
   m_EditorClassIdentifier: 
   _Height_01: 20
-  _EavdeSpeed_2D: 5
+  _EavdeVT_Y: 5
+  _SlideVT_Y: 1
+  _EavdeSpeed_2D: 10
   _UseEvadeTime: 0.5
   _EvadeTime_01: 0.4
-  _HP: 74
+  _HP: 64
   _BeAttack_DelayTime_01: 0.3
   _SpeedMultiplier:
   - 3

@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
             else if (_Move._EvadeBool_01 == true)
             {
                 _DashBool = true;
-                _Move.Evade_ToMachine();
+                _Move.Evadeing();
             }
         }
     }
@@ -134,7 +134,7 @@ public class Player : MonoBehaviour
             }
             if (_Move._EvadeBool_01 == true)
             {
-                _Move.Evade_ToMachine();
+                _Move.Evadeing();
             }
         }
     }
