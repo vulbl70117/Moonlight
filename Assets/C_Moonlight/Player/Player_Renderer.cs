@@ -83,6 +83,7 @@ public class Player_Renderer : MonoBehaviour
                 }
             case Player_Animator.Jump:
                 {
+                    //_Player_AM.SetTrigger("Jump");
                     _Player_AM.SetBool("Jump", isTrue);
                     _Walk_AS.Stop();
                     break;
