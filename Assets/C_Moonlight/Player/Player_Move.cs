@@ -173,8 +173,7 @@ public class Player_Move : MonoBehaviour
         if (_Acceleration_02 < -1)
         {
             _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
-            //_Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
-            //_Player._Renderer.Player_Anim(Player_Animator.JumpIdle);
+            _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
         }
         if (_IsGround && _Acceleration_02 < -1)
         {
@@ -187,9 +186,6 @@ public class Player_Move : MonoBehaviour
 
         else if (_IsGround != true)
             _GravityBool = true;
-        //if (_IsGround)
-        //    _Player._Renderer._Player_AM.ResetTrigger("Jump Trigger");
-
         //raycasy hit
         if (_Player._JumpBool && _IsHeadWall == false)
         {

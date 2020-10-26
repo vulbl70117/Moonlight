@@ -3,7 +3,12 @@ guid: a4d77805bd2f4d545baecb48ceb4e3f9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _Renderer: {instanceID: 0}
+  - _Move: {instanceID: 0}
+  - _DrawGizmos: {instanceID: 0}
+  - machineSetting: {fileID: 11400000, guid: da22a9c1fe7ecc14d92e734810fa543e, type: 2}
+  - _Player: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
