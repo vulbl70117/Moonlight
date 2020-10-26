@@ -169,7 +169,7 @@ public class Machine_Move : MonoBehaviour
         _Stop_Time_02 -= Time.deltaTime;
         Vector3 pos = transform.GetChild(0).transform.position;
         transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime);
-        _Machine_TF.localRotation = Quaternion.Euler(0, 0, 0);
+        _Machine_TF.rotation = Quaternion.Euler(0,90,0);
         if (_Stop_Time_02 <= 0)
         {
             _Attack_Time_02 = _Attack_Time_01;
