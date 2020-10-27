@@ -150,10 +150,13 @@ public class Machine_Move : MonoBehaviour
                                               , Time.deltaTime * _Dive_Speed);
         }
         _Machine_TF.LookAt(_Player_VT);
-        if (_Machine._Attack._DiveBool_01 || _Machine._Attack._DiveBool_02)
+        float x= Vector3.Distance(transform.position, _Player_VT);
+            Debug.Log(x);
+        if (x<=1)
+        //if (_Machine._Attack._DiveBool_01 || _Machine._Attack._DiveBool_02)
         {
-            _Stop_Time_02 = _Stop_Time_01;
             _StopBool = true;
+            _Stop_Time_02 = _Stop_Time_01;
         }
         if (_Attack_Time_02 < 0)
         {

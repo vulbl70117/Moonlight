@@ -15,6 +15,7 @@ public class PlayerSetting : ScriptableObject
     public float _UseEvadeTime = 0.5f;
     public float _EvadeTime_01 = 0.4f;
     [Foldout("Renderer", true)]
+    public bool x;
     public float _HP = 30f;
     public float _BeAttack_DelayTime_01;
     public float[] _SpeedMultiplier;

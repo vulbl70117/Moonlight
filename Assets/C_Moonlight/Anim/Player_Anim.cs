@@ -5,9 +5,11 @@ using UnityEngine;
 public class Player_Anim : StateMachineBehaviour
 {
     public WeaponSetting _WeaponSetting;
+    public PlayerSetting _PlayerSetting;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //animator.SetTrigger("GroundAttacking");
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

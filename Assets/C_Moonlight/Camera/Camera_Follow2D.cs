@@ -55,7 +55,7 @@ public class Camera_Follow2D : MonoBehaviour
         Vector3 _FollowUp= new Vector3(transform.position.x, _Player_GO.transform.position.y + deviation2D_y, transform.position.z - deviation2D_z);
         if (_Player._Move._IsGround)
             transform.position = Vector3.Lerp(transform.position, _Follow, _Camera_Speed * Time.deltaTime);
-        else
+        else if(_Player._Move._IsGround1 == false)
             transform.position = Vector3.Lerp(transform.position, _FollowUp, _Camera_Speed*1.5f * Time.deltaTime);
     }
 }

@@ -25,16 +25,19 @@ public class Player_Move : MonoBehaviour
     private float _EvadeTime_02;
     [Foldout("射線", true)]
     public bool _IsGround;
+    public bool _IsGround1;
     public bool _IsWall;
     public bool _IsHeadWall;
     public float _Tall = 1.5f;
     public float _Wall = 1.5f;
     public float _HeadWall = 0.5f;
     public float _Grounddistance = 0.4f;
+    public float _Distance;
     public float _Airdistance = 3f;
     public RaycastHit Y_HitDown;
     public RaycastHit Y_HitUp;
     public RaycastHit Y_HitWall;
+    public RaycastHit Y_HitR;
     public LayerMask _LayerMask;
     [Foldout("Transform", true)]
     public Transform _Move_Player_ModTF;
@@ -57,11 +60,18 @@ public class Player_Move : MonoBehaviour
     }
     void Update()
     {
-        _IsGround = Physics.Raycast(_Move_Player_Feet.position
-                                   , -_Move_Player_Feet.up
-                                   , out Y_HitDown
-                                   , _Grounddistance
-                                   , 1 << 10);
+        _IsGround = Physics.Raycast(transform.position, -transform.up, out Y_HitDown, _Grounddistance, 1 << 10);
+        
+            if (Physics.Raycast(_Move_Player_Feet.position, -_Move_Player_Feet.up, out Y_HitR, 1 << 10))
+            {
+                _Distance = Vector3.Distance(_Move_Player_Feet.position, Y_HitR.point);
+                Debug.Log(_Distance);
+            if (_Distance < 1.7f)
+                _IsGround1 = true;
+            else
+                _IsGround1 = false;
+            }
+        
         _IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitWall, _Wall, _LayerMask);
         _IsHeadWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.up, out Y_HitUp, _HeadWall, _LayerMask);
         Jump();
@@ -163,9 +173,10 @@ public class Player_Move : MonoBehaviour
     }
     public void IsGround()
     {
-        if (_IsGround && _Player._Renderer._Player_AM.GetBool("Jump") == false)
+        if (_Player._Renderer._Player_AM.GetBool("Jump") == false && _IsGround)
         {
             transform.position = new Vector3(transform.position.x, Y_HitDown.point.y + _Tall, transform.position.z);
+
         }
     }
     public void Jump()
@@ -173,7 +184,8 @@ public class Player_Move : MonoBehaviour
         if (_Acceleration_02 < -1)
         {
             _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
-            _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
+            if(_IsGround1==false)
+                _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
         }
         if (_IsGround && _Acceleration_02 < -1)
         {
@@ -226,7 +238,7 @@ public class Player_Move : MonoBehaviour
     {
         if (_IsGround == false && _IsHeadWall == false)
         {
-            if (Physics.Raycast(_Move_Player_Feet.position
+            if (Physics.Raycast(transform.position
                                 , -_Move_Player_Feet.up
                                 , out Y_HitUp,  _Height_02, 1 << 10))
             {
