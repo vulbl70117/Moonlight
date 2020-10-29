@@ -20,8 +20,8 @@ public class Weapon : MonoBehaviour
     public List<Weapon_Type_enum> _TypeList = new List<Weapon_Type_enum>();//武器欄
     public GameObject[] _Weapon_Type;
     public static bool _Pick_Weapon = false;//開啟撿武器的Tag
-    //public Weapon_UI _Weapon_UI;//武器UI script
-    //public Weapon_Trigger _Weapon_TG;
+    public Weapon_UI _Weapon_UI;//武器UI script
+    public Weapon_Trigger _Weapon_TG;
     void Start()
     {
     }
@@ -38,7 +38,6 @@ public class Weapon : MonoBehaviour
             if (Player_Trigger._Intag)//進入範圍內才可撿武器
             {
                 _Pick_Weapon = true;
-                Debug.Log(_Pick_Weapon);
                 this.SetType(Player_Trigger._NewType, 0);
             }
         }
@@ -61,15 +60,15 @@ public class Weapon : MonoBehaviour
         _TypeList[chWeapon] = eType;
         _NowType = eType;
         _Weapon_Type[(int)_TypeList[chWeapon]].SetActive(true);
-        //_Weapon_UI.Chang_weapon(chWeapon);//傳入武器
-        //_Weapon_UI.Pick_Weapon(eType, chWeapon);//傳入武器圖片
+        _Weapon_UI.Chang_weapon(chWeapon);//傳入武器
+        _Weapon_UI.Pick_Weapon(eType, chWeapon);//傳入武器圖片
     }
     public void Chang_Type(int open)
     {
         _Weapon_Type[(int)_NowType].SetActive(false);
         _NowType = _TypeList[open];
         _Weapon_Type[(int)_TypeList[open]].SetActive(true);
-        //_Weapon_UI.Chang_weapon(open);//傳入武器
+        _Weapon_UI.Chang_weapon(open);//傳入武器
     }
     //public void Chang_Weapon_TG()
     //{

@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
         _RunBool = false;
-        if (_Move._IsGround && _Player_GroundAttacking)
+        if (_Move._IsGround && _PlayerSetting.x)
             return;
         if (_DashBool == false)
         {
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
             _Attack._Machine._Renderer._StrikeBool = false;
             _Weapon._WeaponSetting._AttackHit = false;
         }
-        if (Input.GetMouseButtonDown(0) && !_Player_GroundAttacking)
+        if (Input.GetMouseButtonDown(0) )
         {
             if (_Move._IsGround)
                 _Player_GroundAttacking = true;
@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
             && _Move._Jump_AinTrigger == false
-            && _Player_GroundAttacking == false
+            //&& _Player_GroundAttacking == false
             && _Move._IsHeadWall == false)
         {
             _JumpBool = true;

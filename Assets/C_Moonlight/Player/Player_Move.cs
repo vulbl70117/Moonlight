@@ -65,7 +65,6 @@ public class Player_Move : MonoBehaviour
             if (Physics.Raycast(_Move_Player_Feet.position, -_Move_Player_Feet.up, out Y_HitR, 1 << 10))
             {
                 _Distance = Vector3.Distance(_Move_Player_Feet.position, Y_HitR.point);
-                Debug.Log(_Distance);
             if (_Distance < 1.7f)
                 _IsGround1 = true;
             else

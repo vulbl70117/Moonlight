@@ -77,7 +77,6 @@ public class Player_Renderer : MonoBehaviour
                 }
             case Player_Animator.Attack:
                 {
-                    _Player_AM.SetTrigger("GroundAttacking");
                     _Player_AM.SetTrigger("Attack");
                     break;
                 }
