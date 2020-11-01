@@ -5,11 +5,12 @@ using UnityEngine;
 public class Player_Trigger : MonoBehaviour
 {
     public bool _To2D;
-    public bool _To3D;
+    //public bool _IsBullet;
     public bool _Evade_ToMachine = false;
 
     public GameObject _Camera_2D;
     public GameObject _Camera_3D;
+    public Player _Player;
 
     public static Weapon_Type_enum _NewType = Weapon_Type_enum.Fist;//把偵測到的武器先存起來
     public static bool _Intag = false;//是否在武器感應範圍內
@@ -55,12 +56,19 @@ public class Player_Trigger : MonoBehaviour
             _To2D = true;
             Camera_2D();
         }
-        else if(other.gameObject.tag == "To3D")
+        if (other.gameObject.CompareTag("Bullet"))
         {
-            _To3D = true;
-            Camera_3D();
+            _Player._Renderer._IsMachine = false;
+            _Player._Renderer._AudioSource.PlayOneShot(_Player._Renderer._AudioClip[0]);        
         }
-        
+        if (other.gameObject.CompareTag("Machine"))
+        {
+            if (_Player._Renderer._IsMachine)
+            {
+                _Player._Renderer._IsMachine = false;
+                _Player._Renderer._AudioSource.PlayOneShot(_Player._Renderer._AudioClip[1]);
+            }
+        }
     }
     public void OnTriggerExit(Collider other)
     {
@@ -77,10 +85,5 @@ public class Player_Trigger : MonoBehaviour
     {
         _Camera_2D.SetActive(true);
         _Camera_3D.SetActive(false);
-    }
-    private void Camera_3D()
-    {
-        _Camera_3D.SetActive(true);
-        _Camera_2D.SetActive(false);
     }
 }

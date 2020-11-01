@@ -3,7 +3,12 @@ guid: c607454e7b2440d459747f7cad6751c3
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _explosion_particle: {instanceID: 0}
+  - partic: {instanceID: 0}
+  - mesh: {instanceID: 0}
+  - _Machine_Attack: {fileID: 4948082385304820877, guid: e6f9683a9a922b447b0b430c3ceb12a6,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

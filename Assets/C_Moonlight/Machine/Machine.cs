@@ -19,12 +19,13 @@ public class Machine : MonoBehaviour
     public Machine_Move _Move;
     public Machine_DrawGizmos _DrawGizmos;
     void Start()
-    {        
+    {
         _Move = GetComponent<Machine_Move>();
         _Attack = GetComponent<Machine_Attack>();
         _Renderer = GetComponent<Machine_Renderer>();
         _DrawGizmos = GetComponent<Machine_DrawGizmos>();
     }
+
     void Update()
     {
        

@@ -7,8 +7,11 @@ public class Weapon_UI : MonoBehaviour
     public GameObject Weapon1_off;//關武器1顯示
     public GameObject Weapon2_off;//關武器2顯示
 
-    public List<GameObject> weapon1_image = new List<GameObject>();
-    public List<GameObject> weapon2_image = new List<GameObject>();
+    public List<GameObject> weapon1_image = new List<GameObject>(); //武器欄1
+    public List<GameObject> weapon2_image = new List<GameObject>(); //武器欄2
+
+    public List <Weapon_Type_enum> _now_type; //1,2武器欄現在的武器
+    //private Weapon_Type_enum _weapon2_type = Weapon_Type_enum.Fist;
 
     // Start is called before the first frame update
     void Start()
@@ -35,32 +38,45 @@ public class Weapon_UI : MonoBehaviour
             Weapon2_off.SetActive(false);
         }
     }
-    public void Pick_Weapon(Weapon_Type_enum weapontype, int chWeapon)
+    public void Pick_Weapon(Weapon_Type_enum weapontype, int chWeapon)  //新武器type, 武器欄
     {
+
+        if(_now_type[chWeapon] == Weapon_Type_enum.Fist)
+        {
+            if(chWeapon == 0)
+            {
+                weapon1_image[0].SetActive(false);
+            }
+            else
+            {
+                weapon2_image[0].SetActive(false);
+            }           
+        }
+
         if (weapontype == Weapon_Type_enum.Sword)
         {
             if (chWeapon == 0)
             {
-                weapon1_image[0].SetActive(true);
-                weapon1_image[1].SetActive(false);
+                weapon1_image[2].SetActive(false);
+                weapon1_image[1].SetActive(true);
             }
             else
             {
-                weapon2_image[0].SetActive(true);
-                weapon2_image[1].SetActive(false);
+                weapon2_image[2].SetActive(false);
+                weapon2_image[1].SetActive(true);
             }
         }
         if (weapontype == Weapon_Type_enum.Axe)
         {
             if (chWeapon == 0)
             {
-                weapon1_image[1].SetActive(true);
-                weapon1_image[0].SetActive(false);
+                weapon1_image[1].SetActive(false);
+                weapon1_image[2].SetActive(true);
             }
             else
             {
-                weapon2_image[1].SetActive(true);
-                weapon2_image[0].SetActive(false);
+                weapon2_image[1].SetActive(false);
+                weapon2_image[2].SetActive(true);
             }
         }
     }

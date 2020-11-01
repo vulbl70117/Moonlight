@@ -14,9 +14,13 @@ public enum Player_Animator
 public class Player_Renderer : MonoBehaviour
 {
     private float _BeAttack_DelayTime_02;
+    public float _Now_HP;
     public bool _BeAttackBool;
+    public bool _IsMachine;
     public Animator _Player_AM;
     public AudioSource _Walk_AS;
+    public AudioClip[] _AudioClip;///
+    public AudioSource _AudioSource;///
     public Weapon _Weapon;
     private Player _Player;
     void Start()
@@ -24,6 +28,7 @@ public class Player_Renderer : MonoBehaviour
         _Player = GetComponent<Player>();
         _Walk_AS = GetComponent<AudioSource>();///
         _BeAttack_DelayTime_02 = _Player._PlayerSetting._BeAttack_DelayTime_01;
+        _Now_HP = _Player._PlayerSetting._HP;
     }
     void Update()
     {
@@ -34,7 +39,8 @@ public class Player_Renderer : MonoBehaviour
     }
     public void BeAttack()
     {
-        if(_Player_AM.GetBool("Jump Trigger"))//beattack re Jump Trigger
+        _IsMachine = true;
+        if (_Player_AM.GetBool("Jump Trigger"))//beattack re Jump Trigger
         {
             _Player_AM.ResetTrigger("Jump Trigger");
         }
@@ -44,10 +50,10 @@ public class Player_Renderer : MonoBehaviour
         }
         _BeAttackBool = true;
         Player_Anim(Player_Animator.BeAttack);
-        _Player._PlayerSetting._HP--;
-        Debug.Log("剩餘" + _Player._PlayerSetting._HP);
+        _Now_HP--;
+        Debug.Log("剩餘" + _Now_HP);
         _Player._RunBool = false;
-        if (_Player._PlayerSetting._HP <= 0)///
+        if (_Now_HP <= 0)///
             gameObject.SetActive(false);
         if (_Player_AM && _Player._Move._IsGround ==false)//check
         {
@@ -77,12 +83,12 @@ public class Player_Renderer : MonoBehaviour
                 }
             case Player_Animator.Attack:
                 {
+                    //_Player_AM.SetTrigger("GroundAttacking");
                     _Player_AM.SetTrigger("Attack");
                     break;
                 }
             case Player_Animator.Jump:
                 {
-                    //_Player_AM.SetTrigger("Jump");
                     _Player_AM.SetBool("Jump", isTrue);
                     _Walk_AS.Stop();
                     break;

@@ -9,6 +9,7 @@ TagManager:
   - Weapon
   - Sword
   - Axe
+  - Bullet
   layers:
   - Default
   - TransparentFX

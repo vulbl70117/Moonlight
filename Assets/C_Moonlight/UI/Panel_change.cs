@@ -15,14 +15,14 @@ public class Panel_change : MonoBehaviour
 
     void Update()
     {
-        if(_Player._PlayerSetting._HP <= 0)
+        if(_Player._Renderer._Now_HP <= 0)
         {
             GoodGame();
         }
-        //if(Input.GetKeyDown(KeyCode.A) && Dead_Panel)
-        //{
-        //    Btn_Restart();
-        //}
+        if (Input.GetKeyDown(KeyCode.A) && Dead_Panel.activeSelf == true)
+        {
+            Btn_Restart();
+        }
     }
 
     public void GoodGame()//打開死亡後畫面

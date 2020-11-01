@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class Pause : MonoBehaviour
                 //Screen.showCursor = true;
             }
         }
+        if(pausePanel.activeSelf == true && Input.GetKeyDown(KeyCode.A))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void pause()
@@ -43,7 +48,7 @@ public class Pause : MonoBehaviour
         pausePanel.SetActive(true);
         pause_sound.Play();
         pauseEnabled = true;
-        Time.timeScale = 0;      
+        Time.timeScale = 0;
     }
 
     public void start()

@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerSetting", menuName = "ScriptableObject/PlayerSetting")]
 public class PlayerSetting : ScriptableObject
 {
+    public bool x;
     [Foldout("Move",true)]
     public float _Height_01 = 10f;
     public float _EavdeVT_Y = 5f;
@@ -15,7 +16,7 @@ public class PlayerSetting : ScriptableObject
     public float _UseEvadeTime = 0.5f;
     public float _EvadeTime_01 = 0.4f;
     [Foldout("Renderer", true)]
-    public bool x;
+    public bool attack;
     public float _HP = 30f;
     public float _BeAttack_DelayTime_01;
     public float[] _SpeedMultiplier;

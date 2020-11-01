@@ -2,11 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum To2D3D
+{
+    to2D,
+    to3D
+} 
 public class Player : MonoBehaviour
 {
     
     public Weapon _Weapon;
+    public To2D3D _Change = To2D3D.to2D;
+    public GameObject _Player_Camera3D;
     [Foldout("Player", true)]
     public PlayerSetting _PlayerSetting;
     private bool _Can_Evade = true;
@@ -43,10 +49,10 @@ public class Player : MonoBehaviour
         {
             Sport_2D();
         }
-        if (!_Renderer._Player_AM.GetBool("GroundAttacking"))
-        {
-            _Player_GroundAttacking = false;
-        }
+        //if (!_Renderer._Player_AM.GetBool("GroundAttacking"))
+        //{
+        //    _Player_GroundAttacking = false;
+        //}
     }
     private void FixedUpdate()
     {
@@ -111,7 +117,18 @@ public class Player : MonoBehaviour
     {
         if (_Renderer._Player_AM.GetBool("Attacking") && _Weapon._Attack._IsRay)
         {
-            _Attack._Machine._Renderer.BeAttack(1);
+            if(_Weapon._NowType == Weapon_Type_enum.Sword)///
+            {
+                _Attack._Machine._Renderer.BeAttack(5);
+            }
+            else if (_Weapon._NowType == Weapon_Type_enum.Axe)
+            {
+                _Attack._Machine._Renderer.BeAttack(3);
+            }
+            else
+            {
+                _Attack._Machine._Renderer.BeAttack(1);
+            }///
             _Weapon._WeaponSetting._AttackHit = true;
         }
         else if (_Renderer._Player_AM.GetBool("Attacking") == false && _Weapon._WeaponSetting._AttackHit && _Weapon._Attack._IsRay)
@@ -119,16 +136,17 @@ public class Player : MonoBehaviour
             _Attack._Machine._Renderer._StrikeBool = false;
             _Weapon._WeaponSetting._AttackHit = false;
         }
-        if (Input.GetMouseButtonDown(0) )
+        if (Input.GetMouseButtonDown(0) && /*!_Player_GroundAttacking*/_PlayerSetting.x==false)
         {
-            if (_Move._IsGround)
-                _Player_GroundAttacking = true;
+            //if (_Move._IsGround)
+            //    _Player_GroundAttacking = true;
+            _PlayerSetting.attack = true;
             _Renderer.Player_Anim(Player_Animator.Attack);
         }
     }
     public void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space)
+        if (Input.GetKeyDown(KeyCode.Space) 
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
             && _Move._Jump_AinTrigger == false
@@ -139,7 +157,7 @@ public class Player : MonoBehaviour
             //if (_JumpBool)
             //    _Renderer.Player_Anim(Player_Animator.JumpIdle);
             _Renderer.Player_Anim(Player_Animator.Jump, true);
-            //_Renderer.Player_Anim(Player_Animator.JumpDown, true);
+            _Renderer.Player_Anim(Player_Animator.JumpDown, true);
         }
         //if (Input.GetKey(KeyCode.Space))
         //{

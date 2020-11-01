@@ -30,11 +30,11 @@ public class Weapon_Attack : MonoBehaviour
     }
     public void WeaponRay()
     {
-        if (_Weapon._WeaponSetting.nowWeapon == Weapon_Type_enum.Fist)
-            _IsRay = Physics.Raycast(transform.position, -_Ray_TF.up, out _Attack_Hit
-                                     , _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], _LayerMask);
-        else
-            _IsRay = Physics.Raycast(transform.position, _Ray_TF.forward, out _Attack_Hit
+        //if (_Weapon._WeaponSetting.nowWeapon == Weapon_Type_enum.Fist)
+        //    _IsRay = Physics.Raycast(transform.position, -_Ray_TF.up, out _Attack_Hit
+        //                             , _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], _LayerMask);
+        //else
+            _IsRay = Physics.Raycast(_Ray_TF.position+ _Ray_TF.up*1.4f, _Ray_TF.forward, out _Attack_Hit
                                 , _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], _LayerMask);
     }
 }

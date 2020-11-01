@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Machine_Attack : MonoBehaviour
 {
-    public Machine _Machine;///
+    
+    public Machine _Machine;
     public GameObject _Bullet;
     public Transform Pos;
     public float _Shoot_Speed = 2000;
     public float _TouchTime = 2;
     public float _Next_AttackTime;
-    public float _Now_AttackTime;
+    public float _Now_AttackTime = 0;
     private float _Attack_TouchTime;
     public bool _DiveBool_01;
     public bool _DiveBool_02;
@@ -32,10 +33,14 @@ public class Machine_Attack : MonoBehaviour
     }
     public void Shoot()
     {
+        if(_Machine._Renderer._BeAttack_time>=0)
+        {
+            return;
+        }
         GameObject _Attack = Instantiate(_Bullet);
         if (_Bullet)
         {
-            _Machine._Renderer.Machine_Anim(Machine_Animator.Attack);///
+            _Machine._Renderer.Machine_Anim(Machine_Animator.Attack);
             _Attack.transform.position = Pos.transform.position;
             _Attack.transform.rotation = Pos.transform.rotation;
             Rigidbody _Bullet_RD = _Attack.GetComponent<Rigidbody>();
@@ -52,7 +57,7 @@ public class Machine_Attack : MonoBehaviour
         {
             Player _Player = other.GetComponent<Player>();
             _DiveBool_01 = true;
-            if (_Player._Move._EvadeBool_01 == false)
+            if (_Player._Move._EvadeBool_01 == false && _Machine._Move._a == true)
             {
                 if (Time.time > _Attack_TouchTime + _TouchTime)
                 {

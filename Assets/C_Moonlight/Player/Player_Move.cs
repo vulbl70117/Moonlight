@@ -8,16 +8,26 @@ public enum Player_2D
     Left,
     Evade
 }
+//public enum Player_3D
+//{
+//    Forward,
+//    Back,
+//    Right,
+//    Left,
+//    Evade
+//}
 public class Player_Move : MonoBehaviour
 {
     private Player _Player;
+    //[Foldout("相機", true)]
+    //public To2D3D _Move_Change = To2D3D.to2D;
     public float _Camera_Time;
     [Foldout("重力", true)]
     public bool _GravityBool;
     public float _Gravity = -9.81f;
     public float _Acceleration_01 = 0f;
     public float _Acceleration_02;
-    private float _Height_02;
+    private float _Height_02 ;
     public bool _Jump_AinTrigger;
     [Foldout("迴避", true)]
     public bool _EvadeBool_01;
@@ -36,13 +46,15 @@ public class Player_Move : MonoBehaviour
     public float _Airdistance = 3f;
     public RaycastHit Y_HitDown;
     public RaycastHit Y_HitUp;
-    public RaycastHit Y_HitWall;
     public RaycastHit Y_HitR;
+    public RaycastHit Y_HitWall;
     public LayerMask _LayerMask;
     [Foldout("Transform", true)]
     public Transform _Move_Player_ModTF;
     public Transform _Move_Player_Feet;
     public Transform _Move_Player_Head;
+    //public Transform _Move_Player_Center;//外空物件
+    //public Transform _Boos;
     private Collider _Move_Player_CD;
     private Vector3 _Move_Player_VT;
     //public bool _JumpBool;
@@ -60,19 +72,25 @@ public class Player_Move : MonoBehaviour
     }
     void Update()
     {
-        _IsGround = Physics.Raycast(transform.position, -transform.up, out Y_HitDown, _Grounddistance, 1 << 10);
-        
-            if (Physics.Raycast(_Move_Player_Feet.position, -_Move_Player_Feet.up, out Y_HitR, 1 << 10))
-            {
-                _Distance = Vector3.Distance(_Move_Player_Feet.position, Y_HitR.point);
-            if (_Distance < 1.7f)
+        //_IsWall = Physics.Raycast(_Move_Player_Head.position
+        //                          , _Move_Player_Head.forward
+        //                          , out Y_HitUp, _Wall ,_LayerMask);
+        _IsGround = Physics.Raycast(transform.position
+                                   , -transform.up
+                                   , out Y_HitDown
+                                   , _Grounddistance
+                                   , 1 << 10);
+        if(Physics.Raycast(_Move_Player_Feet.position, -_Move_Player_Feet.up, out Y_HitR, 1 << 10))
+        {
+            _Distance = Vector3.Distance(_Move_Player_Feet.position, Y_HitR.point);
+            if (_Distance < 2f)
                 _IsGround1 = true;
             else
                 _IsGround1 = false;
-            }
-        
+        }
         _IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitWall, _Wall, _LayerMask);
         _IsHeadWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.up, out Y_HitUp, _HeadWall, _LayerMask);
+        //Feet();
         Jump();
         if (_GravityBool)
             Gravity();
@@ -107,19 +125,59 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_2D.Evade:
                 {
-                    _Move_Player_VT = new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y >= 0 ? speed : -speed)
-                                                  , transform.position.y
-                                                  , transform.position.z);
+                        _Move_Player_VT = new Vector3(transform.position.x + (_Move_Player_ModTF.rotation.y >= 0 ? speed : -speed)
+                                                      , transform.position.y
+                                                      , transform.position.z);
                     Camera_Time();
                     break;
                 }
         }
     }
+    //public void Move3D(Player_3D _3D, float speed = 0, bool isTrue = false)
+    //{
+    //    if (_Move_Player_CD == null)
+    //        return;
+    //    switch (_3D)
+    //    {
+    //        case Player_3D.Forward:
+    //            {
+    //                break;
+    //            }
+    //        case Player_3D.Back:
+    //            {
+    //                break;
+    //            }
+    //        case Player_3D.Right:
+    //            {
+    //                _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+    //                transform.localRotation = Quaternion.Euler(0, 0, 0);
+    //                break;
+    //            }
+    //        case Player_3D.Left:
+    //            {
+    //                _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
+    //                transform.localRotation = Quaternion.Euler(0, -180, 0);
+    //                break;
+    //            }
+    //        case Player_3D.Evade:
+    //            {
+    //                //_Move_Player_VT = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z + (transform.rotation.y > 0 ? -speed : speed));
+    //                break;
+    //            }
+    //    }
+    //}
     public void UseEvade_Time()
     {
         if (Time.time > _NowEvadeTime_02 + _Player._PlayerSetting._UseEvadeTime)
         {
-            Move2D(Player_2D.Evade, _Player._PlayerSetting._EavdeVT_Y);
+            //if (_Move_Change == To2D3D.to2D)
+            {
+                Move2D(Player_2D.Evade, _Player._PlayerSetting._EavdeVT_Y);
+            }
+            //if (_Move_Change == To2D3D.to3D)
+            //{
+            //    Move3D(Player_3D.Evade);
+            //}
             _NowEvadeTime_02 = Time.time;
             _EvadeTime_02 = _Player._PlayerSetting._EvadeTime_01;
             _EvadeBool_01 = true;
@@ -172,35 +230,37 @@ public class Player_Move : MonoBehaviour
     }
     public void IsGround()
     {
-        if (_Player._Renderer._Player_AM.GetBool("Jump") == false && _IsGround)
+        if (_IsGround && _Player._Renderer._Player_AM.GetBool("Jump") == false)
         {
             transform.position = new Vector3(transform.position.x, Y_HitDown.point.y + _Tall, transform.position.z);
-
         }
     }
     public void Jump()
     {
-        if (_Acceleration_02 < -1)
+        //if (_Acceleration_02 < 0)
+        //    _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
+        if (_Acceleration_02 < -5)
         {
             _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
             if(_IsGround1==false)
                 _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
+            //Debug.Break();
         }
-        if (_IsGround && _Acceleration_02 < -1)
+        if (_IsGround && _Acceleration_02 < -5)
         {
             _Player._Renderer.Player_Anim(Player_Animator.JumpDown, false);
+            //transform.position = new Vector3(transform.position.x, Y_HitDown.point.y + _Tall, transform.position.z);
             _GravityBool = false;
             _Player._JumpBool = false;
             _Jump_AinTrigger = false;
             _Acceleration_02 = _Acceleration_01;
         }
-
         else if (_IsGround != true)
             _GravityBool = true;
         //raycasy hit
         if (_Player._JumpBool && _IsHeadWall == false)
         {
-            _Height_02 = _Player._PlayerSetting._Height_01 * Time.deltaTime ;
+            _Height_02 = _Player._PlayerSetting._Height_01 * Time.deltaTime;
             //height_02 raycast length
 
             // V3 new_up = mathf.min (hit.point, transform.up*_height_02)
@@ -212,6 +272,11 @@ public class Player_Move : MonoBehaviour
             _Jump_AinTrigger = false;
             _Acceleration_02 = _Acceleration_01;
         }
+        //if (_Player._JumpBool)
+        //{
+        //    _Height_02 = _Player._PlayerSetting._Height_01 * Time.deltaTime ;
+        //    transform.Translate(transform.up * _Height_02);
+        //}
     }
     //public void Jump_Up()
     //{
@@ -235,11 +300,16 @@ public class Player_Move : MonoBehaviour
     }
     public void OutPlane()
     {
-        if (_IsGround == false && _IsHeadWall == false)
+        //_IsGround = Physics.Raycast(_Move_Player_Feet.position
+        //                            , -_Move_Player_Feet.up
+        //                            , out Y_HitDown
+        //                            , _Grounddistance
+        //                            , 1 << 10);
         {
-            if (Physics.Raycast(transform.position
-                                , -_Move_Player_Feet.up
-                                , out Y_HitUp,  _Height_02, 1 << 10))
+        if (_IsGround == false)
+            if (Physics.Raycast(transform.position/* + _Move_Player_Feet.up *_Airdistance*/
+                                , transform.up
+                                , out Y_HitUp, _Height_02, 1 << 10))
             {
                 transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
                 _Acceleration_02 = _Acceleration_01;
