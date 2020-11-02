@@ -48,6 +48,7 @@ public class Player_Move : MonoBehaviour
     public RaycastHit Y_HitUp;
     public RaycastHit Y_HitR;
     public RaycastHit Y_HitWall;
+    public RaycastHit Y_HitWall1;
     public LayerMask _LayerMask;
     [Foldout("Transform", true)]
     public Transform _Move_Player_ModTF;
@@ -88,8 +89,15 @@ public class Player_Move : MonoBehaviour
             else
                 _IsGround1 = false;
         }
-        _IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitWall, _Wall, _LayerMask);
-        _IsHeadWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.up, out Y_HitUp, _HeadWall, _LayerMask);
+        //_IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitWall, _Wall, _LayerMask);
+        if (Physics.Raycast(_Move_Player_ModTF.position + _Move_Player_ModTF.up * 1.3f, _Move_Player_ModTF.right, out Y_HitWall, _Wall, _LayerMask)
+            || Physics.Raycast(_Move_Player_ModTF.position , _Move_Player_ModTF.right, out Y_HitWall, _Wall, _LayerMask))
+        {
+            _IsWall = true;
+        }
+        else
+            _IsWall = false;
+        _IsHeadWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.up, out Y_HitUp, _HeadWall, 1<<10);
         //Feet();
         Jump();
         if (_GravityBool)
@@ -133,39 +141,6 @@ public class Player_Move : MonoBehaviour
                 }
         }
     }
-    //public void Move3D(Player_3D _3D, float speed = 0, bool isTrue = false)
-    //{
-    //    if (_Move_Player_CD == null)
-    //        return;
-    //    switch (_3D)
-    //    {
-    //        case Player_3D.Forward:
-    //            {
-    //                break;
-    //            }
-    //        case Player_3D.Back:
-    //            {
-    //                break;
-    //            }
-    //        case Player_3D.Right:
-    //            {
-    //                _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
-    //                transform.localRotation = Quaternion.Euler(0, 0, 0);
-    //                break;
-    //            }
-    //        case Player_3D.Left:
-    //            {
-    //                _Move_Player_Center.RotateAround(_Boos.position, _Boos.up, speed * Time.deltaTime);
-    //                transform.localRotation = Quaternion.Euler(0, -180, 0);
-    //                break;
-    //            }
-    //        case Player_3D.Evade:
-    //            {
-    //                //_Move_Player_VT = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z + (transform.rotation.y > 0 ? -speed : speed));
-    //                break;
-    //            }
-    //    }
-    //}
     public void UseEvade_Time()
     {
         if (Time.time > _NowEvadeTime_02 + _Player._PlayerSetting._UseEvadeTime)

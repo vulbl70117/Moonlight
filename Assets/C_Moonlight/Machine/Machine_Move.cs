@@ -315,8 +315,8 @@ public class Machine_Move : MonoBehaviour
         {
             _MoveAnim = true;
             _Move_Patrol_Time_02 += Time.deltaTime;
-            transform.position += transform.forward
-                                    * (_MoveBool ? 1 : -1)
+            transform.position += _Machine_TF.forward
+                                    * (_MoveBool ? 1 : 1)
                                     * Time.deltaTime
                                     * _Move_Speed;
         }
@@ -325,9 +325,11 @@ public class Machine_Move : MonoBehaviour
             _MoveBool = !_MoveBool;
             Move_Reset();
             if (_MoveBool)
-                _Machine_TF.rotation = Quaternion.Euler(0, 90, 0);
+                //_Machine_TF.rotation = Quaternion.Euler(0, 90, 0);
+                _Machine_TF.Rotate(_Machine_TF.up * 180);
             else
-                _Machine_TF.rotation = Quaternion.Euler(0, 270, 0);
+                //_Machine_TF.rotation = Quaternion.Euler(0, 270, 0);
+                _Machine_TF.Rotate(_Machine_TF.up * 180);
         }
     }
     public void Move_Reset()
@@ -348,6 +350,7 @@ public class Machine_Move : MonoBehaviour
                      && _Distance > _Machine._DrawGizmos._Attack_Radius)
             {
                 _MoveAnim = true;//
+                Move_Reset();
                 Machion_Chase();
             }
             if (_Distance < _Machine._DrawGizmos._Attack_Radius)
@@ -361,15 +364,15 @@ public class Machine_Move : MonoBehaviour
     public void Machion_Chase()
     {
         _Machine_VT = Vector3.ProjectOnPlane(_Player_TF.position - transform.position, transform.up);
-        transform.Translate(Vector3.forward * Time.deltaTime * 5);
-        transform.rotation = Quaternion.LookRotation(_Machine_VT);
+        _Machine_TF.rotation = Quaternion.LookRotation(_Machine_VT);
+        transform.Translate( -_Machine_TF.right * Time.deltaTime * 5);
     }
     public void Aim()
     {
         _Machine_VT = Vector3.ProjectOnPlane(_Player_TF.position - transform.position, transform.up);
+        _Machine_TF.transform.rotation = Quaternion.LookRotation(_Machine_VT);
         _Pos.transform.rotation = Quaternion.LookRotation(_Machine_VT);
         _Machine._Attack.Fire();
-        transform.rotation = Quaternion.LookRotation(_Machine_VT);
 
     }
     public void Fly()
