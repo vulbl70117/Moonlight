@@ -1,4 +1,5 @@
-﻿using Pixeye.Unity;
+﻿using Packages.Rider.Editor;
+using Pixeye.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,19 +9,9 @@ public enum Player_2D
     Left,
     Evade
 }
-//public enum Player_3D
-//{
-//    Forward,
-//    Back,
-//    Right,
-//    Left,
-//    Evade
-//}
 public class Player_Move : MonoBehaviour
 {
     private Player _Player;
-    //[Foldout("相機", true)]
-    //public To2D3D _Move_Change = To2D3D.to2D;
     public float _Camera_Time;
     [Foldout("重力", true)]
     public bool _GravityBool;
@@ -31,11 +22,12 @@ public class Player_Move : MonoBehaviour
     public bool _Jump_AinTrigger;
     [Foldout("迴避", true)]
     public bool _EvadeBool_01;
+    public float z;
     private float _NowEvadeTime_02;
     private float _EvadeTime_02;
     [Foldout("射線", true)]
     public bool _IsGround;
-    public bool _IsGround1;
+    public bool _IsGround_01;
     public bool _IsWall;
     public bool _IsHeadWall;
     public float _Tall = 1.5f;
@@ -48,15 +40,15 @@ public class Player_Move : MonoBehaviour
     public RaycastHit Y_HitUp;
     public RaycastHit Y_HitR;
     public RaycastHit Y_HitWall;
-    public RaycastHit Y_HitWall1;
+    //public RaycastHit Y_HitWall1;
     public LayerMask _LayerMask;
     [Foldout("Transform", true)]
     public Transform _Move_Player_ModTF;
     public Transform _Move_Player_Feet;
     public Transform _Move_Player_Head;
-    //public Transform _Move_Player_Center;//外空物件
-    //public Transform _Boos;
+    public Transform _Move_Player_Dash;
     private Collider _Move_Player_CD;
+    public Vector3 _Move_Player_;
     private Vector3 _Move_Player_VT;
     //public bool _JumpBool;
     //public float _JumpTime_01 = 1f;
@@ -73,9 +65,6 @@ public class Player_Move : MonoBehaviour
     }
     void Update()
     {
-        //_IsWall = Physics.Raycast(_Move_Player_Head.position
-        //                          , _Move_Player_Head.forward
-        //                          , out Y_HitUp, _Wall ,_LayerMask);
         _IsGround = Physics.Raycast(transform.position
                                    , -transform.up
                                    , out Y_HitDown
@@ -85,11 +74,23 @@ public class Player_Move : MonoBehaviour
         {
             _Distance = Vector3.Distance(_Move_Player_Feet.position, Y_HitR.point);
             if (_Distance < 2f)
-                _IsGround1 = true;
+                _IsGround_01 = true;
             else
-                _IsGround1 = false;
+                _IsGround_01 = false;
         }
+        //if (_Player._DashBool==false)
+        //{
+        //    _Move_Player_ = transform.position;
+        //}
+        z = Vector3.Distance(transform.position, _Move_Player_);
+        //Debug.Log(z);
         //_IsWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.forward, out Y_HitWall, _Wall, _LayerMask);
+        Jump();
+        if (_GravityBool)
+            Gravity();
+        if(_Player._DashBool)
+            Dash();
+
         if (Physics.Raycast(_Move_Player_ModTF.position + _Move_Player_ModTF.up * 1.3f, _Move_Player_ModTF.right, out Y_HitWall, _Wall, _LayerMask)
             || Physics.Raycast(_Move_Player_ModTF.position , _Move_Player_ModTF.right, out Y_HitWall, _Wall, _LayerMask))
         {
@@ -98,10 +99,7 @@ public class Player_Move : MonoBehaviour
         else
             _IsWall = false;
         _IsHeadWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.up, out Y_HitUp, _HeadWall, 1<<10);
-        //Feet();
-        Jump();
-        if (_GravityBool)
-            Gravity();
+        _Move_Player_ = transform.position;
     }
     private void LateUpdate()
     {
@@ -145,18 +143,12 @@ public class Player_Move : MonoBehaviour
     {
         if (Time.time > _NowEvadeTime_02 + _Player._PlayerSetting._UseEvadeTime)
         {
-            //if (_Move_Change == To2D3D.to2D)
-            {
-                Move2D(Player_2D.Evade, _Player._PlayerSetting._EavdeVT_Y);
-            }
-            //if (_Move_Change == To2D3D.to3D)
-            //{
-            //    Move3D(Player_3D.Evade);
-            //}
+             Move2D(Player_2D.Evade, _Player._PlayerSetting._EavdeVT_Y);
             _NowEvadeTime_02 = Time.time;
             _EvadeTime_02 = _Player._PlayerSetting._EvadeTime_01;
             _EvadeBool_01 = true;
         }
+        
     }
     public void Evadeing()
     {
@@ -217,7 +209,7 @@ public class Player_Move : MonoBehaviour
         if (_Acceleration_02 < -5)
         {
             _Player._Renderer.Player_Anim(Player_Animator.Jump, false);
-            if(_IsGround1==false)
+            if(_IsGround_01==false)
                 _Player._Renderer.Player_Anim(Player_Animator.JumpDown, true);
             //Debug.Break();
         }
@@ -275,11 +267,6 @@ public class Player_Move : MonoBehaviour
     }
     public void OutPlane()
     {
-        //_IsGround = Physics.Raycast(_Move_Player_Feet.position
-        //                            , -_Move_Player_Feet.up
-        //                            , out Y_HitDown
-        //                            , _Grounddistance
-        //                            , 1 << 10);
         {
         if (_IsGround == false)
             if (Physics.Raycast(transform.position/* + _Move_Player_Feet.up *_Airdistance*/
@@ -289,6 +276,18 @@ public class Player_Move : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
                 _Acceleration_02 = _Acceleration_01;
             }
+        }
+    }
+    public void Dash()
+    {
+        Debug.DrawLine(_Move_Player_ - _Move_Player_Dash.forward, (_Move_Player_ - _Move_Player_Dash.forward) + (_Move_Player_Dash.forward) * (Vector3.Distance(transform.position, _Move_Player_) + 1), Color.red, 1f);
+        //if(Physics.Raycast(_Move_Player_Dash.position - _Move_Player_Dash.forward * 5, /*_Move_Player_Dash.position - _Move_Player_Dash.forward * 5 + */_Move_Player_ModTF.forward , out p, z, 1 << 10))
+        if (Physics.Raycast(_Move_Player_ - _Move_Player_Dash.forward, _Move_Player_Dash.forward, Vector3.Distance(transform.position,_Move_Player_)+1+ _Wall, 1 << 10))
+            {
+            transform.position = _Move_Player_;
+            _EvadeBool_01 = false;
+            _Player._DashBool = false;
+            _Player._Renderer.Player_Anim(Player_Animator.Dash, false);
         }
     }
 }

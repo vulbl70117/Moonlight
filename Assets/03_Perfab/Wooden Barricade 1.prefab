@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 46446687650709146}
   - component: {fileID: 3144837645516615192}
   - component: {fileID: 1864127503398995609}
-  m_Layer: 0
+  - component: {fileID: 8425978185528082777}
+  m_Layer: 12
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575218024376612757}
   m_LocalRotation: {x: -0, y: -0, z: 0.39097, w: 0.9204034}
-  m_LocalPosition: {x: 0, y: -0.6, z: 0}
-  m_LocalScale: {x: 4.535419, y: 0.4978174, z: 3.273837}
+  m_LocalPosition: {x: 0, y: -0.6, z: 0.32}
+  m_LocalScale: {x: 4.535419, y: 0.4978174, z: 2.993252}
   m_Children: []
   m_Father: {fileID: 733356060842787165}
   m_RootOrder: 1
@@ -88,11 +89,24 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575218024376612757}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0.00000047683716}
+--- !u!114 &8425978185528082777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575218024376612757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a3ccf40bdc0ba42aa3b08a74505dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &733356060843023741
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +118,7 @@ GameObject:
   - component: {fileID: 733356060842787165}
   - component: {fileID: 733356060842017149}
   - component: {fileID: 733356060841018301}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wooden Barricade 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 733356060843023741}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -43.940517, y: 1.0935578, z: -5.2217026}
-  m_LocalScale: {x: 1.2858, y: 1.2858, z: 1.2858}
+  m_LocalScale: {x: 1.2858, y: 1.2858001, z: 1.2858}
   m_Children:
   - {fileID: 64755521448042251}
   - {fileID: 6520058309476101050}
@@ -186,7 +200,8 @@ GameObject:
   - component: {fileID: 4550787768817755962}
   - component: {fileID: 7544614058762149657}
   - component: {fileID: 7629329167251374725}
-  m_Layer: 0
+  - component: {fileID: 1401013482134038816}
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,8 +216,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5961084879124168405}
   m_LocalRotation: {x: -0, y: -0, z: -0.39809224, w: 0.91734535}
-  m_LocalPosition: {x: 0, y: -0.7, z: 0}
-  m_LocalScale: {x: 4.535419, y: 0.31919557, z: 2.993467}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0.68}
+  m_LocalScale: {x: 4.535419, y: 0.31919557, z: 3.351893}
   m_Children: []
   m_Father: {fileID: 733356060842787165}
   m_RootOrder: 0
@@ -262,8 +277,21 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5961084879124168405}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0.00000047683716}
+--- !u!114 &1401013482134038816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5961084879124168405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a3ccf40bdc0ba42aa3b08a74505dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}

@@ -44,10 +44,6 @@ public class Player_Renderer : MonoBehaviour
         {
             _Player_AM.ResetTrigger("Jump Trigger");
         }
-        if (_Player_AM.GetBool("GroundAttacking"))//beattack re Jump Trigger
-        {
-            _Player_AM.ResetTrigger("GroundAttacking");
-        }
         _BeAttackBool = true;
         Player_Anim(Player_Animator.BeAttack);
         _Now_HP--;

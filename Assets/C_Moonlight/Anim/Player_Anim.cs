@@ -9,7 +9,7 @@ public class Player_Anim : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _PlayerSetting.x = true;
+        _PlayerSetting._AttackBool = true;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -25,7 +25,7 @@ public class Player_Anim : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("Attacking", false);
-        _PlayerSetting.x = false;
+        _PlayerSetting._AttackBool = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -47,6 +47,16 @@ public class Player_Trigger : MonoBehaviour
                     other.gameObject.SetActive(false);
                 }
             }
+            else if (weapon_coll._Type == Weapon_Type_enum.Shield)
+            {
+                _NewType = Weapon_Type_enum.Shield;
+
+                if (Weapon._Pick_Weapon == true)
+                {
+                    _Intag = false;
+                    other.gameObject.SetActive(false);
+                }
+            }
         }
     }
     public void OnTriggerEnter(Collider other)

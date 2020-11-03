@@ -6,7 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerSetting", menuName = "ScriptableObject/PlayerSetting")]
 public class PlayerSetting : ScriptableObject
 {
-    public bool x;
+    public bool _AttackBool;
+    public bool _ShieldBool;
     [Foldout("Move",true)]
     public float _Height_01 = 10f;
     public float _EavdeVT_Y = 5f;
