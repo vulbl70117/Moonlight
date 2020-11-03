@@ -32,6 +32,10 @@ public class Player_Renderer : MonoBehaviour
     }
     void Update()
     {
+        //if (_Player._PlayerSetting._ShieldBool == true)
+        //{
+
+        //}
         Player_Anim(Player_Animator.Run);
         Change_Anim();
         if (_BeAttackBool == true)
