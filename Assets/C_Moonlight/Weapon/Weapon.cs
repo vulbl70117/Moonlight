@@ -21,9 +21,9 @@ public class Weapon : MonoBehaviour
     public GameObject[] _Weapon_Type;
     public static bool _Pick_Weapon = false;//開啟撿武器的Tag
     public Weapon_UI _Weapon_UI;//武器UI script
-    //public Weapon_Trigger _Weapon_TG;
     void Start()
     {
+
     }
     void Update()
     {
@@ -54,6 +54,7 @@ public class Weapon : MonoBehaviour
                 this.SetType(Player_Trigger._NewType, 1);
             }
         }
+        Shield_Block();
     }
     void SetType(Weapon_Type_enum eType, int chWeapon)
     {
@@ -70,6 +71,20 @@ public class Weapon : MonoBehaviour
         _NowType = _TypeList[open];
         _Weapon_Type[(int)_TypeList[open]].SetActive(true);
         _Weapon_UI.Chang_weapon(open);//傳入武器
+    }
+    public void Shield_Block()
+    {
+        if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11))
+        {
+            Debug.Log("X");
+            _Player._Renderer._Player_AM.SetBool("Shield", true);
+        }
+        if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 13) && _Player._PlayerSetting._ShieldBool == false)
+        {
+            _Player._Renderer._Player_AM.SetTrigger("Bulletshield");
+        }
+        if(!Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11 | 1 << 13))
+            _Player._Renderer._Player_AM.SetBool("Shield", false);
     }
     //public void Chang_Weapon_TG()
     //{

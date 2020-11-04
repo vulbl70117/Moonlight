@@ -9,6 +9,7 @@ public class WeaponSetting : ScriptableObject
     public Weapon_Type_enum nowWeapon = Weapon_Type_enum.Fist;
     public List<WeaponData> WeaponDataList;
     public float[] _WeaponRay;
+    public float _Block_r;
     public bool _AttackHit;
 }
 [Serializable]

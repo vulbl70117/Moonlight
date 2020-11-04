@@ -26,6 +26,11 @@ public class Player : MonoBehaviour
     public Player_Trigger _Trigger;
     public Player_Renderer _Renderer;
     public Player_Attack _Attack;
+    private void Awake()
+    {
+        _PlayerSetting._ShieldBool = false;
+        _PlayerSetting._AttackBool = false;
+    }
     void Start()
     {
         _Attack = GetComponent<Player_Attack>();
@@ -37,11 +42,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         Weapon_();
-        if (_Move)
+        if (_Move && _PlayerSetting._ShieldBool == false)
         {
             Jump();
         }
-        if (_Weapon)
+        if (_Weapon && _PlayerSetting._ShieldBool == false)
         {
             Attack();
         }
@@ -138,8 +143,6 @@ public class Player : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && _PlayerSetting._AttackBool == false)
         {
-            //if (_Move._IsGround)
-            //    _Player_GroundAttacking = true;
             _PlayerSetting.attack = true;
             _Renderer.Player_Anim(Player_Animator.Attack);
         }
@@ -150,7 +153,6 @@ public class Player : MonoBehaviour
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
             && _Move._Jump_AinTrigger == false
-            //&& _Player_GroundAttacking == false
             && _Move._IsHeadWall == false)
         {
             _JumpBool = true;
@@ -158,14 +160,15 @@ public class Player : MonoBehaviour
             //    _Renderer.Player_Anim(Player_Animator.JumpIdle);
             _Renderer.Player_Anim(Player_Animator.Jump, true);
             _Renderer.Player_Anim(Player_Animator.JumpDown, true);
+            _Move.Jump_Up();
         }
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    _Move.Jump_Continued();
-        //}
-        //if (Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    _Move._JumpBool = false;
-        //}
+        if (Input.GetKey(KeyCode.Space))
+        {
+            _Move.Jump_Continued();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            _Move._JumpBool = false;
+        }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4545718349305300859}
   - component: {fileID: 4545718349305300857}
   - component: {fileID: 4545718349305300856}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Flames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4558,7 +4558,7 @@ GameObject:
   - component: {fileID: 4545718349790031599}
   - component: {fileID: 4545718349790031597}
   - component: {fileID: 4545718349790031596}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: missle_c4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4638,7 +4638,7 @@ GameObject:
   - component: {fileID: 4545718349860479740}
   - component: {fileID: 4545718349860479743}
   - component: {fileID: 4545718349860479742}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: WFX_FlameThrower Big Alt Looped
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9290,7 +9290,7 @@ GameObject:
   - component: {fileID: 4545718350033230638}
   - component: {fileID: 4545718350033230636}
   - component: {fileID: 4545718350033230639}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sparkles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13829,7 +13829,7 @@ GameObject:
   - component: {fileID: 1907759414954528901}
   - component: {fileID: 7363344979147043366}
   - component: {fileID: 6234863182816486537}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bullet_new
   m_TagString: Bullet
   m_Icon: {fileID: 0}

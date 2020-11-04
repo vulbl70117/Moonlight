@@ -10,10 +10,11 @@ public class PlayerSetting : ScriptableObject
     public bool _ShieldBool;
     [Foldout("Move",true)]
     public float _Height_01 = 10f;
+    public float _Continued = 10f;
+    public float _JumpTime_01 = 1f;
     public float _EavdeVT_Y = 5f;
     public float _SlideVT_Y = 1f;
     public float _EavdeSpeed_2D = 5f;
-    //public float _EavdeSpeed_3D = 5f;
     public float _UseEvadeTime = 0.5f;
     public float _EvadeTime_01 = 0.4f;
     [Foldout("Renderer", true)]
