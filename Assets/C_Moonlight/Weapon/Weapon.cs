@@ -76,7 +76,6 @@ public class Weapon : MonoBehaviour
     {
         if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11))
         {
-            Debug.Log("X");
             _Player._Renderer._Player_AM.SetBool("Shield", true);
         }
         if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 13) && _Player._PlayerSetting._ShieldBool == false)
