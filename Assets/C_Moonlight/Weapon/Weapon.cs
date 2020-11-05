@@ -14,6 +14,11 @@ public class Weapon : MonoBehaviour
 {
     public WeaponSetting _WeaponSetting;
     public Player _Player;
+    public Machine _Machine;
+    public Collider[] _CollidersArray;
+    public Transform _Shield_Mod;
+    private GameObject _Machine_GOJ;
+    private Vector3 _Machine_Position;
     //public Weapon_Attack _Attack;
     [Foldout("換武器", true)]
     public Weapon_Type_enum _NowType = Weapon_Type_enum.Fist;//現在手上拿的武器
@@ -38,7 +43,6 @@ public class Weapon : MonoBehaviour
             if (Player_Trigger._Intag)//進入範圍內才可撿武器
             {
                 _Pick_Weapon = true;
-                Debug.Log(_Pick_Weapon);
                 this.SetType(Player_Trigger._NewType, 0);
             }
         }
@@ -75,15 +79,43 @@ public class Weapon : MonoBehaviour
     }
     public void Shield_Block()
     {
-        if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11))
+        _CollidersArray = Physics.OverlapSphere(_Shield_Mod.position, _WeaponSetting._Block_r, 1 << 11 | 1 <<13);
+        foreach(Collider c in _CollidersArray)
         {
-            _Player._Renderer._Player_AM.SetBool("Shield", true);
+            _Machine_Position = c.gameObject.transform.position;
+            if (Vector3.Dot(_Shield_Mod.forward, (_Machine_Position - _Shield_Mod.position).normalized) > 0)
+            {
+                _Machine = c.gameObject.GetComponent<Machine>();
+                if(c.gameObject.layer == 11 && _Machine._Move._a)
+                {
+                    _Player._Renderer._Player_AM.SetBool("Shield", true);
+                }
+                if(c.gameObject.layer == 13 && _Player._PlayerSetting._ShieldBool == false)
+                {
+                    _Player._Renderer._Player_AM.SetTrigger("Bulletshield");
+                }
+            }
+            else
+            {
+                _Machine = null;
+                _Player._Renderer._Player_AM.SetBool("Shield", false);
+            }
+
         }
-        if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 13) && _Player._PlayerSetting._ShieldBool == false)
+        if (_CollidersArray.Length <= 0)
         {
-            _Player._Renderer._Player_AM.SetTrigger("Bulletshield");
-        }
-        if(!Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11 | 1 << 13))
+            _Machine = null;
             _Player._Renderer._Player_AM.SetBool("Shield", false);
+        }
+        //if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11))
+        //{
+        //    _Player._Renderer._Player_AM.SetBool("Shield", true);
+        //}
+        //if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 13) && _Player._PlayerSetting._ShieldBool == false)
+        //{
+        //    _Player._Renderer._Player_AM.SetTrigger("Bulletshield");
+        //}
+        //if(!Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11 | 1 << 13))
+        //    _Player._Renderer._Player_AM.SetBool("Shield", false);
     }
 }

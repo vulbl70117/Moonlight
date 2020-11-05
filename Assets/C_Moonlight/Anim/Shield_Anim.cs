@@ -11,9 +11,13 @@ public class Shield_Anim : StateMachineBehaviour
         _PlayerSetting._ShieldBool = true;
         //animator.SetBool("Shielding", false);
     }
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (stateInfo.normalizedTime >= 1)
+        {
+            _PlayerSetting._ShieldBool = false;
+        }
+    }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _PlayerSetting._ShieldBool = false;

@@ -106,7 +106,7 @@ public class Player_Move : MonoBehaviour
             case Player_2D.Right:
                 {
 
-                    if (_IsWall == false && _Player._PlayerSetting._ShieldBool == false)
+                    if (_IsWall == false && _Player._Renderer._Player_AM.GetBool("Shield") == false)
                         transform.Translate(Vector3.forward * Time.deltaTime * speed);
                     _Move_Player_ModTF.rotation = Quaternion.Euler(0, 0, 0);
                     Camera_Time();
@@ -114,7 +114,7 @@ public class Player_Move : MonoBehaviour
                 }
             case Player_2D.Left:
                 {
-                    if (_IsWall == false && _Player._PlayerSetting._ShieldBool == false)
+                    if (_IsWall == false && _Player._Renderer._Player_AM.GetBool("Shield") == false)
                         transform.Translate(Vector3.forward * Time.deltaTime * speed);
                     _Move_Player_ModTF.rotation = Quaternion.Euler(0, -180, 0);
                     Camera_Time();

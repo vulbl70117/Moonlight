@@ -42,11 +42,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         Weapon_();
-        if (_Move && _PlayerSetting._ShieldBool == false)
+        if (_Move && _Renderer._Player_AM.GetBool("Shield") == false)
         {
             Jump();
         }
-        if (_Weapon && _PlayerSetting._ShieldBool == false)
+        if (_Weapon && _Renderer._Player_AM.GetBool("Shield") == false)
         {
             Attack();
         }

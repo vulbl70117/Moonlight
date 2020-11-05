@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     public GameObject _explosion_particle;///
     public ParticleSystem partic;///
     public MeshRenderer mesh;
-    public Machine_Attack _Machine_Attack;///
+    //public Machine_Attack _Machine_Attack;///
     void Start()
     {
     }

@@ -10,9 +10,9 @@ public class Player_Attack : MonoBehaviour
     //Machine
     public Machine _Machine;
     private GameObject _Any;
-    private GameObject _machine;
-    public Collider[] _colliders;
-    private Vector3 _zero;
+    private GameObject _Machine_GOJ;
+    public Collider[] _CollidersArray;
+    private Vector3 _Machine_Position;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,18 +22,26 @@ public class Player_Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _colliders = Physics.OverlapSphere(transform.position, _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], 1 << 11);
-        foreach(Collider c in _colliders)
+        _CollidersArray = Physics.OverlapSphere(transform.position, _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], 1 << 11);
+        foreach(Collider c in _CollidersArray)
         {
-            _zero = c.gameObject.transform.position;
-            _machine = c.gameObject;
-            if (Vector3.Dot(player._Move._Move_Player_ModTF.right, (_zero - transform.position).normalized) > 0)
+            _Machine_Position = c.gameObject.transform.position;
+            _Machine_GOJ = c.gameObject;
+            if (Vector3.Dot(player._Move._Move_Player_ModTF.right, (_Machine_Position - transform.position).normalized) > 0)
             {
-                Machine(_machine);
+                Machine(_Machine_GOJ);
                 _IsRay = true;
             }
             else
+            {
                 _IsRay = false;
+                _Machine = null;
+            }
+        }
+        if (_CollidersArray.Length <= 0)
+        {
+            _IsRay = false;
+            _Machine = null;
         }
     }
     public void Machine(GameObject machine)
