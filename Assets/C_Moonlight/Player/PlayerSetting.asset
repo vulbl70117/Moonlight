@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSetting
   m_EditorClassIdentifier: 
   _AttackBool: 0
-  _ShieldBool: 1
+  _ShieldBool: 0
   _Height_01: 25
   _Continued: -5
   _JumpTime_01: 1

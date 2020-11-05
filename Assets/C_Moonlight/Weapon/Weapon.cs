@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
 {
     public WeaponSetting _WeaponSetting;
     public Player _Player;
-    public Weapon_Attack _Attack;
+    //public Weapon_Attack _Attack;
     [Foldout("換武器", true)]
     public Weapon_Type_enum _NowType = Weapon_Type_enum.Fist;//現在手上拿的武器
     public List<Weapon_Type_enum> _TypeList = new List<Weapon_Type_enum>();//武器欄
@@ -54,7 +54,8 @@ public class Weapon : MonoBehaviour
                 this.SetType(Player_Trigger._NewType, 1);
             }
         }
-        Shield_Block();
+        if(_NowType==Weapon_Type_enum.Shield)
+            Shield_Block();
     }
     void SetType(Weapon_Type_enum eType, int chWeapon)
     {
@@ -85,19 +86,4 @@ public class Weapon : MonoBehaviour
         if(!Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11 | 1 << 13))
             _Player._Renderer._Player_AM.SetBool("Shield", false);
     }
-    //public void Chang_Weapon_TG()
-    //{
-    //    if (_NowType == Weapon_Type_enum.Fist)
-    //    {
-    //        _Weapon_TG = _Weapon_Type[0].GetComponent<Weapon_Trigger>();
-    //    }
-    //    if (_NowType == Weapon_Type_enum.Sword)
-    //    {
-    //        _Weapon_TG = _Weapon_Type[1].GetComponent<Weapon_Trigger>();
-    //    }
-    //    if (_NowType == Weapon_Type_enum.Axe)
-    //    {
-    //        _Weapon_TG = _Weapon_Type[2].GetComponent<Weapon_Trigger>();
-    //    }
-    //}
 }

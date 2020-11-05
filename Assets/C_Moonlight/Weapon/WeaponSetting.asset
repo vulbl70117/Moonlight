@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7687c7a26fc3bb4599cafafc797bd3c, type: 3}
   m_Name: WeaponSetting
   m_EditorClassIdentifier: 
-  nowWeapon: 3
+  nowWeapon: 2
   WeaponDataList:
   - AttackStartTime: 0.4
     AttackEndTime: 0.55

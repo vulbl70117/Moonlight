@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Player_Attack : MonoBehaviour
 {
-    public bool _StrikeBool;
+    public bool _IsRay;
     public Weapon _Weapon;
     public Player player;
     //Machine
     public Machine _Machine;
     private GameObject _Any;
-    public Collider[] colliders;
-    private Vector3 z;
-    float x;
+    private GameObject _machine;
+    public Collider[] _colliders;
+    private Vector3 _zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,17 +22,19 @@ public class Player_Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        colliders = Physics.OverlapSphere(transform.position, 5, 1 << 11);
-        foreach(Collider c in colliders)
+        _colliders = Physics.OverlapSphere(transform.position, _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], 1 << 11);
+        foreach(Collider c in _colliders)
         {
-            z = c.gameObject.transform.position;
+            _zero = c.gameObject.transform.position;
+            _machine = c.gameObject;
+            if (Vector3.Dot(player._Move._Move_Player_ModTF.right, (_zero - transform.position).normalized) > 0)
+            {
+                Machine(_machine);
+                _IsRay = true;
+            }
+            else
+                _IsRay = false;
         }
-
-        if (Vector3.Dot(player._Move._Move_Player_ModTF.forward, (transform.position - z).normalized) > 0)
-        {
-            Debug.Log(Vector3.Dot(player._Move._Move_Player_ModTF.forward, (transform.position - z).normalized));
-        }
-        Debug.Log(z);
     }
     public void Machine(GameObject machine)
     {

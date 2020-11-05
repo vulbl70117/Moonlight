@@ -120,7 +120,7 @@ public class Player : MonoBehaviour
     }
     public void Attack()
     {
-        if (_Renderer._Player_AM.GetBool("Attacking") && _Weapon._Attack._IsRay)
+        if (_Renderer._Player_AM.GetBool("Attacking") && _Attack._IsRay)
         {
             if(_Weapon._NowType == Weapon_Type_enum.Sword)///
             {
@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
             }///
             _Weapon._WeaponSetting._AttackHit = true;
         }
-        else if (_Renderer._Player_AM.GetBool("Attacking") == false && _Weapon._WeaponSetting._AttackHit && _Weapon._Attack._IsRay)
+        else if (_Renderer._Player_AM.GetBool("Attacking") == false && _Weapon._WeaponSetting._AttackHit && _Attack._IsRay)
         {
             _Attack._Machine._Renderer._StrikeBool = false;
             _Weapon._WeaponSetting._AttackHit = false;

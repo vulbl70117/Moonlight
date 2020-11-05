@@ -96,7 +96,6 @@ public class Machine_Renderer : MonoBehaviour
                     Destroy(eff_dead, 3);
                 }///
                 _Player._Trigger._Evade_ToMachine = false;
-                //gameObject.SetActive(false);
                 Destroy(gameObject, 5);
             }
         }
@@ -136,17 +135,4 @@ public class Machine_Renderer : MonoBehaviour
                 }///
         }
     }
-    //public void Machine_Material()
-    //{
-    //    if(_ChangeMaterial_02 <= _ChangeMaterial_01)
-    //    {
-    //        _Machine_RD.velocity = Vector3.up;
-    //        _ChangeMaterial_02 -= Time.deltaTime;
-    //    }
-    //    if(_ChangeMaterial_02 <= 0)
-    //    {
-    //        _MaterialBool = false;
-    //        _ChangeMaterial_02 = _ChangeMaterial_01;
-    //    }
-    //}
 }
