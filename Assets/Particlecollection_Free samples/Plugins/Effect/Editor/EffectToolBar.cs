@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EffectToolBar{
+public class EffectToolBar1{
 
 	public static void SelectedObjAddComponent<T>(string notSelectStr,string hasComponentStr) where T: UnityEngine.MonoBehaviour{
 		UnityEngine.Object[] selectObjList = Selection.GetFiltered(typeof(GameObject), SelectionMode.Unfiltered);

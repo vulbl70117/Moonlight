@@ -33,7 +33,7 @@ public class Machine_Attack : MonoBehaviour
     }
     public void Shoot()
     {
-        if(_Machine._Renderer._BeAttack_time>=0)
+        if(_Machine._Renderer._BeAttack_time>=0 || _Machine._Renderer._Machine_HP<=0)///
         {
             return;
         }
@@ -56,6 +56,7 @@ public class Machine_Attack : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Player _Player = other.GetComponent<Player>();
+            _Machine._Machine_RD.isKinematic = true;
             _DiveBool_01 = true;
             if (_Player._Move._EvadeBool_01 == false && _Machine._Move._a == true)
             {
@@ -71,6 +72,10 @@ public class Machine_Attack : MonoBehaviour
     }
     public void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            _Machine._Machine_RD.isKinematic = false;
+        }
         _DiveBool_01 = false;
         _DiveBool_02 = false;
     }

@@ -26,14 +26,14 @@ public class Weapon : MonoBehaviour
     public GameObject[] _Weapon_Type;
     public static bool _Pick_Weapon = false;//開啟撿武器的Tag
     public Weapon_UI _Weapon_UI;//武器UI script
+    public static int score_weapon_bonus = 8;
     void Start()
     {
-
     }
     void Update()
     {
         _WeaponSetting.nowWeapon = _NowType;
-        Weapon._Pick_Weapon = false;//常駐關閉撿武器的Tag
+        
         if (Input.GetKeyDown(KeyCode.Alpha1) && _Player._Renderer._Player_AM.GetBool("Jump Trigger") == false)
         {
             if (_TypeList[0] != Weapon_Type_enum.Fist && _TypeList[1] != Weapon_Type_enum.Fist)//1，2武器欄都有武器才可交換
@@ -43,6 +43,7 @@ public class Weapon : MonoBehaviour
             if (Player_Trigger._Intag)//進入範圍內才可撿武器
             {
                 _Pick_Weapon = true;
+                Debug.Log(_Pick_Weapon);
                 this.SetType(Player_Trigger._NewType, 0);
             }
         }
@@ -69,6 +70,7 @@ public class Weapon : MonoBehaviour
         _Weapon_Type[(int)_TypeList[chWeapon]].SetActive(true);
         _Weapon_UI.Chang_weapon(chWeapon);//傳入武器
         _Weapon_UI.Pick_Weapon(eType, chWeapon);//傳入武器圖片
+        score_weapon_bonus /= 2;//撿一次武器少一次分數
     }
     public void Chang_Type(int open)
     {
@@ -83,7 +85,8 @@ public class Weapon : MonoBehaviour
         foreach(Collider c in _CollidersArray)
         {
             _Machine_Position = c.gameObject.transform.position;
-            if (Vector3.Dot(_Shield_Mod.forward, (_Machine_Position - _Shield_Mod.position).normalized) > 0)
+            
+            if (Vector3.Dot(_Shield_Mod.right, (_Machine_Position - _Shield_Mod.position).normalized) > 0)
             {
                 _Machine = c.gameObject.GetComponent<Machine>();
                 if(c.gameObject.layer == 11 && _Machine._Move._a)

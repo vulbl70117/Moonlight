@@ -13,6 +13,7 @@ public class Machine : MonoBehaviour
 {
     public Player _Player;
     public Enemy_Type _Type;
+    public Rigidbody _Machine_RD;
     [Foldout("Scirpt", true)]
     public Machine_Attack _Attack;
     public Machine_Renderer _Renderer;
@@ -20,6 +21,7 @@ public class Machine : MonoBehaviour
     public Machine_DrawGizmos _DrawGizmos;
     void Start()
     {
+        _Machine_RD = GetComponent<Rigidbody>();
         _Move = GetComponent<Machine_Move>();
         _Attack = GetComponent<Machine_Attack>();
         _Renderer = GetComponent<Machine_Renderer>();

@@ -6,10 +6,10 @@ public class Weapon_Collision : MonoBehaviour
 {
     public Weapon_Type_enum _Type = Weapon_Type_enum.Fist;
     private GameObject _Anything;
+    public Weapon Weapon;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame

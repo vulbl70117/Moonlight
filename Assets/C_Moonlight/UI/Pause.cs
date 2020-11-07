@@ -5,17 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
-    static bool pauseEnabled = false;
+    bool pauseEnabled = false;
     public AudioSource pause_sound;
     public AudioSource start_sound;
     public GameObject pausePanel;
+    Panel_change _panel_Change;
 
     void Start()
     {
-        
+        _panel_Change = GetComponent<Panel_change>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -37,9 +37,15 @@ public class Pause : MonoBehaviour
                 //Screen.showCursor = true;
             }
         }
-        if(pausePanel.activeSelf == true && Input.GetKeyDown(KeyCode.A))
+        if(pausePanel.activeSelf == true && Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(0);
+            Application.Quit();
+        }
+        if (pausePanel.activeSelf == true && Input.GetKeyDown(KeyCode.R))
+        {
+            pauseEnabled = false;
+            Time.timeScale = 1;
+            _panel_Change.Btn_Restart();
         }
     }
 

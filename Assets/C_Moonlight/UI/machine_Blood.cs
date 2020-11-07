@@ -10,7 +10,6 @@ public class machine_Blood : MonoBehaviour
     public float maxHP;//放最高血量
     public Slider barHP;//放血條
 
-    public Player_Renderer Player_Renderer; //放角色
     public Machine_Renderer Machine_Renderer;//放機器
 
     void Start()

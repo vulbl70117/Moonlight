@@ -11,6 +11,7 @@ public class Machine_Move : MonoBehaviour
     public bool _MoveAnim;
     public bool z;
     public bool _a;
+    public bool _d;
     public Machine _Machine;
     [Foldout("巡邏", true)]
     public float _Move_AllTime_01 = 3f;
@@ -77,11 +78,9 @@ public class Machine_Move : MonoBehaviour
             _MoveBool = !_MoveBool;
             Move_Reset();
             if (_MoveBool)
-                //_Machine_TF.rotation = Quaternion.Euler(0, 90, 0);
-                _Machine_TF.Rotate(_Machine_TF.up * 180);
+                _Machine_TF.rotation = Quaternion.Euler(0, 90, 0);
             else
-                //_Machine_TF.rotation = Quaternion.Euler(0, 270, 0);
-                _Machine_TF.Rotate(_Machine_TF.up * 180);
+                _Machine_TF.rotation = Quaternion.Euler(0, 270, 0);
         }
     }
     public void Move_Reset()
@@ -102,7 +101,6 @@ public class Machine_Move : MonoBehaviour
                      && _Distance > _Machine._DrawGizmos._Attack_Radius)
             {
                 _MoveAnim = true;//
-                Move_Reset();
                 Machion_Chase();
             }
             if (_Distance < _Machine._DrawGizmos._Attack_Radius)
@@ -116,15 +114,15 @@ public class Machine_Move : MonoBehaviour
     public void Machion_Chase()
     {
         _Machine_VT = Vector3.ProjectOnPlane(_Player_TF.position - transform.position, transform.up);
-        _Machine_TF.rotation = Quaternion.LookRotation(_Machine_VT);
         transform.Translate( -_Machine_TF.right * Time.deltaTime * 5);
+        _Machine_TF.rotation = Quaternion.LookRotation(_Machine_VT);
     }
     public void Aim()
     {
         _Machine_VT = Vector3.ProjectOnPlane(_Player_TF.position - transform.position, transform.up);
-        _Machine_TF.transform.rotation = Quaternion.LookRotation(_Machine_VT);
         _Pos.transform.rotation = Quaternion.LookRotation(_Machine_VT);
         _Machine._Attack.Fire();
+        _Machine_TF.rotation = Quaternion.LookRotation(_Machine_VT);
 
     }
     public void Fly()
@@ -157,6 +155,7 @@ public class Machine_Move : MonoBehaviour
                                               , Time.deltaTime * _Dive_Speed);
             _Machine._Renderer.Machine_Anim(Machine_Animator.Attack);
             _a = true;
+            _d = true;
         }
         _Machine_TF.LookAt(_Player_VT);
         float x = Vector3.Distance(transform.position, _Player_VT);
@@ -168,6 +167,7 @@ public class Machine_Move : MonoBehaviour
             _StopBool = true;
             _Stop_Time_02 = _Stop_Time_01;
             _a = false;
+            _d = false;
         }
         if (_Attack_Time_02 < 0)
         {

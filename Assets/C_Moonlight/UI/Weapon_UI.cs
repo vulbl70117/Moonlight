@@ -7,10 +7,14 @@ public class Weapon_UI : MonoBehaviour
     public GameObject Weapon1_off;//關武器1顯示
     public GameObject Weapon2_off;//關武器2顯示
 
-    public List<GameObject> weapon1_image = new List<GameObject>(); //武器欄1
-    public List<GameObject> weapon2_image = new List<GameObject>(); //武器欄2
+    public List<GameObject> weapon1_image = new List<GameObject>(); //武器欄1圖片
+    public List<GameObject> weapon2_image = new List<GameObject>(); //武器欄2圖片
 
     public List <Weapon_Type_enum> _now_type; //1,2武器欄現在的武器
+
+    private int _now_type_number1 = 0;
+    private int _now_type_number2 = 0;
+
     //private Weapon_Type_enum _weapon2_type = Weapon_Type_enum.Fist;
 
     // Start is called before the first frame update
@@ -41,7 +45,7 @@ public class Weapon_UI : MonoBehaviour
     public void Pick_Weapon(Weapon_Type_enum weapontype, int chWeapon)  //新武器type, 武器欄
     {
 
-        if(_now_type[chWeapon] == Weapon_Type_enum.Fist)
+        if(_now_type[chWeapon] == Weapon_Type_enum.Fist)//關空的武器欄顯示
         {
             if(chWeapon == 0)
             {
@@ -57,12 +61,14 @@ public class Weapon_UI : MonoBehaviour
         {
             if (chWeapon == 0)
             {
-                weapon1_image[2].SetActive(false);
+                weapon1_image[_now_type_number1].SetActive(false);
+                _now_type_number1 = 1;
                 weapon1_image[1].SetActive(true);
             }
             else
             {
-                weapon2_image[2].SetActive(false);
+                weapon2_image[_now_type_number2].SetActive(false);
+                _now_type_number2 = 1;
                 weapon2_image[1].SetActive(true);
             }
         }
@@ -70,13 +76,30 @@ public class Weapon_UI : MonoBehaviour
         {
             if (chWeapon == 0)
             {
-                weapon1_image[1].SetActive(false);
+                weapon1_image[_now_type_number1].SetActive(false);
+                _now_type_number1 = 2;
                 weapon1_image[2].SetActive(true);
             }
             else
             {
-                weapon2_image[1].SetActive(false);
+                weapon2_image[_now_type_number2].SetActive(false);
+                _now_type_number2 = 2;
                 weapon2_image[2].SetActive(true);
+            }
+        }
+        if (weapontype == Weapon_Type_enum.Shield)
+        {
+            if (chWeapon == 0)
+            {
+                weapon1_image[_now_type_number1].SetActive(false);
+                _now_type_number1 = 3;
+                weapon1_image[3].SetActive(true);
+            }
+            else
+            {
+                weapon2_image[_now_type_number2].SetActive(false);
+                _now_type_number2 = 3;
+                weapon2_image[3].SetActive(true);
             }
         }
     }

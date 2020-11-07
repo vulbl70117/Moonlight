@@ -14,6 +14,7 @@ public class Player_Trigger : MonoBehaviour
 
     public static Weapon_Type_enum _NewType = Weapon_Type_enum.Fist;//把偵測到的武器先存起來
     public static bool _Intag = false;//是否在武器感應範圍內
+    public GameObject GOAL_Panel;///
     void Start()
     {
     }
@@ -33,8 +34,9 @@ public class Player_Trigger : MonoBehaviour
                 _NewType = Weapon_Type_enum.Sword;
                 if (Weapon._Pick_Weapon == true)
                 {
+                    Weapon._Pick_Weapon = false;//關閉撿武器的Tag
+                    _Intag = false;
                     other.gameObject.SetActive(false);
-                    _Intag = false; 
                 }
             }
             else if (weapon_coll._Type == Weapon_Type_enum.Axe)
@@ -44,6 +46,7 @@ public class Player_Trigger : MonoBehaviour
                 if (Weapon._Pick_Weapon == true)
                 {
                     _Intag = false;
+                    Weapon._Pick_Weapon = false;///
                     other.gameObject.SetActive(false);
                 }
             }
@@ -54,6 +57,7 @@ public class Player_Trigger : MonoBehaviour
                 if (Weapon._Pick_Weapon == true)
                 {
                     _Intag = false;
+                    Weapon._Pick_Weapon = false;///
                     other.gameObject.SetActive(false);
                 }
             }
@@ -66,19 +70,15 @@ public class Player_Trigger : MonoBehaviour
             _To2D = true;
             Camera_2D();
         }
-        if (other.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Machine") && _Player._Renderer._IsMachine_atk)
         {
-            _Player._Renderer._IsMachine = false;
-            _Player._Renderer._AudioSource.PlayOneShot(_Player._Renderer._AudioClip[0]);        
+            _Player._Renderer._IsMachine_atk = false;
+            _Player._Renderer._AudioSource.PlayOneShot(_Player._Renderer._AudioClip[1]);
         }
-        if (other.gameObject.CompareTag("Machine"))
+        if(other.gameObject.CompareTag("GOAL"))///
         {
-            if (_Player._Renderer._IsMachine)
-            {
-                _Player._Renderer._IsMachine = false;
-                _Player._Renderer._AudioSource.PlayOneShot(_Player._Renderer._AudioClip[1]);
-            }
-        }
+            GOAL_Panel.SetActive(true);
+        }///
     }
     public void OnTriggerExit(Collider other)
     {

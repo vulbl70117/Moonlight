@@ -65,7 +65,9 @@ public class Player : MonoBehaviour
         {
             if (_Renderer._BeAttackBool == false)
             {
-                Move_2D();
+                Move_2D(); 
+                //_Player_AM.ResetTrigger("Jump Trigger");
+                
             }
         }
     }
@@ -77,12 +79,12 @@ public class Player : MonoBehaviour
             return;
         if (_DashBool == false)
         {
-            if (Input.GetKey(KeyCode.D) && _Renderer._BeAttackBool == false)
+            if (Input.GetKey(KeyCode.D) && _Renderer._BeAttackBool == false && Time.timeScale != 0)
             {
                 _RunBool = true;
                 _Move.Move2D(Player_2D.Right, _Move_Speed);
             }
-            if (Input.GetKey(KeyCode.A) && _Renderer._BeAttackBool == false)
+            if (Input.GetKey(KeyCode.A) && _Renderer._BeAttackBool == false && Time.timeScale != 0)
             {
                 _RunBool = true;
                 _Move.Move2D(Player_2D.Left, -_Move_Speed);
@@ -93,7 +95,7 @@ public class Player : MonoBehaviour
     {
         if (_Move && _Can_Evade && _Renderer._BeAttackBool == false)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && _Move._EvadeBool_01 == false && Time.timeScale != 0)
             {
                 _DashBool = false;
                 _Move.UseEvade_Time();
@@ -141,7 +143,7 @@ public class Player : MonoBehaviour
             _Attack._Machine._Renderer._StrikeBool = false;
             _Weapon._WeaponSetting._AttackHit = false;
         }
-        if (Input.GetMouseButtonDown(0) && _PlayerSetting._AttackBool == false)
+        if (Input.GetMouseButtonDown(0) && _PlayerSetting._AttackBool == false && Time.timeScale != 0)
         {
             _PlayerSetting.attack = true;
             _Renderer.Player_Anim(Player_Animator.Attack);
@@ -153,22 +155,22 @@ public class Player : MonoBehaviour
             && _Renderer._Player_AM.GetBool("Jump Trigger") == false
             && _Move._IsGround == true 
             && _Move._Jump_AinTrigger == false
-            && _Move._IsHeadWall == false)
+            && _Move._IsHeadWall == false
+            && Time.timeScale != 0)
         {
             _JumpBool = true;
             //if (_JumpBool)
             //    _Renderer.Player_Anim(Player_Animator.JumpIdle);
             _Renderer.Player_Anim(Player_Animator.Jump, true);
             _Renderer.Player_Anim(Player_Animator.JumpDown, true);
-            _Move.Jump_Up();
         }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            _Move.Jump_Continued();
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            _Move._JumpBool = false;
-        }
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    _Move.Jump_Continued();
+        //}
+        //if (Input.GetKeyUp(KeyCode.Space))
+        //{
+        //    _Move._JumpBool = false;
+        //}
     }
 }

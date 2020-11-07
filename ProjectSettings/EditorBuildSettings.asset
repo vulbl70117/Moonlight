@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/00_Scenes/Start_Scene.unity
-    guid: 1a41feca7c40881438099f98068705b6
+    path: Assets/00_Scenes11/Start_Scene.unity
+    guid: a37eb7fce0cc6524a8b71926ae392893
   - enabled: 1
-    path: Assets/00_Scenes/Scence_3_DreamForestTree.unity
+    path: Assets/00_Scenes11/Scence_3_DreamForestTree.unity
     guid: 9540c15f73dba104689a28475f2046a0
+  - enabled: 1
+    path: Assets/00_Scenes11/HighScore_Panel.unity
+    guid: 023e514cd4832c04a9bdba74c08f3e28
   m_configObjects: {}

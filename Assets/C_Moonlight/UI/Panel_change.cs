@@ -7,6 +7,7 @@ public class Panel_change : MonoBehaviour
 {
     public GameObject Dead_Panel;
     public Player _Player;
+    public GameObject GOAL_Panel;
 
     void Start()
     {
@@ -23,6 +24,10 @@ public class Panel_change : MonoBehaviour
         {
             Btn_Restart();
         }
+        if(GOAL_Panel.activeSelf == true && Input.GetMouseButtonDown(0))
+        {
+            SceneManager.LoadScene("HighScore_Panel");
+        }
     }
 
     public void GoodGame()//打開死亡後畫面
@@ -33,5 +38,8 @@ public class Panel_change : MonoBehaviour
     public void Btn_Restart()
     {
         SceneManager.LoadScene(0);
+        time_count.time_mini = 10;
+        time_count.time_sec = 10;
+        Weapon.score_weapon_bonus = 8;
     }
 }

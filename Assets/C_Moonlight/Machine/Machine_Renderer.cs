@@ -6,6 +6,7 @@ public enum Machine_Animator
     Run,
     Attack,
     BeAttack,
+    BeAttack2,
     Attacking_move
 }
 public class Machine_Renderer : MonoBehaviour
@@ -31,7 +32,7 @@ public class Machine_Renderer : MonoBehaviour
     public GameObject _Machine_mesh;//
     public GameObject _Machine_Deadmesh;//
     public Rigidbody[] rigidbodies;//
-    private float explosionForce = 400f;  //爆炸力道
+    private float explosionForce = 500f;  //爆炸力道
     private float explosionRadius = 3;     //爆炸半徑
     void Start()
     {
@@ -66,11 +67,14 @@ public class Machine_Renderer : MonoBehaviour
             eff.transform.rotation = _Effect_Atked_here.transform.rotation;
             Destroy(eff, 1);
         }///
-        _BeAttack_time = 1;
+        _BeAttack_time = 2;
 
         if (_Machine_AM != null)
         {
-            Machine_Anim(Machine_Animator.BeAttack);
+            if(damge == 1)
+                Machine_Anim(Machine_Animator.BeAttack);
+            else
+                Machine_Anim(Machine_Animator.BeAttack2);
             _Machine_HP -= damge;
             _StrikeBool = true;
             if (_Machine_HP <= 0)
@@ -96,6 +100,7 @@ public class Machine_Renderer : MonoBehaviour
                     Destroy(eff_dead, 3);
                 }///
                 _Player._Trigger._Evade_ToMachine = false;
+                //gameObject.SetActive(false);
                 Destroy(gameObject, 5);
             }
         }
@@ -128,6 +133,11 @@ public class Machine_Renderer : MonoBehaviour
                     _Machine_AM.SetTrigger("BeAttack");
                     break;
                 }
+            case Machine_Animator.BeAttack2:
+                {
+                    _Machine_AM.SetTrigger("BeAttack2");
+                    break;
+                }
             case Machine_Animator.Attacking_move:///
                 {
                     _Machine_AM.SetTrigger("Attacking");
@@ -135,4 +145,17 @@ public class Machine_Renderer : MonoBehaviour
                 }///
         }
     }
+    //public void Machine_Material()
+    //{
+    //    if(_ChangeMaterial_02 <= _ChangeMaterial_01)
+    //    {
+    //        _Machine_RD.velocity = Vector3.up;
+    //        _ChangeMaterial_02 -= Time.deltaTime;
+    //    }
+    //    if(_ChangeMaterial_02 <= 0)
+    //    {
+    //        _MaterialBool = false;
+    //        _ChangeMaterial_02 = _ChangeMaterial_01;
+    //    }
+    //}
 }

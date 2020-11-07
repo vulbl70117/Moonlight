@@ -9,7 +9,6 @@ public class Shield_Anim : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _PlayerSetting._ShieldBool = true;
-        //animator.SetBool("Shielding", false);
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

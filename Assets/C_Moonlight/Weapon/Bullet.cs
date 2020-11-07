@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     public GameObject _explosion_particle;///
     public ParticleSystem partic;///
     public MeshRenderer mesh;
-    //public Machine_Attack _Machine_Attack;///
+    public Machine_Attack _Machine_Attack;///
     void Start()
     {
     }
@@ -22,10 +22,12 @@ public class Bullet : MonoBehaviour
             return;
         if (other.CompareTag("Weapon"))
         {
+            Weapon_Collision _Weapon_Collision = other.gameObject.GetComponent<Weapon_Collision>();
             gameObject.GetComponent<Collider>().enabled = false;
             mesh.enabled = false;
             partic.Stop();///
             ins_explosion();///
+            _Weapon_Collision.Weapon._Player._Renderer._AudioSource.PlayOneShot(_Weapon_Collision.Weapon._Player._Renderer._AudioClip[0]);//爆炸音效   
             Destroy(gameObject, 3);///
         }
         if (other.CompareTag("Player"))
@@ -38,6 +40,9 @@ public class Bullet : MonoBehaviour
                 mesh.enabled = false;
                 partic.Stop();///
                 Destroy(gameObject, 3);
+
+                _Player._Renderer._IsMachine_atk = false;
+                _Player._Renderer._AudioSource.PlayOneShot(_Player._Renderer._AudioClip[0]);//爆炸音效                
             }
         }
     }

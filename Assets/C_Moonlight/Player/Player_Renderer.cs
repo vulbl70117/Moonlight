@@ -16,9 +16,9 @@ public class Player_Renderer : MonoBehaviour
     private float _BeAttack_DelayTime_02;
     public float _Now_HP;
     public bool _BeAttackBool;
-    public bool _IsMachine;
+    public bool _IsMachine_atk;
     public Animator _Player_AM;
-    public AudioSource _Walk_AS;
+    public AudioSource _Walk_AS;///
     public AudioClip[] _AudioClip;///
     public AudioSource _AudioSource;///
     public Weapon _Weapon;
@@ -39,7 +39,7 @@ public class Player_Renderer : MonoBehaviour
     }
     public void BeAttack()
     {
-        _IsMachine = true;
+        _IsMachine_atk = true;///給受擊音效
         if (_Player_AM.GetBool("Jump Trigger"))//beattack re Jump Trigger
         {
             _Player_AM.ResetTrigger("Jump Trigger");
