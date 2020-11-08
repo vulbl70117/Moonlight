@@ -81,7 +81,7 @@ public class Weapon : MonoBehaviour
     }
     public void Shield_Block()
     {
-        _CollidersArray = Physics.OverlapSphere(_Shield_Mod.position, _WeaponSetting._Block_r, 1 << 11 | 1 <<13);
+        _CollidersArray = Physics.OverlapSphere(_Shield_Mod.position, _WeaponSetting._Block_r, 1 << 14 | 1 <<13);
         foreach(Collider c in _CollidersArray)
         {
             _Machine_Position = c.gameObject.transform.position;
@@ -89,7 +89,7 @@ public class Weapon : MonoBehaviour
             if (Vector3.Dot(_Shield_Mod.right, (_Machine_Position - _Shield_Mod.position).normalized) > 0)
             {
                 _Machine = c.gameObject.GetComponent<Machine>();
-                if(c.gameObject.layer == 11 && _Machine._Move._a)
+                if(c.gameObject.layer == 14 && _Machine._Move._a)
                 {
                     _Player._Renderer._Player_AM.SetBool("Shield", true);
                 }
@@ -97,28 +97,20 @@ public class Weapon : MonoBehaviour
                 {
                     _Player._Renderer._Player_AM.SetTrigger("Bulletshield");
                 }
+                if(_Machine._Move._a == false || !_Player._Move._IsGround)
+                _Player._Renderer._Player_AM.SetBool("Shield", false);
             }
             else
             {
                 _Machine = null;
-                _Player._Renderer._Player_AM.SetBool("Shield", false);
+                //_Player._Renderer._Player_AM.SetBool("Shield", false);
             }
 
         }
         if (_CollidersArray.Length <= 0)
         {
             _Machine = null;
-            _Player._Renderer._Player_AM.SetBool("Shield", false);
+            //_Player._Renderer._Player_AM.SetBool("Shield", false);
         }
-        //if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11))
-        //{
-        //    _Player._Renderer._Player_AM.SetBool("Shield", true);
-        //}
-        //if (Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 13) && _Player._PlayerSetting._ShieldBool == false)
-        //{
-        //    _Player._Renderer._Player_AM.SetTrigger("Bulletshield");
-        //}
-        //if(!Physics.CheckSphere(_Weapon_Type[(int)_NowType].transform.position, _WeaponSetting._Block_r, 1 << 11 | 1 << 13))
-        //    _Player._Renderer._Player_AM.SetBool("Shield", false);
     }
 }

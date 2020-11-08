@@ -22,12 +22,12 @@ public class Player_Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _CollidersArray = Physics.OverlapSphere(transform.position, _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], 1 << 11);
+        _CollidersArray = Physics.OverlapSphere(transform.position, _Weapon._WeaponSetting._WeaponRay[(int)_Weapon._WeaponSetting.nowWeapon], 1 << 11 | 1 <<14);
         foreach(Collider c in _CollidersArray)
         {
             _Machine_Position = c.gameObject.transform.position;
             _Machine_GOJ = c.gameObject;
-            if (Vector3.Dot(player._Move._Move_Player_ModTF.right, (_Machine_Position - transform.position).normalized) > 0)
+            if (Vector3.Dot(player._Move._Move_Player_ModTF.forward, (_Machine_Position - transform.position).normalized) > 0)
             {
                 Machine(_Machine_GOJ);
                 _IsRay = true;
