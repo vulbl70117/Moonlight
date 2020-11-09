@@ -39,6 +39,7 @@ public class Player_Move : MonoBehaviour
     public RaycastHit Y_HitDown;
     public RaycastHit Y_HitUp;
     public RaycastHit Y_HitR;
+    public RaycastHit Y_HitL;
     public RaycastHit Y_HitWall;
     //public RaycastHit Y_HitWall1;
     //public LayerMask _LayerMask;
@@ -70,6 +71,7 @@ public class Player_Move : MonoBehaviour
     void Update()
     {
         IsGround();
+        
         //_IsGround = Physics.Raycast(transform.position
         //                           , -transform.up
         //                           , out Y_HitDown
@@ -92,12 +94,12 @@ public class Player_Move : MonoBehaviour
         
         //_IsHeadWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.up, out Y_HitUp, _HeadWall, 1<<10);
         _IsHeadWall = Physics.CheckSphere(_Move_Player_Head.position, _HeadWall, 1 << 10);
-        _Move_Player_ = transform.position;
     }
     private void LateUpdate()
     {
-        TuchGround();
         OutPlane();
+        TuchGround();
+        _Move_Player_ = transform.position;
     }
     public void Move2D(Player_2D _2D, float speed, bool isTrue = false)
     {
@@ -205,8 +207,10 @@ public class Player_Move : MonoBehaviour
     }
     public void IsGround()
     {
-        if (Physics.CheckSphere(_Move_Player_LFeet.position, _Distance, 1 << 10)
-            || Physics.CheckSphere(_Move_Player_RFeet.position, _Distance, 1 << 10))
+        //if (Physics.CheckSphere(_Move_Player_LFeet.position, _Distance, 1 << 10)
+        //    || Physics.CheckSphere(_Move_Player_RFeet.position, _Distance, 1 << 10))
+        if (Physics.Raycast(_Move_Player_LFeet.position, -_Move_Player_LFeet.up, out Y_HitL, _Distance, 1 << 10)
+            || Physics.Raycast(_Move_Player_RFeet.position, -_Move_Player_RFeet.up, out Y_HitR, _Distance, 1 << 10))
         {
             _IsGround = true;
         }
@@ -217,8 +221,18 @@ public class Player_Move : MonoBehaviour
     {
         if (_IsGround && _Player._Renderer._Player_AM.GetBool("Jump") == false)
         {
-            if(Physics.Raycast(transform.position, -transform.up, out Y_HitDown, _Grounddistance, 1 << 10))
+            if (Physics.Raycast(transform.position, -transform.up, out Y_HitDown, _Grounddistance, 1 << 10))
+            {
                 transform.position = new Vector3(transform.position.x, Y_HitDown.point.y + _Tall, transform.position.z);
+            }
+            else if (Y_HitR.collider != null && !Physics.Raycast(transform.position, -transform.up, out Y_HitDown, _Grounddistance, 1 << 10))
+            {
+                transform.position = new Vector3(transform.position.x, Y_HitR.point.y + _Tall, transform.position.z);
+            }
+            else if (Y_HitL.collider != null && Y_HitR.collider == null && !Physics.Raycast(transform.position, -transform.up, out Y_HitDown, _Grounddistance, 1 << 10))
+            {
+                transform.position = new Vector3(transform.position.x, Y_HitL.point.y + _Tall, transform.position.z);
+            }
         }
     }
     public void Jump()
