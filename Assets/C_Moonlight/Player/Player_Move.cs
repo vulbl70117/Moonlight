@@ -93,13 +93,13 @@ public class Player_Move : MonoBehaviour
             Dash();
         
         //_IsHeadWall = Physics.Raycast(_Move_Player_Head.position, _Move_Player_Head.up, out Y_HitUp, _HeadWall, 1<<10);
+        OutPlane();
+        TuchGround();
         _IsHeadWall = Physics.CheckSphere(_Move_Player_Head.position, _HeadWall, 1 << 10);
+        _Move_Player_ = transform.position;
     }
     private void LateUpdate()
     {
-        OutPlane();
-        TuchGround();
-        _Move_Player_ = transform.position;
     }
     public void Move2D(Player_2D _2D, float speed, bool isTrue = false)
     {
@@ -207,8 +207,6 @@ public class Player_Move : MonoBehaviour
     }
     public void IsGround()
     {
-        //if (Physics.CheckSphere(_Move_Player_LFeet.position, _Distance, 1 << 10)
-        //    || Physics.CheckSphere(_Move_Player_RFeet.position, _Distance, 1 << 10))
         if (Physics.Raycast(_Move_Player_LFeet.position, -_Move_Player_LFeet.up, out Y_HitL, _Distance, 1 << 10)
             || Physics.Raycast(_Move_Player_RFeet.position, -_Move_Player_RFeet.up, out Y_HitR, _Distance, 1 << 10))
         {
@@ -231,6 +229,7 @@ public class Player_Move : MonoBehaviour
             }
             else if (Y_HitL.collider != null && Y_HitR.collider == null && !Physics.Raycast(transform.position, -transform.up, out Y_HitDown, _Grounddistance, 1 << 10))
             {
+                Debug.Log("X");
                 transform.position = new Vector3(transform.position.x, Y_HitL.point.y + _Tall, transform.position.z);
             }
         }
@@ -297,6 +296,7 @@ public class Player_Move : MonoBehaviour
     public void OutPlane()
     {
         if (_IsGround == false && _Acceleration_02 < -80)
+        {
             if (Physics.Raycast(_Move_Player_ + transform.up
                                 , -transform.up
                                 , out Y_HitUp, Vector3.Distance(transform.position, _Move_Player_) + 1 +10, 1 << 10))
@@ -304,6 +304,7 @@ public class Player_Move : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, Y_HitUp.point.y + _Tall, transform.position.z);
                 _Acceleration_02 = _Acceleration_01;
             }
+        }
     }
     public void Dash()
     {
